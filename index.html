@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Uveitis Workup</title>
+<meta name="theme-color" content="#20304f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Uveitis">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<style>
+:root{
+  --paper:#f5efe1; --paper2:#efe7d4; --ink:#20304f; --ink2:#3a4a68;
+  --rust:#a8432a; --rust2:#c25a3f; --line:#d8ccb0; --gold:#b5893c;
+  --ok:#3f7d54; --amber:#b5893c; --red:#a8432a; --shadow:0 1px 3px rgba(40,30,10,.12);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);
+  font-family:Georgia,"Iowan Old Style","Times New Roman",serif;line-height:1.5;-webkit-text-size-adjust:100%}
+body{max-width:1180px;margin:0 auto;padding:16px 16px 90px}
+header.top{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:6px}
+.kicker{font-variant:small-caps;letter-spacing:.12em;color:var(--rust);font-size:12.5px;font-weight:bold}
+h1{font-size:26px;margin:2px 0 4px;font-weight:normal}
+.sub{color:var(--ink2);font-size:14px;max-width:780px}
+.src{font-size:11px;color:#8a7c5e;margin-top:5px;font-style:italic}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 4px;position:sticky;top:0;background:var(--paper);padding:6px 0;z-index:20;border-bottom:1px solid var(--line)}
+.tab{font-family:inherit;font-variant:small-caps;letter-spacing:.05em;font-size:14px;padding:7px 16px;border-radius:6px 6px 0 0;
+  border:1px solid var(--line);border-bottom:none;background:var(--paper2);color:var(--ink2);cursor:pointer}
+.tab.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.view{display:none}
+.view.on{display:block}
+
+.layout{display:flex;gap:20px;align-items:flex-start;margin-top:12px}
+.main{flex:1 1 auto;min-width:0}
+.side{flex:0 0 290px;position:sticky;top:56px}
+@media(max-width:880px){.layout{flex-direction:column}.side{position:static;flex-basis:auto;width:100%}}
+
+h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--ink);
+  border-bottom:1px solid var(--line);padding-bottom:5px;margin:22px 0 4px}
+.sysnote{font-size:12.5px;color:var(--ink2);margin:-1px 0 8px;font-style:italic}
+
+.q{background:var(--paper2);border:1px solid var(--line);border-radius:7px;
+  margin:7px 0;box-shadow:var(--shadow);overflow:hidden}
+.q.pos{border-color:var(--rust);border-left:4px solid var(--rust)}
+.qhead{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;cursor:pointer;user-select:none}
+.qhead:hover{background:#eadfc6}
+.qtxt{flex:1 1 auto;font-size:14.5px}
+.qtxt small{display:block;color:var(--ink2);font-size:12px;font-style:italic;margin-top:2px}
+.toggle{flex:0 0 auto;display:flex;gap:5px}
+.tbtn{font-family:inherit;font-size:12px;border:1px solid var(--ink2);background:transparent;
+  color:var(--ink2);border-radius:20px;padding:3px 12px;cursor:pointer}
+.tbtn.yes.on{background:var(--rust);border-color:var(--rust);color:#fff}
+.tbtn.no.on{background:var(--ink);border-color:var(--ink);color:#fff}
+
+.drill{display:none;padding:0 13px 13px;border-top:1px dashed var(--line)}
+.q.pos .drill{display:block}
+.drill h4{font-variant:small-caps;letter-spacing:.05em;font-size:13px;margin:12px 0 3px;
+  color:var(--rust);border-bottom:1px dotted var(--line);padding-bottom:2px}
+.drill ul{margin:3px 0;padding-left:19px}
+.drill li{font-size:13px;margin:3px 0}
+.pill{display:inline-block;background:#e7ddc4;border:1px solid var(--line);color:var(--ink);
+  font-size:11.5px;border-radius:4px;padding:2px 8px;margin:3px 4px 0 0;font-variant:small-caps;letter-spacing:.03em}
+.pill.dx{background:#f0e2d2;border-color:#e0c2ab;color:var(--rust)}
+
+/* sidebar */
+.panel{background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:10px}
+.panel h3{margin:0;font-variant:small-caps;letter-spacing:.06em;font-size:14.5px;background:var(--ink);
+  color:var(--paper);padding:8px 12px;font-weight:normal}
+.dxrow{display:flex;align-items:center;gap:8px;padding:6px 12px;border-bottom:1px solid #eee5d2;font-size:13px}
+.dxrow:last-child{border-bottom:none}
+.dxname{flex:1 1 auto}
+.bar{height:8px;background:var(--rust);border-radius:4px;min-width:6px}
+.cnt{flex:0 0 auto;font-size:11.5px;color:var(--ink2);width:26px;text-align:right}
+.empty{padding:12px;font-size:12.5px;color:var(--ink2);font-style:italic}
+.count-note{font-size:12px;color:var(--ink2);margin:6px 12px 2px}
+.legend{font-size:11px;color:#8a7c5e;padding:7px 12px;border-top:1px solid var(--line)}
+.controls{margin:6px 0 0;display:flex;gap:6px;flex-wrap:wrap}
+.controls button{font-family:inherit;font-size:12px;padding:5px 11px;border-radius:5px;
+  border:1px solid var(--ink2);background:var(--paper2);color:var(--ink);cursor:pointer}
+.footer{margin-top:26px;border-top:1px solid var(--line);padding-top:10px;font-size:11px;color:#8a7c5e}
+
+/* interpreter */
+.labgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.labgrid{grid-template-columns:1fr}}
+.labpanel{background:var(--paper2);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.lp-h{font-variant:small-caps;letter-spacing:.05em;font-size:14px;color:var(--paper);background:var(--ink);padding:6px 11px}
+.lp-note{font-size:11.5px;color:var(--ink2);font-style:italic;padding:7px 11px 0}
+.lp-fields{display:flex;flex-direction:column;gap:8px;padding:9px 11px}
+.fld{display:flex;flex-direction:column;gap:3px}
+.fld label{font-size:12.5px;color:var(--ink)}
+.numrow{display:flex;gap:6px;align-items:center}
+.fnum{font-family:inherit;font-size:13px;width:92px;padding:4px 7px;border:1px solid var(--line);border-radius:5px;
+  background:#fff;color:var(--ink);font-variant-numeric:tabular-nums}
+.fnum:focus,.fsel:focus{outline:2px solid var(--rust);outline-offset:1px}
+.funit,.fsel{font-family:inherit;font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;
+  background:#fff;color:var(--ink)}
+.fsel{width:100%;max-width:230px}
+.ustatic{font-size:12px;color:var(--ink2);font-style:italic}
+.interp{margin-top:14px}
+.icard{border:1px solid var(--line);border-radius:8px;margin:8px 0;overflow:hidden;box-shadow:var(--shadow);background:#fff}
+.icard .ih{display:flex;align-items:center;gap:9px;padding:8px 12px;font-size:14.5px}
+.icard .status{font-variant:small-caps;letter-spacing:.04em;font-size:11.5px;padding:2px 9px;border-radius:12px;color:#fff;flex:0 0 auto}
+.s-support{background:var(--ok)} .s-live{background:var(--amber)} .s-unlikely{background:#9a8f76} .s-excluded{background:#7a6f5a} .s-note{background:#c2b593;color:#3a3018}
+.icard .dxn{flex:1 1 auto;font-weight:bold}
+.icard .body{padding:0 12px 11px;font-size:13px}
+.icard .body p{margin:5px 0}
+.icard .body .why{color:var(--ink2)}
+.icard .cite{font-size:11px;color:#8a7c5e;font-style:italic}
+.hint{background:#f0e2d2;border:1px solid #e0c2ab;border-radius:7px;padding:9px 12px;font-size:12.5px;margin:10px 0;color:var(--ink)}
+.hint b{color:var(--rust)}
+/* eye signs */
+.examgrp{background:var(--paper2);border:1px solid var(--line);border-radius:8px;margin:9px 0;overflow:hidden}
+.eg-h{font-variant:small-caps;letter-spacing:.05em;font-size:14px;color:var(--paper);background:var(--ink);padding:6px 12px}
+.eg-note{font-size:11.5px;color:var(--ink2);font-style:italic;padding:6px 12px 0}
+.eg-chips{display:flex;flex-wrap:wrap;gap:6px;padding:9px 12px}
+.echip{font-family:inherit;font-size:13px;border:1px solid var(--ink2);background:transparent;color:var(--ink);
+  border-radius:18px;padding:6px 13px;cursor:pointer;line-height:1.25;text-align:left}
+.echip:hover{background:#e7ddc4}
+.echip.on{background:var(--rust);border-color:var(--rust);color:#fff}
+.eg-why{padding:0 12px}
+.eg-why:not(:empty){padding:0 12px 10px}
+.whyline{font-size:12.5px;color:var(--ink2);margin:4px 0;border-left:2px solid var(--rust);padding-left:8px}
+.whyline b{color:var(--rust);font-style:normal}
+/* summary */
+.summaryout{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  font-size:12.5px;line-height:1.5;color:var(--ink);white-space:pre-wrap;overflow-x:auto;box-shadow:var(--shadow)}
+.sumbtn{font-family:inherit;font-size:12px;padding:3px 11px;border-radius:5px;border:1px solid var(--ink);
+  background:var(--ink);color:var(--paper);cursor:pointer;margin-left:4px}
+.sumbtn:hover{background:var(--ink2)}
+
+/* investigations tab */
+.stratcard{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:7px;padding:9px 13px;margin:8px 0;box-shadow:var(--shadow)}
+.stratcard h4{margin:0 0 4px;font-variant:small-caps;letter-spacing:.05em;font-size:14.5px;color:var(--ink);font-weight:normal}
+.stratcard p{margin:0;font-size:13px;color:var(--ink2)}
+.stratcard .cite{font-size:11px;color:#8a7c5e;font-style:italic;margin-top:5px}
+.pbwrap{background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:11px 13px;margin:14px 0}
+.pbrow{display:flex;flex-wrap:wrap;gap:12px;margin:7px 0}
+.pbrow .fld{min-width:150px;flex:1 1 150px}
+.pbflags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.pbsel{font-family:inherit;font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);width:100%}
+.pbsel:focus{outline:2px solid var(--rust);outline-offset:1px}
+.pbchip{font-family:inherit;font-size:12.5px;border:1px solid var(--ink2);background:transparent;color:var(--ink);
+  border-radius:18px;padding:5px 12px;cursor:pointer;line-height:1.2}
+.pbchip:hover{background:#e7ddc4}
+.pbchip.on{background:var(--rust);border-color:var(--rust);color:#fff}
+.rxgrp{border:1px solid var(--line);border-radius:7px;margin:9px 0;overflow:hidden;background:#fff;box-shadow:var(--shadow)}
+.rxgrp h4{margin:0;padding:6px 12px;font-variant:small-caps;letter-spacing:.05em;font-size:13.5px;color:#fff;font-weight:normal}
+.rx-must h4{background:var(--rust)} .rx-should h4{background:var(--ink)} .rx-consider h4{background:var(--gold)} .rx-avoid h4{background:#7a6f5a}
+.rxgrp ul{margin:0;padding:8px 12px 10px 27px}
+.rxgrp li{font-size:13px;margin:6px 0}
+.rxgrp li i{color:var(--ink2);font-size:12.5px;font-style:normal;display:block;margin-top:1px}
+.tcard{border:1px solid var(--line);border-radius:7px;margin:7px 0;background:#fff;overflow:hidden;box-shadow:var(--shadow)}
+.tcard>.th{display:flex;align-items:center;gap:9px;padding:9px 12px;cursor:pointer;user-select:none}
+.tcard>.th:hover{background:var(--paper2)}
+.tcard .tname{flex:1 1 auto;font-size:14px}
+.tcard .tag{flex:0 0 auto;font-variant:small-caps;letter-spacing:.04em;font-size:11px;padding:2px 9px;border-radius:12px;color:#fff}
+.tag-core{background:var(--rust)} .tag-targeted{background:var(--ink)} .tag-selective{background:var(--gold)} .tag-rare{background:#9a8f76}
+.tcard .tbody{display:none;padding:0 13px 12px;border-top:1px dashed var(--line);font-size:13px}
+.tcard.open .tbody{display:block}
+.tcard .tbody h5{font-variant:small-caps;letter-spacing:.05em;font-size:12.5px;margin:11px 0 2px;color:var(--rust);font-weight:normal}
+.tcard .tbody p{margin:2px 0;color:var(--ink)}
+.tcard .tbody .cite{font-size:11px;color:#8a7c5e;font-style:italic;margin-top:8px}
+.chev{flex:0 0 auto;color:var(--ink2);font-size:11px}
+@media print{.tcard .tbody{display:block}}
+/* mobile: floating jump-to-differential + bigger tap targets */
+.mobjump{display:none}
+@media(max-width:880px){
+  .mobjump{display:flex;position:fixed;right:14px;bottom:16px;z-index:40;background:var(--rust);color:#fff;
+    border:none;border-radius:26px;padding:11px 18px;font-family:inherit;font-size:14px;box-shadow:0 3px 10px rgba(40,30,10,.3);cursor:pointer;align-items:center;gap:7px}
+  .tbtn{padding:6px 15px;font-size:13px}
+  .tab{font-size:13px;padding:8px 12px}
+  h1{font-size:22px}
+}
+@media print{.tabs,.side,.mobjump,.controls,.sumbtn,.hint{display:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="kicker">Clinic Companion — sit with the patient and work through it</div>
+  <h1>Uveitis — Full Front-of-Patient Workup</h1>
+  <div class="sub">Five steps: <b>History</b> (what to ask, with follow-ups) → <b>Review of systems</b> (branching red-flag screen) → <b>Eye signs</b> (what you see at the slit lamp) → <b>Investigations</b> (what to order, why, and what each test can and cannot do) → <b>Results</b> (plug the numbers in). The differential ranks live across all of them, and <b>Summary</b> writes it up for your notes.</div>
+  <div class="src">Grounded in your library — Foster &amp; Vitale <i>Diagnosis &amp; Treatment of Uveitis</i> 2e; Samalia in <i>Uveitis Management: A Clinical Handbook</i> (2023) ch.2; <i>Wills Eye Manual</i> 7e §12.1; <i>Oxford Handbook of Ophthalmology</i> 4e. Decision-support only — your judgement governs.</div>
+</header>
+
+<div class="tabs">
+  <button class="tab on" data-v="hx">1 · History</button>
+  <button class="tab" data-v="ros">2 · Review of systems</button>
+  <button class="tab" data-v="exam">3 · Eye signs</button>
+  <button class="tab" data-v="invest">4 · Investigations</button>
+  <button class="tab" data-v="labs">5 · Results</button>
+  <button class="tab" data-v="summary">✎ Summary</button>
+</div>
+
+<div class="layout">
+  <div class="main">
+    <div id="v-hx" class="view on"></div>
+    <div id="v-ros" class="view"></div>
+    <div id="v-exam" class="view">
+      <div class="hint"><b>What you see at the slit lamp.</b> Tap the findings present. Each one is a discriminating sign — the panel updates the differential and, where a sign is near-specific (mutton-fat KP, sectoral iris atrophy, mobile hypopyon), tells you what it points to and why. Work anterior → posterior.</div>
+      <div id="examgrid"></div>
+    </div>
+    <div id="v-invest" class="view">
+      <div class="hint"><b>What to order, and what the result will actually mean.</b> There is no standard uveitis screen — tests are chosen to include or exclude the entities you are genuinely considering. Below: the strategy, a <b>targeted panel builder</b> for the patient in front of you, then a monograph on every test (what it measures, when to order, how it performs, and the trap that catches people).</div>
+      <div id="stratbox"></div>
+      <div class="pbwrap">
+        <div class="lp-h" style="margin:-11px -13px 8px;padding:6px 13px">Build a targeted panel for this patient</div>
+        <div class="pbrow">
+          <div class="fld"><label>Anatomical location</label><select class="pbsel" data-k="loc"><option value="">— choose —</option><option value="anterior">Anterior</option><option value="intermediate">Intermediate</option><option value="posterior">Posterior</option><option value="pan">Panuveitis</option><option value="scleritis">Scleritis</option></select></div>
+          <div class="fld"><label>Laterality</label><select class="pbsel" data-k="lat"><option value="">—</option><option value="unilateral">Unilateral</option><option value="bilateral">Bilateral</option></select></div>
+          <div class="fld"><label>Inflammation type</label><select class="pbsel" data-k="gran"><option value="">—</option><option value="non-granulomatous">Non-granulomatous</option><option value="granulomatous">Granulomatous</option></select></div>
+          <div class="fld"><label>Course</label><select class="pbsel" data-k="course"><option value="">—</option><option value="first">First episode, acute</option><option value="recurrent">Recurrent</option><option value="chronic">Chronic (≥3 months)</option></select></div>
+          <div class="fld"><label>Age band</label><select class="pbsel" data-k="age"><option value="">—</option><option value="child">Child (&lt;16)</option><option value="young">Adult 16–50</option><option value="older">Adult &gt;50</option></select></div>
+        </div>
+        <div style="font-size:12.5px;color:var(--ink2);margin-top:8px">Tap anything else that applies:</div>
+        <div class="pbflags" id="pbflags"></div>
+      </div>
+      <div class="pbout" id="pbout"></div>
+      <h2 class="sys">Test-by-test</h2>
+      <div class="sysnote">Tap a test to open it. <span class="tag tag-core" style="display:inline-block">core</span> = order in nearly everyone · <span class="tag tag-targeted" style="display:inline-block">targeted</span> = order when the phenotype fits · <span class="tag tag-selective" style="display:inline-block">selective</span> = narrow indication · <span class="tag tag-rare" style="display:inline-block">rare</span> = specialist / research.</div>
+      <div id="investgrid"></div>
+    </div>
+    <div id="v-labs" class="view">
+      <div class="hint"><b>How to use:</b> tick off the results you have. The panel below reasons about each diagnosis — <i>supported</i>, <i>still on the table</i>, <i>less likely</i>, or <i>effectively excluded</i> — and tells you <i>why</i>, including the test quirks (e.g. syphilis with a bland CBC and only a raised ESR, or a normal ACE not clearing sarcoid). Leave anything you haven't done as “not done”.</div>
+      <div class="labgrid" id="labgrid"></div>
+      <div class="interp" id="interp"></div>
+    </div>
+    <div id="v-summary" class="view">
+      <div class="hint"><b>Clinical summary.</b> A write-up of everything you've entered — positive history, ROS, eye signs, results with interpretation, the ranked differential and suggested next tests. <button class="sumbtn" onclick="copySummary()">Copy to clipboard</button> <button class="sumbtn" onclick="window.print()">Print / PDF</button></div>
+      <pre id="summaryout" class="summaryout"></pre>
+    </div>
+
+    <div class="footer" id="footer"></div>
+  </div>
+
+  <div class="side" id="side">
+    <div class="panel">
+      <h3>Working differential</h3>
+      <div class="count-note" id="flagnote">Nothing flagged yet.</div>
+      <div id="dxlist"><div class="empty">Flag findings in History, ROS or Eye signs, or enter results, and the likely diagnoses rank here.</div></div>
+      <div class="legend">Bars = number of your positive findings each diagnosis explains. A prompt, not a probability.</div>
+    </div>
+    <div class="controls">
+      <button onclick="resetAll()">Reset all</button>
+      <button onclick="goTab('summary')">View summary</button>
+    </div>
+  </div>
+</div>
+<div id="updbar" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#20304f;color:#f5efe1;
+ padding:10px 14px;font-family:Georgia,serif;font-size:13px;text-align:center">
+ A newer version has downloaded. <button onclick="applyUpdate()" style="font-family:inherit;font-size:13px;margin-left:8px;
+ padding:4px 12px;border-radius:5px;border:1px solid #f5efe1;background:transparent;color:#f5efe1;cursor:pointer">Update now</button></div>
+<button class="mobjump" onclick="document.getElementById('side').scrollIntoView({behavior:'smooth'})">▲ Differential (<span id="mobcount">0</span>)</button>
+
+<script>
+/* ============ HISTORY (front-of-patient) ============ */
+/* Samalia, Uveitis Management handbook ch.2; Foster 2e; Wills 7e */
+const HX=[
+ {sys:"Who is in front of you — demographics", note:"Age, sex, ethnicity and geography shift the pre-test odds before you ask a single symptom (Handbook ch.2.2.1). Pre-test probability is the single biggest determinant of whether a test result will mean anything.", items:[
+   {q:"Child / adolescent (&lt;16)?", fu:["Any joint swelling — pauciarticular, small joints, morning stiffness? (JIA — often a white, asymptomatic eye)","Recent systemic illness with fatigue, weight loss and kidney involvement? (TINU — check urine β2-microglobulin + creatinine)","Puppy contact / pica / geophagia? (toxocariasis)","Rash + arthritis + uveitis in the first years of life, with camptodactyly? (Blau syndrome / early-onset sarcoid — NOD2)","Screen JIA eyes even when completely asymptomatic — the eye is white and the child does not complain."],
+    exam:["Joint survey for synovitis","Growth/height, nail pitting, psoriasis in hidden sites"],
+    eye:["JIA: chronic anterior uveitis, white eye, band keratopathy, posterior synechiae, cataract","Toxocara: unilateral leukocoria, peripheral or posterior pole granuloma, tractional band"],
+    dx:["JIA","TINU","toxocara","Blau"], tests:["ANA (Hep-2), RF","Urine β2-microglobulin + serum creatinine","Toxocara ELISA if granuloma"]},
+   {q:"Older adult (&gt;60) with vitritis / posterior signs?", fu:["Partial or no response to steroid, or relapse the moment steroid is tapered? (masquerade)","Weight loss, night sweats, lymph nodes?","Any CNS symptoms — memory, behaviour, focal deficit?","Any current or past malignancy, especially breast/lung/skin?"],
+    exam:["Node survey","Brief cognitive screen","Skin survey for melanoma"],
+    eye:["Vitreous cells 'out of proportion' to the eye's quietness, subretinal/sub-RPE creamy deposits → primary vitreoretinal lymphoma","Birdshot: cream oval lesions, HLA-A29","Metastasis / paraneoplastic retinopathy also live at this age"],
+    dx:["lymphoma","birdshot","AIR"], tests:["MRI brain with gadolinium","Diagnostic vitrectomy: cytology, flow, IL-10:IL-6, MYD88 L265P","ERG if AIR suspected"]},
+   {q:"Relevant ethnicity, birthplace, residence or travel?", fu:["Where were you born, and where have you lived — not just holidays?","Asian / Middle-Eastern ancestry along the old Silk Road → Behçet","Pigmented ethnicities (Asian, Hispanic, Native American, African) → VKH; African-American and Northern European → sarcoid","Time in TB-endemic countries (India, sub-Saharan Africa, SE Asia), or a household TB contact?","Brazil / West Africa → aggressive toxoplasma strains; Ohio–Mississippi valley → histoplasmosis; endemic Lyme (NE USA, forested Europe)","Japan/Korea → sarcoid is the leading uveitis cause; India → TB is."],
+    exam:["BCG scar","General nutrition"],
+    eye:["Directs which infective and HLA groups to weight — and which tests will actually have a usable predictive value"],
+    dx:["Behçet","VKH","sarcoid","TB","Lyme","toxoplasma","POHS"], tests:["IGRA ± TST if endemic exposure","Targeted serology only where exposure fits"]},
+   {q:"Male, or female? Any occupational exposure?", fu:["HLA-B27 AAU and Behçet skew male; sarcoid, VKH and JIA uveitis skew female","Occupation — farm/soil (histoplasma, toxoplasma), abattoir/dairy (brucella), sewer/water (leptospirosis), gardening (Whipple's, sporotrichosis), healthcare or prison work (TB)","Any beryllium exposure? (chronic beryllium disease mimics sarcoid exactly)"],
+    exam:["Hands, skin"],
+    eye:["No specific sign — this is pre-test probability, not a sign"],
+    dx:["sarcoid","brucella","leptospirosis","Whipple","TB"], tests:["Occupational history documented in the notes"]}
+ ]},
+
+ {sys:"Presenting complaint — analyse the symptom", note:"The symptom set localises the uveitis anatomically, and anatomical class is what drives every downstream test (Handbook 2.3.1; SUN anatomical classification).", items:[
+   {q:"Pain, redness and light sensitivity (photophobia)?", fu:["Onset — sudden (hours–days) or gradual?","One eye or both? Alternating between eyes over time?","How many previous attacks, and how were they treated?","Boring pain that wakes you from sleep, or pain on eye movement? (think scleritis, not uveitis)","Is the redness circumcorneal (ciliary flush) or diffuse/sectoral?"],
+    exam:["Blanch test with phenylephrine (episcleritis blanches, scleritis does not)"],
+    eye:["Anterior uveitis: ciliary flush, KP, AC cells/flare, ± hypopyon, posterior synechiae","Acute + unilateral + recurrent → HLA-B27 pattern"],
+    dx:["HLA-B27","HSV","VZV","Behçet","scleritis"], tests:["HLA-B27 if the phenotype fits","Syphilis serology + TB test (they mimic anything)"]},
+   {q:"Floaters and blurred vision, with little or no pain/redness?", fu:["Floaters alone, or true visual loss? Gradual creep over weeks?","Flashing lights, distortion, or a patch missing in the field?","Any preceding flu-like illness?","Symptoms worse in one eye, or genuinely both?"],
+    exam:["Neurological screen (MS)","Nodes, chest"],
+    eye:["Intermediate: vitreous cells, snowballs, inferior snowbanking (pars planitis)","Posterior: focal retinitis/choroiditis, vasculitis"],
+    dx:["pars planitis","sarcoid","MS","toxoplasma","TB","syphilis","birdshot","lymphoma"], tests:["OCT macula (CMO is the vision-limiting lesion)","CXR, ACE, syphilis serology, IGRA","MRI brain only if neuro symptoms or before anti-TNF"]},
+   {q:"Photopsia, distortion (metamorphopsia) or a field defect?", fu:["Central vs peripheral loss? Shimmering or scintillating?","One eye or both, simultaneously?","Headache, tinnitus, neck stiffness or hearing change with it? (VKH prodrome)","Any recent flu-like illness before it started? (white dot syndromes)"],
+    exam:["Gross hearing, meningism"],
+    eye:["Posterior uveitis / chorioretinitis, serous RD (VKH), macular involvement","White dot syndromes: MEWDS, APMPPE, PIC, serpiginous"],
+    dx:["VKH","birdshot","syphilis","sarcoid","toxoplasma","lymphoma","MEWDS","APMPPE","serpiginous"], tests:["FAF + OCT (outer retinal loss)","FFA and ICGA — ICGA shows choroidal lesions FFA misses","Audiometry / LP only if VKH features"]},
+   {q:"Night blindness, shrinking field, or long-standing poor vision?", fu:["How long — years? Any childhood problems seeing in the dark?","Family history of retinal degeneration?","Is the 'vitritis' actually pigmented cells (tobacco dust) rather than white cells?"],
+    exam:["Family pedigree"],
+    eye:["Retinitis pigmentosa can masquerade as chronic uveitis: bone-spicule pigment, waxy disc, CMO, vitreous cells and cataract are all compatible"],
+    dx:["RP","AIR","birdshot","syphilis"], tests:["ERG (extinguished/reduced)","Genetic testing","Antiretinal antibodies only if acquired, rapid, and AIR suspected"]},
+   {q:"Red, painful eye with discharge, or a lid/skin lesion?", fu:["Purulent discharge (conjunctivitis/keratitis) vs watering?","Recent intraocular surgery or injection? (endophthalmitis is the emergency here)","Any preceding trauma with an organic foreign body?"],
+    exam:["Lids, lacrimal sac, corneal wound integrity, Seidel"],
+    eye:["Endophthalmitis: fibrin, hypopyon, loss of red reflex, out-of-proportion pain and vision loss"],
+    dx:["endophthalmitis","HSV","VZV"], tests:["URGENT vitreous tap + intravitreal antibiotics — vitreous culture beats AC tap for endophthalmitis"]}
+ ]},
+
+ {sys:"Onset, course & laterality", note:"Rate of onset, duration and one-vs-both-eyes narrow the list sharply — and map directly onto the SUN descriptors you must record (Handbook 2.3.2–2.3.3).", items:[
+   {q:"Sudden onset?", fu:["Over hours to a couple of days?","Explosive, with a hypopyon and surprisingly little pain? (Behçet)","Any preceding gut or genitourinary infection 1–4 weeks before? (reactive arthritis)"],
+    eye:["Sudden: HLA-B27 AAU, Behçet, VKH, sympathetic ophthalmia"], dx:["HLA-B27","Behçet","VKH","reactive"], tests:["HLA-B27","HLA-B51 if Behçet features"]},
+   {q:"Insidious / chronic creep?", fu:["Noticed only by gradual blur or floaters?","Painless white eye? (child → JIA; adult → Fuchs, intermediate uveitis, lymphoma)","Has it ever been fully quiet, or is it grumbling constantly?"],
+    eye:["Insidious: intermediate uveitis, birdshot, vitreoretinal lymphoma, Fuchs, JIA"], dx:["pars planitis","birdshot","lymphoma","Fuchs","JIA"], tests:["HLA-A29 if cream lesions","Consider diagnostic vitrectomy if &gt;60 and steroid-resistant"]},
+   {q:"Duration ≥3 months (chronic by SUN), or relapse within 3 months of stopping treatment?", fu:["Total duration of this episode?","Does it relapse the moment you drop below a threshold dose?","Chronicity itself pushes toward JIA, Fuchs, sarcoid, TB, lymphoma and away from simple HLA-B27 AAU"],
+    eye:["Band keratopathy, cataract, glaucoma and CMO are the fingerprints of chronicity"], dx:["JIA","Fuchs","sarcoid","TB","lymphoma","pars planitis"], tests:["Full aetiological work-up is more justified in chronic than in a first, typical, unilateral AAU"]},
+   {q:"Simultaneously bilateral?", fu:["Both eyes at once (not sequential)?","Bilaterality is one of the seven IWOS intraocular signs of ocular sarcoidosis"],
+    eye:["Simultaneous bilateral: TINU, JIA, VKH, birdshot, sarcoid, APMPPE, syphilis, drug-induced"], dx:["TINU","JIA","VKH","birdshot","sarcoid","syphilis","drug"], tests:["Bilateral disease raises the yield of systemic work-up substantially"]},
+   {q:"Recurrent — same eye or alternating?", fu:["How many episodes, how far apart?","Same eye every time (herpetic, Fuchs, toxoplasma) or alternating (HLA-B27)?","Is each episode identical, or evolving?"],
+    eye:["Recurrent AAU → HLA-B27; recurrent same-eye + ↑IOP + iris atrophy → herpetic; recurrent beside an old scar → toxoplasma"], dx:["HLA-B27","HSV","VZV","Behçet","toxoplasma","Fuchs"], tests:["HLA-B27","Aqueous PCR if herpetic features and diagnosis matters"]}
+ ]},
+
+ {sys:"Response to previous treatment — a diagnostic test in itself", note:"How the eye behaved on steroid is one of the most under-used pieces of history. Steroid-resistance, steroid-dependence and paradoxical worsening each point somewhere specific.", items:[
+   {q:"Poor or only partial response to adequate topical/systemic steroid?", fu:["Was the dose and frequency genuinely adequate, and adherence real?","Did it improve then rebound immediately on taper?","Age &gt;50 with vitritis? — think vitreoretinal lymphoma before escalating immunosuppression","Any chance this is infection being masked?"],
+    exam:["Recheck for lymphadenopathy, CNS signs"],
+    eye:["Lymphoma classically shows a brief partial steroid response then relapse; infective disease may transiently quieten then worsen"],
+    dx:["lymphoma","TB","syphilis","toxoplasma","endophthalmitis","P.acnes"],
+    tests:["MRI brain + gadolinium","Diagnostic vitrectomy (warn the lab in advance; ideally after ~2 weeks off steroid)","Aqueous/vitreous PCR + culture"]},
+   {q:"Worsened after steroid, or after starting a biologic?", fu:["Necrotising retinitis expanding on steroid? (herpetic ARN, toxoplasma, TB)","Started etanercept and developed uveitis? (paradoxical — etanercept is the worst TNF agent for uveitis)","Checkpoint inhibitor started weeks before? (immune-related uveitis, VKH-like)"],
+    eye:["Progression on steroid should be read as infection or masquerade until disproven"],
+    dx:["HSV","VZV","ARN","TB","toxoplasma","drug","lymphoma"],
+    tests:["Urgent aqueous PCR (HSV/VZV/CMV/toxo)","Reassess the TB and syphilis screen"]},
+   {q:"Already on immunosuppression or biologics when this started?", fu:["Which agent, what dose, how long?","Any prophylaxis and TB screening done before starting?","New floaters + retinitis on immunosuppression → CMV, toxo, ARN/PORN, fungal"],
+    exam:["Oral candida, skin, temperature"],
+    eye:["Immunosuppression blunts the inflammatory response — retinitis can look bland with minimal vitritis"],
+    dx:["CMV","toxoplasma","ARN","TB","candida","lymphoma"],
+    tests:["Aqueous PCR panel","Blood cultures if endogenous endophthalmitis possible","CD4 count if HIV-positive"]}
+ ]},
+
+ {sys:"Drug history — don't miss drug-induced uveitis", note:"Some drugs cause uveitis outright; recognising the trigger can spare an entire work-up and the treatment is withdrawal, not immunosuppression (Handbook 2.2.3; Wills — rifabutin).", items:[
+   {q:"On bisphosphonates, rifabutin, sulfonamides, or systemic fluoroquinolones?", fu:["Bisphosphonates (esp. IV zoledronate) → anterior uveitis and scleritis, typically within days of the first dose","Rifabutin → hypopyon uveitis, dose-related, worse with concurrent macrolides/protease inhibitors","Sulfonamides → acute bilateral anterior uveitis with myopic shift and choroidal effusion","Fluoroquinolones (moxifloxacin) → bilateral acute iris transillumination/depigmentation (BAIT/BADI) with pigment dispersion and raised IOP — often misdiagnosed as uveitis"],
+    exam:["Drug chart and timeline — when exactly did it start relative to the drug?"],
+    eye:["Often bilateral, resolves on withdrawal; moxifloxacin gives a distinctive atrophic transilluminating iris"],
+    dx:["drug"], tests:["Withdraw the agent and observe — the response IS the test","Avoid a full aetiological screen if the timeline is convincing"]},
+   {q:"On checkpoint inhibitors, TNF-α inhibitors, BRAF/MEK inhibitors, or interferon?", fu:["Ipilimumab/nivolumab/pembrolizumab → anterior uveitis, panuveitis, VKH-like syndrome, retinal vasculitis; may need oncology MDT before stopping","Etanercept in particular → paradoxical uveitis and sarcoid-like granulomatous disease; anti-TNF monoclonals treat uveitis, etanercept does not","MEK inhibitors → serous retinal detachments (MEKAR) that mimic VKH","Interferon-α → retinopathy with cotton-wool spots and haemorrhages"],
+    exam:["Skin (vitiligo with checkpoint-related VKH-like disease)","Hearing"],
+    eye:["Checkpoint VKH-like: bilateral serous RDs, poliosis, without the usual VKH prodrome"],
+    dx:["drug","VKH","sarcoid"], tests:["Timeline documented; discuss with oncology/rheumatology","OCT for serous fluid"]},
+   {q:"Recent vaccination, intravesical BCG, topical eye drops, or any new medicine at all?", fu:["Uveitis within days–weeks of a vaccine (influenza, HPV, BCG, COVID) is described but rare — a diagnosis of exclusion","Intravesical BCG for bladder cancer → reactive arthritis with uveitis, or true BCG infection","Topical brimonidine → granulomatous anterior uveitis; metipranolol and prostaglandin analogues → anterior uveitis and CMO","Also ask about herbal/over-the-counter preparations and anabolic steroids"],
+    exam:["Full drop chart including drops the patient did not think worth mentioning"],
+    eye:["Brimonidine-associated uveitis is granulomatous and resolves on stopping the drop"],
+    dx:["drug","reactive","sarcoid"], tests:["Trial of withdrawal","Do not attribute to a vaccine until the standard mimics are excluded"]},
+   {q:"On an ACE inhibitor, or on steroid right now?", fu:["ACE inhibitors falsely lower serum ACE — a 'normal' ACE means nothing on ramipril/lisinopril","Systemic steroid suppresses ACE, shrinks granulomas, blunts the TST and reduces the yield of biopsy and of lymphoma cytology","If you can safely delay, sample before treating"],
+    exam:["Cushingoid features"],
+    eye:["Steroid also masks granulomatous KP — look for them before you treat"],
+    dx:["sarcoid","lymphoma","TB"], tests:["Interpret ACE with the drug list in hand","Where possible take diagnostic samples BEFORE starting steroid"]}
+ ]},
+
+ {sys:"Past ocular history", note:"Prior surgery, trauma and implants reshape the differential instantly, and create their own diagnoses (Handbook 2.2.4).", items:[
+   {q:"Prior intraocular surgery or intravitreal injection?", fu:["How recent? Acute painful drop in vision days after surgery/injection → endophthalmitis (an emergency, not uveitis)","Chronic low-grade inflammation months later with a white capsular plaque → Propionibacterium (Cutibacterium) acnes","Pseudophakia with hyphaema, raised IOP and recurrent inflammation → UGH syndrome from lens/iris chafe","Retained lens fragment after complicated cataract surgery → lens-induced uveitis"],
+    exam:["Wound integrity, Seidel","Gonioscopy for a retained fragment or haptic position"],
+    eye:["P. acnes: granulomatous KP, capsular plaque, relapsing after each steroid taper","UGH: pigment, transillumination, IOP spikes"],
+    dx:["endophthalmitis","P.acnes","lens-induced"], tests:["Vitreous tap + culture (hold plates 14 days for P. acnes — it is slow-growing and easily reported as 'no growth')","UBM/AS-OCT for haptic position"]},
+   {q:"Penetrating trauma or surgery to the OTHER eye, with inflammation now in both?", fu:["How long ago? (sympathetic ophthalmia ranges from 2 weeks to decades, most within a year)","Was there uveal prolapse or an occult scleral rupture?"],
+    exam:["Look for the old scar; examine BOTH eyes fully dilated"],
+    eye:["Sympathetic ophthalmia: bilateral granulomatous panuveitis, Dalen–Fuchs nodules, serous RDs, disc oedema — indistinguishable from VKH except for the trauma"],
+    dx:["sympathetic","VKH","lens-induced"], tests:["OCT for serous fluid","FFA (multiple pinpoint leaks) / ICGA"]},
+   {q:"High myopia, or previous laser/retinal surgery?", fu:["High myopia + small punched-out chorioretinal lesions with no vitritis → punctate inner choroidopathy (PIC)","Any previous retinal detachment surgery, silicone oil, or cryotherapy?"],
+    exam:["Refraction, axial length"],
+    eye:["PIC: small yellow-white inner choroidal spots, CNV is the sight-threatening complication"],
+    dx:["PIC","POHS","serpiginous"], tests:["OCT + OCT-A for CNV","FAF"]},
+   {q:"Reduced vision or a known scar in the eye from before?", fu:["Any old pigmented chorioretinal scar? (toxoplasma reactivates at the edge of a scar)","Amblyopia, or genuinely acquired loss?"],
+    exam:["Careful peripheral retinal examination of both eyes"],
+    eye:["Satellite lesion adjacent to a pigmented scar — 'headlight in the fog' — is toxoplasmosis until proven otherwise"],
+    dx:["toxoplasma","POHS","TB"], tests:["Toxoplasma IgG (a negative IgG makes it very unlikely)","Aqueous PCR / Goldmann–Witmer if atypical"]}
+ ]},
+
+ {sys:"Past medical history", note:"An existing systemic diagnosis can end the work-up before it starts — or be a red herring (Handbook 2.2.5; Wills 12.1).", items:[
+   {q:"Known systemic diagnosis already? (AS, IBD, psoriasis, sarcoid, MS, Behçet, RA, SLE)", fu:["Is the uveitis pattern actually consistent with the known disease, or is it something new?","On immunosuppression? — may mask infective signs and give an atypical picture","If already-diagnosed sarcoid or a known uveitogenic drug fits, further work-up may be unnecessary (Wills 12.1)","Beware anchoring: a known sarcoid patient can still get syphilis or lymphoma"],
+    exam:["Directed to the known disease"],
+    eye:["Maps to the known disease pattern — mismatch is the warning sign"],
+    dx:["HLA-B27","IBD","sarcoid","MS","Behçet","SLE","RA"], tests:["Confirm the original diagnosis was actually secured","Still screen for syphilis and TB — they mimic anything"]},
+   {q:"Diabetes, hypertension, or renal disease?", fu:["Diabetic retinopathy and hypertensive retinopathy are masquerades for retinal vasculitis","Renal impairment matters for contrast imaging and for NSAID/methotrexate choice","Diabetes also raises serum ACE, a false-positive trap for sarcoid"],
+    exam:["BP, urinalysis, HbA1c"],
+    eye:["Microaneurysms, hard exudate and dot-blot haemorrhages are not uveitis"],
+    dx:["sarcoid","TINU"], tests:["U&amp;E/creatinine before immunosuppression","Interpret ACE with diabetes in mind"]},
+   {q:"Any cancer, chemotherapy or radiotherapy, past or present?", fu:["Which cancer, when, and is it in remission?","Melanoma or small-cell lung cancer + rapid photoreceptor loss → paraneoplastic retinopathy (MAR/CAR)","Any history of lymphoma, or immunosuppression predisposing to it?"],
+    exam:["Skin survey, nodes, chest"],
+    eye:["Choroidal metastasis, paraneoplastic retinopathy and lymphoma all masquerade as uveitis"],
+    dx:["lymphoma","AIR"], tests:["ERG","Antiretinal antibody testing (interpret cautiously — found in up to 62% of normal sera)","Imaging for primary/metastatic disease"]},
+   {q:"Tuberculosis — past infection, treatment, or a household contact?", fu:["Ever treated for TB, and did you complete the course?","Household or occupational contact? Prison, shelter or healthcare exposure?","BCG-vaccinated? (matters for interpreting a TST, not an IGRA)"],
+    exam:["BCG scar, chest"],
+    eye:["Ocular TB: broad tent-shaped PAS, serpiginous-like choroiditis, occlusive periphlebitis, choroidal granuloma"],
+    dx:["TB"], tests:["IGRA first-line in low-prevalence settings; consider adding TST — in OCULAR TB, TST may be MORE sensitive than IGRA","CXR, then chest CT if suspicion persists"]},
+   {q:"Sexually transmitted infection, HIV, or hepatitis — ever tested?", fu:["Any previous syphilis, and was it fully treated? (treponemal tests stay positive for life — that does not mean current disease)","HIV status and most recent CD4 count?","Hepatitis B/C status — matters before immunosuppression as much as for diagnosis"],
+    exam:["Skin, palms and soles, mucosa, nodes"],
+    eye:["Syphilis mimics every uveitis pattern; CMV retinitis appears below CD4 ~50"],
+    dx:["syphilis","HIV","CMV","TB"], tests:["Treponemal test (reverse-sequence) + quantitative RPR","HIV test — order it in EVERY case of ocular syphilis (co-infection is common)","HBV/HCV screen before immunosuppression"]}
+ ]},
+
+ {sys:"Social & exposure history", note:"Occupation, pets, diet, water and sexual history unlock the infective causes. These items follow the Foster/Tessler patient questionnaire directly (Foster 2e Appendix; Handbook 2.2.2).", items:[
+   {q:"Have you lived outside this country, or travelled abroad?", fu:["Where, and for how long — residence matters far more than a two-week holiday","Rural or urban? Any illness while away?","Match the exposure map: TB (India, Africa, SE Asia), toxoplasma (Brazil, France), histoplasma (Ohio/Mississippi valley), Lyme (NE USA, forested Europe), Chikungunya/dengue/West Nile, onchocerciasis (West Africa), leprosy"],
+    exam:["Skin (hypopigmented anaesthetic patches — leprosy), scars"],
+    eye:["Geography changes which infective diagnosis is even plausible"],
+    dx:["TB","toxoplasma","POHS","Lyme","leprosy","brucella"], tests:["Only order geographically-plausible serology — testing for rare exotic disease with low pre-test probability generates false positives"]},
+   {q:"Do you own, or have you owned, a dog?", fu:["Puppies especially — Toxocara canis eggs from faeces-contaminated soil","Any pica / soil-eating in childhood?","Also ask about fleas (Bartonella)"],
+    exam:["Nodes"],
+    eye:["Toxocara: unilateral peripheral or posterior-pole granuloma with a tractional band, chronic endophthalmitis picture in a child"],
+    dx:["toxocara","Bartonella"], tests:["Toxocara ELISA (serum); consider Goldmann–Witmer coefficient on aqueous"]},
+   {q:"Do you own, or have you owned, a cat?", fu:["Kittens especially — Bartonella henselae (cat-scratch) and Toxoplasma oocysts from litter","Any scratch or bite followed by fever and swollen glands?","Who changes the litter tray, particularly in pregnancy?"],
+    exam:["Regional lymphadenopathy, scratch marks"],
+    eye:["Cat-scratch: neuroretinitis with a macular star and disc swelling","Toxoplasma: focal necrotising retinochoroiditis"],
+    dx:["Bartonella","toxoplasma"], tests:["Bartonella henselae IgG/IgM","Toxoplasma IgG/IgM"]},
+   {q:"Do you eat raw or undercooked meat, uncooked sausage, or unpasteurised dairy?", fu:["Rare steak, cured/uncooked sausage, raw shellfish?","Unpasteurised milk or cheese → brucellosis (also abattoir/vet/farm work)","Raw freshwater fish → diphyllobothrium; undercooked pork → cysticercosis"],
+    exam:["Temperature, spine tenderness (brucella spondylitis)"],
+    eye:["Toxoplasma retinochoroiditis; brucellosis can cause any uveitis pattern with sacroiliitis and fever"],
+    dx:["toxoplasma","brucella"], tests:["Toxoplasma IgG/IgM","Brucella serology only with a compatible exposure and fever"]},
+   {q:"Any exposure to sick animals, farms, or animal birthing?", fu:["Sheep/cattle lambing or calving → Coxiella (Q fever), brucella, leptospirosis","Bird/bat droppings or caves → histoplasmosis, cryptococcus","Rodents, or work in sewers/waterways → leptospirosis"],
+    exam:["Jaundice, conjunctival suffusion (leptospirosis)"],
+    eye:["Leptospirosis: hypopyon anterior uveitis or panuveitis weeks after the acute illness, often in outbreak settings"],
+    dx:["leptospirosis","brucella","POHS"], tests:["Leptospira / Coxiella serology only if the exposure and illness fit"]},
+   {q:"Do you drink untreated stream, well or lake water?", fu:["Camping, hiking, rural well supply?","Any diarrhoeal illness afterwards?","Untreated water is a route for leptospira, toxoplasma oocysts and giardia"],
+    exam:["General"],
+    eye:["No specific sign — this is an exposure question that redirects the infective panel"],
+    dx:["toxoplasma","leptospirosis"], tests:["Directed serology only"]},
+   {q:"Do you smoke — and how much alcohol do you drink?", fu:["Pack-years; smoking is strongly associated with intermediate uveitis and with CNV in POHS, and worsens Behçet","Alcohol units per day/week — relevant to liver enzymes, methotrexate safety and to nutritional/thiamine issues","Any recreational drug use, including inhaled or snorted (levamisole-contaminated cocaine → ANCA-positive vasculitis)?"],
+    exam:["Nasal septum (cocaine-induced midline destruction mimics GPA)"],
+    eye:["Smoking is an independent risk factor for uveitis severity and for CNV"],
+    dx:["drug","GPA"], tests:["LFTs before methotrexate","ANCA can be positive in levamisole/cocaine users — do not over-read it"]},
+   {q:"Have you ever injected drugs?", fu:["Current or past; shared equipment?","Fever, back pain, or a new murmur? → endogenous endophthalmitis, right-sided endocarditis","Also raises HIV, HBV, HCV risk"],
+    exam:["Injection sites, murmur, temperature, splinter haemorrhages"],
+    eye:["Endogenous endophthalmitis: focal chorioretinal infiltrates with vitritis, often Candida (fluffy 'string of pearls') or Staph aureus"],
+    dx:["endophthalmitis","candida","HIV","syphilis"], tests:["Blood cultures ×3, echocardiogram","Vitreous tap for culture","HIV, HBV, HCV serology"]},
+   {q:"Sexual history — partners, orientation, and safer-sex practice?", fu:["Ask it plainly and without judgement; frame it as routine for everyone with uveitis","New or multiple partners, men who have sex with men, transactional sex, or a partner with a known STI?","Any genital ulcer, rash on palms and soles, or hair loss in the last year? (secondary syphilis)","Offer a full sexual health screen rather than syphilis serology alone"],
+    exam:["Skin including palms/soles, mucosa, genital examination, nodes"],
+    eye:["Ocular syphilis: any pattern, but placoid posterior chorioretinitis is near-pathognomonic","HIV: CMV retinitis, HIV retinopathy, immune recovery uveitis"],
+    dx:["syphilis","HIV","HLA-B27","reactive","Behçet"], tests:["Treponemal test + quantitative RPR","HIV test in every case of ocular syphilis","Chlamydia/gonorrhoea NAAT; consider sexual-health clinic referral"]},
+   {q:"Have you ever had a blood transfusion, tattoo or piercing?", fu:["Transfusion abroad or before viral screening was routine → HIV, HCV, HTLV-1, CMV exposure","Tattoos: both a hepatitis risk AND a site for sarcoid granulomas (a tattoo that becomes raised and itchy is a biopsy target)","HTLV-1 (Caribbean, Japan, West Africa) causes an intermediate uveitis with vitreous opacities"],
+    exam:["Inspect tattoos for infiltration/nodularity — an easy, high-yield biopsy site for sarcoid"],
+    eye:["HTLV-1 uveitis: bilateral vitreous opacities, often with hyperthyroidism"],
+    dx:["HIV","HTLV1","sarcoid"], tests:["Hepatitis B/C and HIV serology","Biopsy an infiltrated tattoo or skin lesion if sarcoid is suspected — far easier than a lung biopsy"]},
+   {q:"Any contraceptive pill, hormone therapy, or recent pregnancy?", fu:["From the Foster questionnaire — oral contraceptives are associated with thrombotic events and with retinal vaso-occlusion","Recent delivery? (postpartum flare is common in Behçet and VKH; JIA and many uveitides flare postpartum)","Planning conception? — this changes drug selection entirely"],
+    exam:["BP"],
+    eye:["Retinal vein/artery occlusion in a young woman on the pill can masquerade as vasculitis"],
+    dx:["APS","Behçet","SLE"], tests:["Thrombophilia/antiphospholipid screen if vaso-occlusive","Pregnancy test before teratogenic immunosuppression"]}
+ ]},
+
+ {sys:"Family history", note:"Taken from the Foster/Tessler questionnaire — asked about parents, grandparents, children, siblings, aunts and uncles. HLA-linked disease and a few specifics cluster in families.", items:[
+   {q:"Family history of arthritis, rheumatism, back disease, psoriasis or IBD?", fu:["First-degree relative with ankylosing spondylitis, psoriasis, Crohn's or colitis? (HLA-B27 spectrum)","Anyone diagnosed young, or with 'bad back' from their twenties?","Family autoimmune disease of any kind — thyroid, coeliac, type 1 diabetes?"],
+    exam:["Nail pitting, scalp/natal cleft psoriasis in the patient"],
+    eye:["Supports the HLA-B27 / spondyloarthropathy group"],
+    dx:["HLA-B27","IBD","JIA"], tests:["HLA-B27","Sacroiliac imaging; rheumatology referral"]},
+   {q:"Family history of tuberculosis, syphilis, or Lyme disease?", fu:["Household TB contact — the highest-yield single TB question","Congenital syphilis in a parent (interstitial keratitis, Hutchinson teeth, deafness)?","Shared outdoor/endemic exposure for Lyme"],
+    exam:["Interstitial keratitis, ghost vessels, dental changes"],
+    eye:["Congenital syphilis: salt-and-pepper fundus, interstitial keratitis with ghost vessels"],
+    dx:["TB","syphilis","Lyme"], tests:["IGRA ± TST","Treponemal serology","Lyme serology only if endemic exposure — its PPV alone is poor"]},
+   {q:"Family history of sickle cell disease or trait, or any blood disorder?", fu:["Ethnicity — African, Caribbean, Mediterranean, Middle Eastern, Indian?","Any painful crises, or family members on hydroxyurea?","Sickle retinopathy masquerades as vasculitis"],
+    exam:["Conjunctival 'comma' vessels, splenomegaly"],
+    eye:["Peripheral vaso-occlusion, sea-fan neovascularisation, salmon-patch haemorrhage"],
+    dx:["sickle"], tests:["Haemoglobin electrophoresis / sickle solubility test","Widefield FFA for peripheral non-perfusion"]},
+   {q:"Family history of eye inflammation, blindness, or retinal degeneration?", fu:["Anyone else with uveitis, or with a retinal dystrophy?","Night blindness or tunnel vision in relatives? (RP masquerade)","Consanguinity? (recessive disease, and Behçet clustering)"],
+    exam:["Consider examining a relative if a dystrophy is suspected"],
+    eye:["A family pedigree of night blindness reframes 'chronic uveitis with CMO' as retinitis pigmentosa"],
+    dx:["RP","Behçet","AIR","birdshot"], tests:["ERG","Genetic testing / genetic counselling"]},
+   {q:"Family history of cancer, diabetes, allergies, or of kidney, lung, skin, bowel or nervous-system disease?", fu:["These are the Foster questionnaire's family-history items — take them as a broad net rather than a specific pointer","Family sarcoid (2–5× risk in first-degree relatives, higher in African-American families)?","Family MS or demyelinating disease? Family lymphoma?","Family kidney disease with deafness → Alport (anterior lenticonus, dot-and-fleck retinopathy)"],
+    exam:["Directed by whatever is disclosed"],
+    eye:["Non-specific individually; the pattern across a family is what matters"],
+    dx:["sarcoid","MS","lymphoma","SLE","IBD"], tests:["Document the pedigree; no reflex testing from family history alone"]}
+ ]}
+];
+
+/* ============ REVIEW OF SYSTEMS (branching) ============ */
+/* Tessler survey (Foster 2e pp.117-130) + Oxford Table 11.7 + Handbook Table 2.2 */
+const ROS=[
+ {sys:"General / constitutional", note:"Constitutional symptoms push toward infection, sarcoid, lymphoma or Behçet — never dismiss them as 'just feeling run down'.", items:[
+   {q:"Fevers, night sweats or persistent chills?", fu:["Drenching sweats that soak the bedding → TB, lymphoma","Pattern — nightly, cyclical, or continuous?","Travel, TB contact, or immunosuppression?","Any lump you can feel yourself?"], exam:["Temperature","Palpate cervical/axillary/inguinal nodes","Hepatosplenomegaly"], eye:["Granulomatous KP, choroidal granuloma (TB, sarcoid)","Vitreous cells 'out of proportion' → lymphoma if elderly"], dx:["TB","sarcoid","lymphoma","Behçet","syphilis","VKH","brucella"], tests:["FBC+diff, ESR/CRP, LDH","CXR","IGRA ± TST","Blood cultures if febrile"]},
+   {q:"Unexplained weight loss, poor appetite or profound fatigue?", fu:["How much weight, over what time? &gt;10% in 6 months is significant","Cough, bowel change or lymph nodes with it?","Fatigue out of proportion — sarcoid fatigue is often the dominant symptom"], exam:["Weigh; wasting","Lymphadenopathy","Abdominal masses"], eye:["Chronic panuveitis, choroidal lesions"], dx:["TB","lymphoma","sarcoid","syphilis","HIV"], tests:["FBC, ESR/CRP","CXR ± chest CT","Serum ACE and lysozyme","HIV serology"]},
+   {q:"Swollen glands (neck / armpit / groin), or swollen salivary/tear glands?", fu:["Painful or painless? Since when? Rubbery and fixed, or tender and mobile?","Fever/night sweats with it?","Dry mouth and dry eyes with parotid swelling → sarcoid (Heerfordt) or Sjögren"], exam:["Full node survey","Parotid and lacrimal gland palpation (sarcoid)","Spleen"], eye:["Bilateral granulomatous uveitis, periphlebitis; lacrimal gland enlargement is a biopsy target"], dx:["sarcoid","lymphoma","TB","HIV","syphilis","toxoplasma","Bartonella"], tests:["Serum ACE, lysozyme, calcium","CXR / chest CT","Lacrimal gland or node biopsy — far higher yield than blind conjunctival biopsy","HIV serology"]}
+ ]},
+ {sys:"Musculoskeletal", note:"The highest-yield ROS system — inflammatory back pain and arthritis drive the HLA-B27 and JIA groups. Distinguish inflammatory from mechanical pain explicitly.", items:[
+   {q:"Low-back pain or stiffness worse in the MORNING, easing with movement?", fu:["Stiffness &gt;30 min on waking? Does it wake you in the second half of the night?","Better with exercise, WORSE with rest — that is the inflammatory signature (mechanical pain does the opposite)","Onset before age 40? Alternating buttock pain?","Family history of AS, psoriasis or IBD?","Does it respond dramatically to NSAIDs?"], exam:["Lumbar flexion / modified Schober's test","Sacroiliac tenderness / FABER","Chest expansion (&lt;5 cm is abnormal)","Occiput-to-wall distance"], eye:["Acute, unilateral, recurrent, non-granulomatous AAU; fibrin/hypopyon; alternating eyes between attacks"], dx:["HLA-B27","IBD","reactive","sarcoid"], tests:["HLA-B27","MRI sacroiliac joints (plain films miss early disease)","Rheumatology referral"]},
+   {q:"Painful, swollen or stiff peripheral joints?", fu:["Symmetrical small joints (RA) vs asymmetrical large joints/lower limb (spondyloarthropathy)?","How many joints, and for how long?","Child — persistent joint swelling ≥6 weeks? (JIA — and the eye may be silent)","Any joint destruction, deformity or nodules?"], exam:["Joint survey for synovitis and effusion","Nail changes (pitting, onycholysis)","Hidden psoriasis — scalp, umbilicus, natal cleft, behind the ears"], eye:["Child + ANA+ → chronic AU, band keratopathy, synechiae (JIA)","RA causes scleritis and PUK rather than uveitis"], dx:["JIA","HLA-B27","RA","sarcoid","Behçet","syphilis","SLE"], tests:["ANA (Hep-2), RF, anti-CCP","HLA-B27","X-rays of affected joints"]},
+   {q:"Heel pain, Achilles pain, or a whole swollen finger/toe (enthesitis or dactylitis)?", fu:["Pain at the insertion of the Achilles or plantar fascia, worst on first steps in the morning?","'Sausage digit' — the whole digit swollen rather than just the joint?","Chest wall or rib pain at the costochondral junctions?"], exam:["Palpate Achilles insertion, plantar fascia, iliac crests, tibial tuberosity","Inspect every digit"], eye:["Acute anterior uveitis of the HLA-B27 spectrum, often with a fibrinous exudate"], dx:["HLA-B27","reactive","IBD"], tests:["HLA-B27","Ultrasound of the enthesis if uncertain","Rheumatology referral"]},
+   {q:"Muscle pain, weakness, or difficulty rising from a chair / climbing stairs?", fu:["Proximal weakness (myositis, sarcoid myopathy, steroid myopathy)?","Muscle tenderness or wasting?","Any rash over knuckles or eyelids? (dermatomyositis — heliotrope rash)"], exam:["Proximal power testing","Skin over knuckles, eyelids, chest"], eye:["Not a classic uveitis association — but sarcoid myopathy supports systemic sarcoid, and steroid myopathy is iatrogenic"], dx:["sarcoid","SLE","GPA"], tests:["CK","Consider EMG / muscle MRI","Muscle biopsy can yield sarcoid granulomas"]}
+ ]},
+ {sys:"Skin, hair & nails", note:"Rashes localise fast: erythema nodosum, vesicles, vitiligo, poliosis, lupus pernio and pathergy each point somewhere specific — and skin is the easiest tissue to biopsy.", items:[
+   {q:"Tender red lumps on the shins (erythema nodosum)?", fu:["Recent sore throat, cough, bowel upset, or a new drug?","Joint pains and fever with it? (Löfgren syndrome = erythema nodosum + bilateral hilar nodes + arthritis + fever — an acute, good-prognosis sarcoid)","Do they leave a bruise-like mark as they fade?"], exam:["Inspect both shins","Chest and nodes","Ask about bowels"], eye:["Bilateral granulomatous uveitis, periphlebitis (sarcoid); or Behçet/IBD/TB"], dx:["sarcoid","Behçet","TB","IBD","reactive"], tests:["CXR (looking for bilateral hilar lymphadenopathy)","Serum ACE, lysozyme, calcium","IGRA","Skin biopsy of a persistent lesion"]},
+   {q:"Violaceous, indurated plaques on the nose, cheeks or ears (lupus pernio), or any new lump in a scar or tattoo?", fu:["Chronic disfiguring purple plaques on the nose → lupus pernio, a marker of chronic fibrotic sarcoid","Old scars or tattoos becoming raised, red and itchy? — classic sarcoid behaviour and an ideal biopsy site","Any nasal obstruction with it? (lupus pernio often has upper-airway disease)"], exam:["Face, ears, nose","Inspect every scar and tattoo carefully"], eye:["Chronic granulomatous panuveitis; lupus pernio is associated with chronic, more resistant disease"], dx:["sarcoid","TB","leprosy"], tests:["Skin/scar/tattoo biopsy — the highest-yield, least-invasive route to a tissue diagnosis of sarcoid","CXR/chest CT, ACE, lysozyme"]},
+   {q:"Vesicular rash, cold sores or shingles (especially around the eye)?", fu:["Dermatomal distribution? Lesion on the tip or side of the nose (Hutchinson's sign — nasociliary involvement)?","Recurrent cold sores, or genital blisters?","Was it painful before the rash appeared?"], exam:["Map the dermatome","Corneal sensation BEFORE instilling drops (reduced in herpetic disease)"], eye:["Unilateral, raised IOP, sectoral iris atrophy, stellate or granulomatous KP; VZV pseudodendrites; ARN posteriorly"], dx:["HSV","VZV","ARN"], tests:["Usually clinical","Aqueous PCR (HSV/VZV/CMV) if atypical, hypertensive, or the diagnosis changes management"]},
+   {q:"Psoriasis — scaly plaques, scalp scale, or pitted/lifting nails?", fu:["Where — elbows, knees, scalp, natal cleft, umbilicus, behind the ears? (patients often deny 'psoriasis' but have it in hidden sites)","Nail pitting, onycholysis, oil-drop sign?","Joint pain or dactylitis with it?"], exam:["Look in the hidden sites yourself — do not rely on the patient's answer","All twenty nails"], eye:["HLA-B27-linked acute anterior uveitis; psoriatic uveitis can be bilateral and more chronic than classic B27 AAU"], dx:["HLA-B27","reactive","IBD"], tests:["HLA-B27","Dermatology/rheumatology referral"]},
+   {q:"White patches of skin or hair, whitened lashes, or hair loss (vitiligo / poliosis / alopecia)?", fu:["Preceded by headache, neck stiffness, tinnitus or hearing change? (VKH prodrome)","Symmetrical depigmentation, particularly perilimbal (Sugiura sign) or over the head and neck?","Any prior penetrating eye trauma or surgery? (sympathetic ophthalmia is the clinical twin of VKH)","Recent checkpoint-inhibitor therapy? (drug-induced VKH-like disease)"], exam:["Skin and hair for vitiligo, poliosis, alopecia","Hearing, meningism"], eye:["Bilateral granulomatous panuveitis, multifocal serous RDs, disc oedema, later sunset-glow fundus and Dalen–Fuchs nodules"], dx:["VKH","sympathetic","syphilis","drug"], tests:["OCT (multilobular serous fluid, choroidal thickening on EDI-OCT)","FFA — multiple pinpoint leaks with pooling; ICGA — hypofluorescent dark dots","Audiometry; LP for pleocytosis only if the diagnosis is genuinely uncertain (FFA often suffices)"]},
+   {q:"Photosensitive/butterfly rash, mouth ulcers, hair loss, or painfully cold white-then-blue fingers (Raynaud's)?", fu:["Rash in sun-exposed distribution, sparing the nasolabial folds?","Discoid scarring lesions?","Recurrent miscarriage or clots? (antiphospholipid syndrome)","Dry eyes and dry mouth? (secondary Sjögren)"], exam:["Malar and discoid rash","Nailfold capillaroscopy / digital vasculitis","Oral mucosa"], eye:["SLE causes cotton-wool spots, occlusive retinal vasculitis, scleritis and rarely ischaemic choroidopathy more often than true uveitis"], dx:["SLE","APS","scleroderma"], tests:["ANA, then anti-dsDNA, anti-Sm, ENA, C3/C4","Antiphospholipid antibodies (lupus anticoagulant, anti-cardiolipin, anti-β2GPI)","Urinalysis for casts/protein"]},
+   {q:"Tight or thickened skin of the fingers or face, with reflux or difficulty swallowing?", fu:["Sclerodactyly, Raynaud's, telangiectasia, calcinosis (CREST)?","Skin tightening progressing proximally?","Shortness of breath (interstitial lung disease)?"], exam:["Skin thickening, oral aperture, nailfold capillaries"], eye:["Scleroderma → keratoconjunctivitis sicca, lid tightening, occasionally scleritis; true uveitis is uncommon"], dx:["scleroderma","SLE"], tests:["ANA, anti-Scl-70, anti-centromere, anti-RNA-pol III","Rheumatology referral"]},
+   {q:"A skin lesion where blood was taken or skin was pricked (pathergy)?", fu:["Did a pustule appear at a needle site 24–48 h later?","Acneiform or pseudofolliculitis lesions on the trunk?","Pathergy is a Behçet criterion — positivity varies hugely by population (high in Turkey/Middle East, low in Northern Europe)"], exam:["Inspect venepuncture sites","Formal pathergy test: intradermal 20G needle prick, read at 48 h"], eye:["Explosive recurrent bilateral panuveitis with a mobile hypopyon and occlusive retinal vasculitis"], dx:["Behçet"], tests:["Pathergy test where locally used","HLA-B51 (supportive only — not in the diagnostic criteria)","FFA for occlusive vasculitis and fern-like leakage"]},
+   {q:"Hypopigmented or anaesthetic skin patches, or thickened nerves?", fu:["Numb patch that does not sweat? Thickened ulnar or greater auricular nerve?","Time lived in a leprosy-endemic country?","Any painless burns or ulcers on the hands/feet?"], exam:["Test sensation over the patch","Palpate peripheral nerves","Corneal sensation, lagophthalmos"], eye:["Leprosy: chronic low-grade iridocyclitis, iris pearls, corneal hypoaesthesia, madarosis"], dx:["leprosy","TB","sarcoid"], tests:["Slit-skin smear / skin biopsy","Refer to infectious diseases"]}
+ ]},
+ {sys:"Mucous membranes (mouth & genitals)", note:"Recurrent oral + genital ulcers with a hypopyon uveitis is Behçet until proven otherwise. Quantify the ulcers — 'a few now and then' is not the same as three crops a year.", items:[
+   {q:"Recurrent mouth ulcers (3 or more episodes in 12 months)?", fu:["How many per year? Single or in crops? How long do they take to heal, and do they scar?","Genital ulcers or skin lesions with them?","Pathergy — a pustule where the skin has been pricked?","Any coeliac symptoms, iron/B12/folate deficiency, or IBD? (all cause aphthae too)"], exam:["Oral mucosa including buccal, palate, tongue","Genital scars","Skin pustules"], eye:["Explosive recurrent bilateral non-granulomatous panuveitis, MOBILE and often painless hypopyon, occlusive retinal vasculitis with capillary drop-out"], dx:["Behçet","IBD","HLA-B27","HSV","SLE"], tests:["HLA-B51 (supportive, not diagnostic)","FFA for occlusive vasculitis / fern-leak","FBC, ferritin, B12, folate, coeliac serology to exclude simple aphthosis"]},
+   {q:"Genital sores or ulcers?", fu:["Recurrent and painful, scarring (Behçet) vs a single painless chancre (primary syphilis)?","Vesicles that recur in the same place (HSV)?","Sexual history and STI risk?"], exam:["Genital examination and scars","Regional nodes","Palms and soles for a copper-coloured rash → secondary syphilis"], eye:["Any pattern — syphilis mimics everything; Behçet as above"], dx:["Behçet","syphilis","HSV","HLA-B27"], tests:["Treponemal serology + quantitative RPR; HIV test","HLA-B51","Swab/NAAT of an active lesion"]},
+   {q:"Dry eyes and dry mouth, or difficulty swallowing dry food?", fu:["Needing water to swallow dry food, or fluid at the bedside?","Parotid swelling? (Sjögren or sarcoid)","Any connective tissue disease diagnosed?"], exam:["Schirmer, tear break-up, ocular surface staining","Parotid palpation"], eye:["Sjögren gives severe dry eye, not uveitis — but sarcoid gives both dry eye AND uveitis, which is the discriminator"], dx:["sarcoid","SLE","scleroderma"], tests:["Anti-Ro (SSA) / anti-La (SSB), ANA","Serum ACE, lysozyme; consider lacrimal or minor salivary gland biopsy"]}
+ ]},
+ {sys:"Gastrointestinal", note:"Chronic diarrhoea + uveitis = IBD until proven otherwise; ask specifically about blood, mucus, nocturnal symptoms and weight.", items:[
+   {q:"Chronic or recurrent diarrhoea, or blood/mucus in the stool?", fu:["How long? Weight loss? Nocturnal diarrhoea (organic, not functional)?","Urgency, tenesmus, or waking to open the bowels?","Mouth ulcers, joint pain, erythema nodosum with it?","Any perianal pain, fissure, fistula or abscess? (Crohn's)"], exam:["Abdominal tenderness/masses","Perianal inspection","Weight and BMI"], eye:["Anterior uveitis (HLA-B27-linked), episcleritis, scleritis; uveitis in IBD is more often bilateral, chronic and posterior than in isolated AS"], dx:["IBD","Behçet","HLA-B27","Whipple"], tests:["Faecal calprotectin","FBC, ferritin, CRP","Ileocolonoscopy with biopsy","HLA-B27"]},
+   {q:"Abdominal pain, bloating, or fatty/floating stools with weight loss?", fu:["Malabsorption picture — steatorrhoea, nutritional deficiency?","Middle-aged man with arthralgia, weight loss, diarrhoea and neurological signs? → Whipple's disease","Any coeliac symptoms or family history?"], exam:["Abdominal examination","Neurological screen (oculomasticatory myorhythmia is pathognomonic for Whipple's)","Nodes"], eye:["Whipple's: chronic vitritis, retinal haemorrhages, uveitis unresponsive to steroid, with CNS involvement"], dx:["Whipple","IBD","lymphoma"], tests:["Coeliac serology","Duodenal biopsy with PAS staining and Tropheryma whipplei PCR","Vitreous PCR for T. whipplei if suspected"]},
+   {q:"Jaundice, known liver disease, or abnormal liver tests?", fu:["Hepatitis B or C? (matters both as a cause of vasculitis/cryoglobulinaemia and before immunosuppression)","Alcohol intake?","Hepatic granulomas are common in sarcoid and often silent"], exam:["Jaundice, hepatomegaly, stigmata of chronic liver disease"], eye:["Hepatitis C with cryoglobulinaemia can give retinal vasculitis; interferon treatment causes retinopathy"], dx:["sarcoid","TB","syphilis"], tests:["LFTs — raised ALP/GGT is one of the IWOS supportive investigations for sarcoid","Hepatitis B and C serology BEFORE any immunosuppression"]}
+ ]},
+ {sys:"Genitourinary & renal", note:"Haematuria/nephritis → GPA, TINU, SLE; dysuria/discharge → reactive arthritis and STIs. Urinalysis is cheap and repeatedly under-ordered.", items:[
+   {q:"Blood in the urine, frothy urine, or known kidney problems?", fu:["Recent sinus or respiratory disease, nasal crusting? (GPA)","Young patient with recent systemic illness, fatigue, weight loss and bilateral anterior uveitis? (TINU)","Rash, joint pains, hair loss? (lupus nephritis)","Any renal stones, or symptoms of high calcium? (sarcoid)"], exam:["Blood pressure","Bedside urinalysis — do it yourself","Sinus and respiratory examination","Peripheral oedema"], eye:["Bilateral sudden anterior uveitis in a young person (TINU); scleritis, PUK, orbital mass or retinal vasculitis (GPA)"], dx:["TINU","GPA","SLE","TB","syphilis","sarcoid"], tests:["Urinalysis + microscopy for casts","URINE β2-MICROGLOBULIN + serum creatinine — combined elevation has ~100% PPV for TINU","ANCA (PR3/MPO), ANA/dsDNA, C3/C4","Serum and 24-h urinary calcium"]},
+   {q:"Painful urination, or urethral/vaginal discharge?", fu:["Recent gastrointestinal infection (Salmonella, Shigella, Campylobacter, Yersinia) or an STI 1–4 weeks before? (reactive arthritis)","The triad: urethritis + arthritis + conjunctivitis/uveitis","New or multiple sexual partners?"], exam:["Genital examination","Joints","Skin — keratoderma blennorrhagica on soles, circinate balanitis"], eye:["Conjunctivitis early; acute anterior uveitis later, HLA-B27-linked"], dx:["reactive","HLA-B27","syphilis","TB","Behçet"], tests:["HLA-B27","Chlamydia/gonorrhoea NAAT; stool culture if post-dysenteric","Treponemal serology"]},
+   {q:"Testicular pain, swelling, or epididymitis?", fu:["Recurrent? (Behçet — epididymitis is part of the disease)","With mouth/genital ulcers or joint pains?","Any TB risk? (genitourinary TB)"], exam:["Scrotal examination","Oral and genital mucosa","Joints"], eye:["Behçet: occlusive retinal vasculitis, mobile hypopyon; HLA-B27: acute anterior uveitis"], dx:["Behçet","HLA-B27","TB"], tests:["HLA-B51","Scrotal ultrasound","Early-morning urines for TB if suspected"]}
+ ]},
+ {sys:"Respiratory", note:"Cough and breathlessness are the sarcoid and TB gateway — pair with a chest film in every uveitis patient, and remember that a normal film does NOT clear either.", items:[
+   {q:"Persistent cough, breathlessness or wheeze?", fu:["Dry vs productive? Longer than 3 weeks?","Breathless on exertion — how far can you walk on the flat?","Weight loss, night sweats, haemoptysis? (TB)","Asthma with sinus disease and eosinophilia? (EGPA)"], exam:["Chest auscultation (sarcoid chests are often strikingly normal)","Nodes, parotid","Skin — erythema nodosum, lupus pernio","Clubbing"], eye:["Bilateral granulomatous uveitis, mutton-fat KP, iris and choroidal granulomata (sarcoid); choroidal tubercle (TB)"], dx:["sarcoid","TB","GPA","HIV","toxocara"], tests:["CXR — bilateral hilar lymphadenopathy is the classic finding","Chest CT if CXR normal but suspicion persists (more sensitive and specific, especially in women over 50)","Serum ACE, lysozyme, calcium","IGRA ± TST","Pulmonary function tests with transfer factor"]},
+   {q:"Coughing up blood (haemoptysis)?", fu:["With nasal crusting or epistaxis? (GPA — pulmonary-renal syndrome)","With weight loss and night sweats? (TB)","Any chest pain or pleurisy?"], exam:["Chest","ENT — nasal mucosa and septum","Urinalysis (never skip this in suspected GPA)"], eye:["Scleritis, PUK, orbital inflammation, retinal vasculitis (GPA); choroidal tubercle or granuloma (TB)"], dx:["TB","GPA","SLE","sarcoid"], tests:["CXR + chest CT","ANCA (c-ANCA/PR3)","Sputum for AFB and TB culture ×3","Urinalysis and renal function"]},
+   {q:"Snoring, daytime sleepiness, or chronic sinus congestion?", fu:["Obstructive sleep apnoea matters before starting systemic steroid","Chronic sinusitis with crusting and bleeding → GPA rather than simple rhinitis","Nasal polyps with asthma and eosinophilia → EGPA"], exam:["Nasal mucosa","Neck circumference, BP"], eye:["Sinus disease adjacent to the orbit can present as orbital inflammation or scleritis"], dx:["GPA","sarcoid"], tests:["CT sinuses","ANCA","Sleep study before long-term steroid if indicated"]}
+ ]},
+ {sys:"Cardiovascular", note:"Easy to skip and occasionally life-saving — cardiac sarcoid can present with arrhythmia and sudden death, and Behçet is a thrombotic disease.", items:[
+   {q:"Palpitations, blackouts, or an irregular heartbeat?", fu:["Any syncope, near-syncope or documented arrhythmia?","Family history of sudden cardiac death?","Cardiac sarcoid causes conduction block, ventricular arrhythmia and heart failure, and may be clinically silent until it is not"], exam:["Pulse, blood pressure","Heart sounds, JVP","Signs of heart failure"], eye:["No specific ocular sign — but a uveitis patient with sarcoid needs cardiac screening"], dx:["sarcoid","Behçet"], tests:["ECG in every patient with suspected or confirmed sarcoid","Echocardiogram, Holter monitoring","Cardiac MRI or FDG-PET if screening is abnormal — refer to cardiology"]},
+   {q:"Leg swelling, painful leg, or a previous DVT/PE/stroke?", fu:["Any clot, at any site, at any age?","Recurrent miscarriage? (antiphospholipid syndrome)","Behçet causes venous thrombosis including cerebral venous sinus thrombosis, and pulmonary artery aneurysms","On the contraceptive pill or hormone therapy?"], exam:["Calves","Neurological examination","Fundoscopy for vein occlusion"], eye:["Retinal vein occlusion or occlusive vasculitis in a young patient is not a routine RVO — investigate it"], dx:["Behçet","APS","SLE","sickle"], tests:["Antiphospholipid antibodies, thrombophilia screen","HLA-B51","FFA (widefield) for capillary non-perfusion","Consider CT pulmonary angiography if Behçet with haemoptysis"]},
+   {q:"A known heart murmur, or aortic valve disease?", fu:["Ankylosing spondylitis and relapsing polychondritis both cause aortic regurgitation and conduction defects","Sudden deafness with vertigo plus interstitial keratitis and aortitis → Cogan syndrome","Fever with a new murmur → endocarditis and endogenous endophthalmitis"], exam:["Cardiac auscultation","Peripheral stigmata of endocarditis, Roth spots"], eye:["Cogan: non-syphilitic interstitial keratitis with vestibuloauditory dysfunction — a true ophthalmic emergency for hearing preservation"], dx:["Cogan","HLA-B27","polychondritis","endophthalmitis"], tests:["Echocardiogram","Blood cultures if febrile","Urgent audiology and high-dose steroid if Cogan is suspected"]}
+ ]},
+ {sys:"ENT", note:"Deafness/tinnitus + panuveitis → VKH or sympathetic; earlobe-sparing ear pain → relapsing polychondritis; sinus crusting → GPA.", items:[
+   {q:"New hearing loss, tinnitus or vertigo?", fu:["Headache, neck stiffness and hearing change days before the eye? (VKH prodrome)","Prior eye trauma or surgery? (sympathetic ophthalmia)","Sudden sensorineural loss with interstitial keratitis → Cogan syndrome — treat urgently","Any ototoxic drugs?"], exam:["Gross hearing, Rinne/Weber","Skin and hair (vitiligo, poliosis)","Meningism"], eye:["Bilateral granulomatous panuveitis, serous RD, disc oedema, later sunset-glow (VKH)"], dx:["VKH","sympathetic","Cogan","sarcoid","GPA","syphilis","Lyme"], tests:["Formal audiometry","OCT / FFA / ICGA","Treponemal serology (otosyphilis)","LP for pleocytosis if genuinely uncertain"]},
+   {q:"Painful, floppy or red ear cartilage, or a collapsing nasal bridge?", fu:["Does the pain and redness SPARE the earlobe? (the lobe has no cartilage — this is the discriminating question)","Hoarse voice, stridor, or airway symptoms? (laryngotracheal chondritis is life-threatening)","Joint pains?"], exam:["Pinna — confirm lobule sparing","Nasal bridge","Voice and airway"], eye:["Relapsing polychondritis: scleritis, episcleritis, peripheral keratitis, occasionally uveitis; may overlap with GPA"], dx:["polychondritis","GPA","syphilis"], tests:["ANCA to exclude GPA","Rheumatology/ENT referral urgently if airway involved"]},
+   {q:"Chronic sinus problems, nasal crusting, or recurrent nosebleeds?", fu:["With haemoptysis or haematuria? (GPA)","Any nasal septal perforation? (GPA — but also cocaine use, which mimics it including ANCA positivity)","Loss of smell?"], exam:["Nasal mucosa — crusting, saddle deformity, septal perforation","Chest, urinalysis"], eye:["Orbital mass, scleritis, PUK, nasolacrimal obstruction, retinal vasculitis (GPA)"], dx:["GPA","syphilis","sarcoid","TB"], tests:["c-ANCA / PR3 (and MPO)","CT sinuses and chest","Urinalysis and renal function","ENT biopsy — often low yield but diagnostic when positive"]}
+ ]},
+ {sys:"Neurological", note:"Neuro symptoms with intermediate or posterior uveitis raise MS, neurosarcoid, neuro-Behçet, syphilis and CNS lymphoma — and change both imaging and drug choice (anti-TNF is contraindicated in demyelination).", items:[
+   {q:"Numbness, tingling, weakness or loss of balance?", fu:["Ever had transient painful monocular visual loss with pain on eye movement? (optic neuritis)","Symptoms separated in time AND place?","Heat sensitivity (Uhthoff), electric shock down the spine on neck flexion (Lhermitte)?","Bladder urgency or incontinence?"], exam:["Cranial nerves, power, sensation, reflexes, gait","RAPD, colour vision (red desaturation)","Fundoscopy for periphlebitis"], eye:["Intermediate uveitis / pars planitis with peripheral periphlebitis — up to ~10% of intermediate uveitis patients develop MS"], dx:["MS","sarcoid","Behçet","syphilis","HIV","lymphoma","Lyme"], tests:["MRI brain ± spine with gadolinium — NOT routine for all intermediate uveitis, but indicated if neuro symptoms, and MANDATORY before starting anti-TNF","Neurology referral; consider LP for oligoclonal bands","Treponemal serology"]},
+   {q:"Facial weakness, double vision, or any cranial nerve problem?", fu:["Facial nerve palsy — bilateral or recurrent? (neurosarcoid, Lyme, HIV)","Facial palsy + parotid swelling + uveitis + fever = Heerfordt syndrome (uveoparotid fever, sarcoid)","Double vision — which direction, and is it worse at the end of the day?"], exam:["Full cranial nerve examination","Parotid glands","Skin"], eye:["Sarcoid is the classic cause of a uveitis-plus-cranial-neuropathy picture"], dx:["sarcoid","Lyme","TB","syphilis","lymphoma","GPA"], tests:["Serum ACE, lysozyme, calcium","MRI brain with gadolinium (leptomeningeal enhancement in neurosarcoid)","LP: protein, cells, oligoclonal bands, cytology, VDRL","Lyme serology if endemic exposure"]},
+   {q:"Severe headaches, seizures, confusion or personality change?", fu:["Neck stiffness, photophobia, hearing change? (VKH, meningitis)","Fever, immunosuppression? (infective, including cryptococcus, TB meningitis)","Older patient with vitritis and cognitive change? — CNS lymphoma","Behçet with brainstem symptoms → neuro-Behçet"], exam:["Meningism","Fundoscopy for papilloedema BEFORE lumbar puncture","Cognitive screen"], eye:["Panuveitis with disc oedema and serous RD (VKH); vitritis with subretinal infiltrates (PVRL)"], dx:["lymphoma","VKH","sarcoid","Behçet","SLE","TB","syphilis"], tests:["MRI brain with gadolinium FIRST","LP: cytology, flow cytometry, oligoclonal bands, VDRL, opening pressure","Serum ACE, treponemal serology"]}
+ ]},
+ {sys:"Endocrine & metabolic", note:"Small system, two real traps: hypercalcaemia in sarcoid, and diabetes/thyroid disease as both mimic and comorbidity.", items:[
+   {q:"Excessive thirst, passing lots of urine, constipation, or kidney stones?", fu:["These are the symptoms of hypercalcaemia — present in ~10% of sarcoid, from granulomas making 1,25-dihydroxyvitamin D","Any vitamin D supplements? (they can precipitate hypercalcaemia in sarcoid)","Bone pain, low mood, abdominal pain?"], exam:["Hydration, blood pressure"], eye:["Chronic hypercalcaemia → band keratopathy, which also arises from chronic uveitis itself"], dx:["sarcoid","lymphoma","TB"], tests:["Serum calcium (corrected) and 24-hour urinary calcium — both are IWOS supportive investigations","Vitamin D and PTH","Renal function"]},
+   {q:"Thyroid problems, or unexplained weight/heat/cold intolerance?", fu:["Graves' disease → thyroid eye disease, which is not uveitis but is often confused with orbital inflammation","HTLV-1 uveitis is associated with hyperthyroidism","Any neck swelling or eye bulging?"], exam:["Thyroid palpation, tremor, pulse","Lid retraction, proptosis, restricted ductions"], eye:["Thyroid eye disease: lid retraction, proptosis, restrictive myopathy — a masquerade for orbital/scleral inflammation"], dx:["HTLV1","sarcoid"], tests:["TFTs, TSH-receptor antibodies","Orbital imaging if proptosis"]}
+ ]},
+ {sys:"Haematological", note:"From the patient questionnaire — bruising, bleeding and transfusion history that a standard ROS misses.", items:[
+   {q:"Easy bruising, or easy/frequent bleeding?", fu:["Spontaneous bruises, gum bleeding, heavy periods?","With a photosensitive rash or joint pains? (SLE)","Recurrent clots or miscarriages? (antiphospholipid syndrome)","Any anticoagulant or antiplatelet drug?"], exam:["Skin for petechiae and purpura","Joints, malar rash","Spleen"], eye:["Thrombocytopenia (SLE) → retinal haemorrhages; APS → retinal vaso-occlusion and vasculitis"], dx:["SLE","APS","GPA","lymphoma"], tests:["FBC with platelets, clotting screen","ANA/dsDNA, complement","Antiphospholipid antibodies (lupus anticoagulant, anti-cardiolipin, anti-β2GPI) — repeat at 12 weeks to confirm"]},
+   {q:"Any blood transfusion, or a haemoglobinopathy (sickle cell disease or trait)?", fu:["Transfusion abroad or before routine viral screening? (HIV, HCV, HTLV-1, CMV exposure)","Known sickle cell disease or trait? Ethnicity?","Prior vaso-occlusive crises, or dactylitis in childhood?"], exam:["Splenomegaly","Conjunctival 'comma' vessels (sickle)"], eye:["Sickle: peripheral vaso-occlusion, sea-fan neovascularisation, salmon-patch haemorrhage, anterior-segment ischaemia — a masquerade for vasculitis"], dx:["sickle","HIV","CMV","HTLV1"], tests:["Haemoglobin electrophoresis / sickle solubility test","Widefield FFA for peripheral non-perfusion","HIV, HBV, HCV ± HTLV-1 serology if transfused"]}
+ ]},
+ {sys:"Immunisation, infection & immune status", note:"Determines both what infections are plausible and what you may safely give as treatment.", items:[
+   {q:"Any immunosuppression — HIV, chemotherapy, transplant, or long-term steroid/biologic?", fu:["Most recent CD4 count if HIV-positive? (CMV retinitis below ~50; toxoplasma and syphilis at any count)","Any prophylaxis in place?","Recently started antiretrovirals with paradoxical worsening? → immune recovery uveitis"], exam:["Oral candida, skin, temperature","Weight"], eye:["CMV retinitis (haemorrhagic 'pizza-pie', minimal vitritis); PORN; immune recovery uveitis with CMO and epiretinal membrane"], dx:["CMV","HIV","toxoplasma","TB","syphilis","candida","lymphoma"], tests:["HIV test with CD4 and viral load","Aqueous PCR panel","Broad infective screen before any escalation of immunosuppression"]},
+   {q:"Tick or insect bite, or a spreading bull's-eye rash?", fu:["Travel or outdoor activity in a Lyme-endemic area (NE USA, forested central/northern Europe, parts of the UK)?","Facial palsy, migratory arthritis, fatigue, heart block after the rash?","Timing — erythema migrans appears days to weeks after the bite"], exam:["Skin for erythema migrans","Cranial nerve VII, joints","Cardiac rhythm"], eye:["Lyme: intermediate uveitis, keratitis, retinal vasculitis, cranial neuropathy — but ocular Lyme is genuinely rare"], dx:["Lyme","Bartonella","syphilis"], tests:["Two-tier Lyme testing: ELISA then immunoblot — do NOT order Lyme serology without endemic exposure and systemic features, the positive predictive value alone is poor and false positives are common (including cross-reaction with syphilis)"]},
+   {q:"Any recent infection, illness or vaccination in the weeks before the eye started?", fu:["Flu-like illness before white-dot-syndrome symptoms? (MEWDS, APMPPE — APMPPE can be complicated by cerebral vasculitis)","Gastrointestinal or genitourinary infection 1–4 weeks before? (reactive arthritis)","COVID-19 or COVID vaccination — described but a diagnosis of exclusion","Streptococcal sore throat? (post-streptococcal uveitis)"], exam:["Throat, temperature, nodes"], eye:["MEWDS: unilateral, young woman, foveal granularity, wreath-like grey-white dots, enlarged blind spot, usually self-limiting"], dx:["MEWDS","APMPPE","reactive","drug"], tests:["FAF and OCT (outer retinal / ellipsoid disruption)","ICGA — hypofluorescent spots far more numerous than the visible lesions","MRI/MRA if APMPPE with headache — cerebral vasculitis is the feared association"]},
+   {q:"BCG vaccinated, or previous TB skin testing?", fu:["A BCG scar means a TST may be falsely positive — an IGRA is unaffected","Was a previous TST positive, and did anything follow from it?","Note the paradox: a NEGATIVE TST in a BCG-vaccinated or previously TST-positive patient indicates cutaneous anergy, which SUPPORTS sarcoidosis under the IWOS criteria"], exam:["Look for the BCG scar over the deltoid"], eye:["Interpretation only — no ocular sign"], dx:["TB","sarcoid"], tests:["IGRA first-line in low-prevalence settings; in ocular TB specifically consider adding a TST, as it may be more sensitive than IGRA","Document BCG status alongside any TST result"]}
+ ]},
+ {sys:"Obstetric & treatment-planning", note:"Not in the classic ROS but essential before you choose immunosuppression — from the questionnaire's pregnancy items.", items:[
+   {q:"Currently pregnant, breastfeeding, or planning pregnancy?", fu:["Last menstrual period, and a pregnancy test if there is any doubt","Planning conception in the next 6–12 months? Is the partner planning conception (methotrexate affects men too)?","On, or likely to need, methotrexate, mycophenolate, cyclophosphamide or thalidomide (all teratogenic)?","Uveitis often improves in pregnancy and flares postpartum — plan for that"],
+    exam:["N/A — this is a planning decision"],
+    eye:["Does not change the ocular picture, but governs safe treatment: avoid methotrexate, mycophenolate, cyclophosphamide; steroid, azathioprine, ciclosporin and some anti-TNF agents are comparatively safer"],
+    dx:[], tests:["Pregnancy test before any teratogenic immunosuppression","Contraception counselling and washout planning","MDT with rheumatology and obstetrics"]}
+ ]}
+];
+
+/* ============ DX METADATA ============ */
+const DXMETA={
+ "HLA-B27":{name:"HLA-B27 spondyloarthropathy / AAU"}, "JIA":{name:"Juvenile idiopathic arthritis"},
+ "sarcoid":{name:"Sarcoidosis"}, "TB":{name:"Tuberculosis"}, "syphilis":{name:"Syphilis"},
+ "Behçet":{name:"Behçet's disease"}, "VKH":{name:"Vogt–Koyanagi–Harada"}, "MS":{name:"Multiple sclerosis"},
+ "IBD":{name:"Inflammatory bowel disease"}, "TINU":{name:"TINU syndrome"}, "GPA":{name:"GPA (Wegener's)"},
+ "SLE":{name:"Systemic lupus erythematosus"}, "toxoplasma":{name:"Toxoplasmosis"}, "HSV":{name:"Herpes simplex"},
+ "VZV":{name:"Varicella zoster"}, "CMV":{name:"CMV retinitis"}, "ARN":{name:"Acute retinal necrosis"},
+ "lymphoma":{name:"Intraocular lymphoma (masquerade)"}, "Fuchs":{name:"Fuchs uveitis syndrome"},
+ "HIV":{name:"HIV / opportunistic"}, "Lyme":{name:"Lyme disease"}, "pars planitis":{name:"Pars planitis / intermediate"},
+ "lens-induced":{name:"Lens-induced / retained lens"}, "birdshot":{name:"Birdshot chorioretinopathy"},
+ "toxocara":{name:"Toxocariasis"}, "APS":{name:"Antiphospholipid syndrome"}, "sickle":{name:"Sickle-cell (masquerade)"},
+ "scleroderma":{name:"Scleroderma / systemic sclerosis"}, "reactive":{name:"Reactive arthritis"},
+ "Posner":{name:"Posner–Schlossman"}, "sympathetic":{name:"Sympathetic ophthalmia"}, "scleritis":{name:"Posterior scleritis"},
+ "drug":{name:"Drug-induced uveitis"}, "RA":{name:"Rheumatoid arthritis (scleritis/PUK)"}, "Blau":{name:"Blau / early-onset sarcoidosis"},
+ "endophthalmitis":{name:"Endophthalmitis"}, "P.acnes":{name:"Cutibacterium (P.) acnes — chronic post-op"}, "candida":{name:"Candida / fungal"},
+ "Bartonella":{name:"Cat-scratch (Bartonella)"}, "brucella":{name:"Brucellosis"}, "leptospirosis":{name:"Leptospirosis"},
+ "Whipple":{name:"Whipple's disease"}, "leprosy":{name:"Leprosy (Hansen's)"}, "HTLV1":{name:"HTLV-1 uveitis"},
+ "POHS":{name:"Presumed ocular histoplasmosis"}, "PIC":{name:"Punctate inner choroidopathy"}, "MEWDS":{name:"MEWDS"},
+ "APMPPE":{name:"APMPPE"}, "serpiginous":{name:"Serpiginous choroiditis"}, "AIR":{name:"Autoimmune retinopathy (CAR/MAR)"},
+ "RP":{name:"Retinitis pigmentosa (masquerade)"}, "Cogan":{name:"Cogan syndrome"}, "polychondritis":{name:"Relapsing polychondritis"}
+};
+
+/* ============ EYE SIGNS (slit-lamp → differential) ============ */
+/* Uveitis Management handbook ch.2 (KP/Arlt, band keratopathy, corneal sensation); Foster 2e differential tables; Wills 7e */
+const EYE=[
+ {region:"Cornea — keratic precipitates (KP)", note:"KP morphology is one of the most discriminating anterior signs.", multi:false, signs:[
+   {t:"Mutton-fat / granulomatous KP", pts:["sarcoid","TB","VKH","syphilis","sympathetic"], why:"Large greasy KP = granulomatous uveitis → sarcoid, TB, VKH, syphilis, sympathetic ophthalmia."},
+   {t:"Fine / non-granulomatous KP", pts:["HLA-B27","Behçet","reactive"], why:"Fine KP fit non-granulomatous disease (HLA-B27 spectrum, Behçet)."},
+   {t:"Diffuse stellate KP (whole endothelium)", pts:["Fuchs","HSV","VZV"], why:"Grey-white stellate KP spread over the entire endothelium = Fuchs uveitis syndrome or viral (HSV/VZV)."}
+ ]},
+ {region:"Cornea — other", note:"", multi:true, signs:[
+   {t:"Dendrite (true, with terminal bulbs)", pts:["HSV"], why:"Fluorescein-staining dendrite with terminal bulbs = HSV epithelial keratitis."},
+   {t:"Pseudodendrite (no bulbs, poor staining)", pts:["VZV"], why:"Smaller pseudodendrite lacking terminal bulbs = herpes zoster."},
+   {t:"Reduced corneal sensation", pts:["HSV","VZV"], why:"Corneal hypoaesthesia points to herpetic disease (also leprosy)."},
+   {t:"Interstitial keratitis / ghost vessels", pts:["syphilis","TB"], why:"Stromal keratitis with ghost vessels → syphilis (classic), TB, Cogan's."},
+   {t:"Band keratopathy", pts:["JIA"], why:"Calcific band keratopathy signals chronicity — classically JIA and other childhood uveitis."}
+ ]},
+ {region:"Anterior chamber", note:"", multi:true, signs:[
+   {t:"Hypopyon — mobile, painless", pts:["Behçet"], why:"A shifting hypopyon in a relatively painless eye is the Behçet signature."},
+   {t:"Hypopyon — with pain / fibrin", pts:["HLA-B27","reactive"], why:"A fibrinous, painful hypopyon fits severe HLA-B27 acute anterior uveitis."},
+   {t:"Heavy fibrin / plasmoid aqueous", pts:["HLA-B27"], why:"Dense fibrin is typical of intense HLA-B27-related AAU."}
+ ]},
+ {region:"Iris", note:"", multi:true, signs:[
+   {t:"Heterochromia (lighter affected iris)", pts:["Fuchs"], why:"Iris heterochromia with diffuse stromal atrophy = Fuchs uveitis syndrome."},
+   {t:"Sectoral iris atrophy", pts:["HSV","VZV"], why:"Patchy/sectoral atrophy with transillumination + raised IOP = herpetic uveitis."},
+   {t:"Koeppe / Busacca nodules", pts:["sarcoid","TB","syphilis"], why:"Iris granulomas (Koeppe at pupil margin, Busacca on stroma) = granulomatous disease."},
+   {t:"Iris nodules + tent-shaped PAS", pts:["TB","sarcoid"], why:"Broad tent-shaped peripheral anterior synechiae and nodules favour TB/sarcoid."},
+   {t:"Rubeosis / new iris vessels", pts:["Fuchs","Behçet"], why:"Fine iris/angle vessels occur in Fuchs (fragile, Amsler sign) and ischaemic disease."}
+ ]},
+ {region:"Synechiae & pupil", note:"Absence of synechiae is itself a clue.", multi:true, signs:[
+   {t:"Posterior synechiae present", pts:["HLA-B27","sarcoid","JIA","syphilis"], why:"Synechiae indicate sticky, often granulomatous or severe inflammation (sarcoid, JIA, HLA-B27, syphilis)."},
+   {t:"NO synechiae (never sticks)", pts:["Fuchs","Posner"], why:"Classic teaching: Fuchs and Posner–Schlossman do NOT form posterior synechiae — a useful negative sign."}
+ ]},
+ {region:"Intraocular pressure", note:"", multi:false, signs:[
+   {t:"Raised IOP with the uveitis", pts:["HSV","VZV","Posner","Fuchs","sarcoid"], why:"Uveitis WITH raised IOP narrows to herpetic, Posner–Schlossman, Fuchs, or sarcoid trabeculitis."}
+ ]},
+ {region:"Lens", note:"", multi:true, signs:[
+   {t:"Cataract (esp. posterior subcapsular)", pts:["Fuchs","JIA"], why:"Chronic quiet inflammation → cataract; prominent in Fuchs and JIA."}
+ ]},
+ {region:"Vitreous", note:"", multi:true, signs:[
+   {t:"Snowballs / snowbanking (inferior)", pts:["pars planitis","sarcoid","Lyme"], why:"Inferior snowbanks/snowballs define intermediate uveitis / pars planitis (screen for MS, sarcoid, Lyme)."},
+   {t:"Heavy vitritis 'out of proportion'", pts:["lymphoma","toxoplasma","sarcoid"], why:"Dense vitritis — if steroid-resistant in an older patient, think lymphoma; over a retinal focus, toxoplasma."},
+   {t:"Vitritis absent despite retinal lesion", pts:["CMV","birdshot"], why:"Retinal/choroidal disease with little vitritis fits CMV retinitis or (cream lesions) birdshot."}
+ ]},
+ {region:"Retina & vasculature", note:"", multi:true, signs:[
+   {t:"Focal retinitis beside a pigmented scar", pts:["toxoplasma"], why:"‘Headlight in the fog’ satellite lesion by an old scar = toxoplasmosis."},
+   {t:"Pizza-pie retinitis (haemorrhage + necrosis)", pts:["CMV"], why:"Haemorrhagic necrotising retinitis with minimal vitritis = CMV (check immune status)."},
+   {t:"Peripheral necrotising retinitis, rapid", pts:["ARN","VZV","HSV"], why:"Confluent peripheral retinitis + arteritis = acute retinal necrosis (VZV/HSV)."},
+   {t:"Venous periphlebitis / candle-wax", pts:["sarcoid","TB"], why:"Segmental venous sheathing (candle-wax drippings) → sarcoid, TB."},
+   {t:"Occlusive (arterial) retinal vasculitis", pts:["Behçet","SLE","GPA"], why:"Occlusive arteriolar vasculitis with capillary drop-out → Behçet, SLE, GPA."}
+ ]},
+ {region:"Choroid & disc", note:"", multi:true, signs:[
+   {t:"Cream oval choroidal lesions (postequatorial)", pts:["birdshot"], why:"Ovoid cream lesions radiating from the disc = birdshot (HLA-A29)."},
+   {t:"Multifocal choroiditis / granuloma", pts:["sarcoid","TB","syphilis"], why:"Choroidal granulomas → sarcoid, TB, syphilis."},
+   {t:"Serous retinal detachment(s)", pts:["VKH","scleritis"], why:"Multifocal serous RDs → VKH (with disc oedema) or posterior scleritis."},
+   {t:"‘Sunset-glow’ fundus", pts:["VKH"], why:"Depigmented orange fundus in the convalescent phase = VKH."},
+   {t:"Placoid outer-retinal lesion (macula)", pts:["syphilis"], why:"Acute syphilitic posterior placoid chorioretinitis is near-pathognomonic."}
+ ]}
+];
+
+/* ============ INVESTIGATIONS — DEEP DIVE ============ */
+/* Joye A & Gonzales J, "Diagnostic Testing in Uveitis", ch.5 in Lin P (ed), Uveitis,
+   Current Practices in Ophthalmology (Springer 2020), pp.143-159 — the spine of this tab.
+   Plus Herbort/IWOS 2009 + Mochizuki 2019; Foster 2e; Wills 7e; Handbook ch.2. */
+
+const STRATEGY=[
+ {h:"There is no 'usual' uveitis screen — and ordering one is a mistake",
+  p:"Tests should be ordered to include or exclude the specific entities you are actually considering. A shotgun panel in a patient with low pre-test probability generates false positives with poor positive predictive value, and those false positives then have to be chased. The literature is explicit: recommendations are expert-opinion-driven and rest on a <b>directed (oriented) approach</b> built from history, exam and anatomical class.",
+  cite:"Joye &amp; Gonzales 2020, p.144; Rosenbaum, Semin Arthritis Rheum 1990"},
+ {h:"But three things are screened for in almost everyone",
+  p:"<b>Chest imaging, a TB test and syphilis serology</b> belong in essentially every uveitis work-up — not because they are common, but because <b>sarcoidosis, tuberculosis and syphilis can masquerade as almost any type of uveitis</b>. Those three are the exception to 'test only what you suspect'.",
+  cite:"Joye &amp; Gonzales 2020, p.144 (Note box)"},
+ {h:"The one case that needs no laboratory work-up at all",
+  p:"A <b>first episode</b> of typical, unilateral, non-granulomatous acute anterior uveitis in an otherwise well adult, with no systemic symptoms and a prompt response to topical steroid, does not require any blood tests. Investigate it if it recurs, becomes bilateral, becomes granulomatous, or fails to settle.",
+  cite:"Wills 7e §12.1; Handbook ch.2"},
+ {h:"Classify before you order",
+  p:"Four descriptors do most of the work of narrowing the panel: <b>anatomical location</b> (anterior / intermediate / posterior / pan / scleritis), <b>laterality</b>, <b>granulomatous vs non-granulomatous</b>, and <b>course</b> (acute / recurrent / chronic). Add age and ethnicity. Every test below is chosen off that grid, not off a checklist.",
+  cite:"Joye &amp; Gonzales 2020, p.144; SUN Working Group"},
+ {h:"A standardised strategy is not better than a good clinician's directed one",
+  p:"The <b>ULISSE</b> randomised trial compared a standardised diagnostic strategy against an open, clinician-directed one in uveitis and found no advantage to the standardised approach in diagnostic yield. That is the evidence base for tailoring rather than protocolising — while still never skipping the syphilis/TB/sarcoid triad.",
+  cite:"de Parisot A et al, Am J Ophthalmol 2017;178:176–85 (ULISSE)"},
+ {h:"Take the sample before you treat, where it is safe to",
+  p:"Steroid suppresses serum ACE, shrinks granulomas, blunts the tuberculin skin test, and degrades the cytological yield of a vitreous biopsy for lymphoma. Antivirals reduce PCR yield. If the diagnosis matters and the eye can wait a short time, <b>sample first</b>. If it cannot wait, treat — and record that treatment preceded the sample so the results are read correctly.",
+  cite:"Joye &amp; Gonzales 2020; Handbook ch.2"},
+ {h:"Positive predictive value, not sensitivity, is what limits HLA and autoantibody testing",
+  p:"The PPV of HLA testing in uveitis is <b>&lt;0.50</b> and it should not be part of routine screening. Likewise, apart from ANA in suspected JIA-associated uveitis, <b>no autoantibody test has proven routine utility in uveitis</b> — ANA, RF, anti-CCP and ANCA earn their place in <i>scleritis</i>, not in uveitis.",
+  cite:"Joye &amp; Gonzales 2020, pp.152–155"}
+];
+
+/* Test monographs. tag: core | targeted | selective | rare */
+const INVEST=[
+ {group:"The near-universal three", note:"Ordered in almost every uveitis patient because these diseases imitate everything else.", tests:[
+  {t:"Chest X-ray (CXR)", tag:"core",
+   what:"Plain film screening for bilateral hilar lymphadenopathy (sarcoid) and for apical/cavitary or fibrotic change and calcified nodes (TB).",
+   when:"Every new uveitis patient. Inexpensive, safe, quick.",
+   perf:"Insensitive. Its value is when positive: bilateral hilar lymphadenopathy with a compatible uveitis meets IWOS criteria for <i>presumed</i> ocular sarcoidosis without a biopsy.",
+   pitfall:"A NORMAL CXR does not clear either disease. <b>Most ocular TB occurs in patients with no active pulmonary TB</b>, and sarcoid and TB uveitis frequently present with no pulmonary signs at all.",
+   cite:"Joye &amp; Gonzales 2020 pp.144–145; Wills 7e p.604; Herbort/IWOS 2009", dx:["sarcoid","TB"]},
+  {t:"Chest CT (high-resolution)", tag:"targeted",
+   what:"Cross-sectional imaging of hilar/mediastinal nodes and parenchyma.",
+   when:"After a NEGATIVE chest X-ray when suspicion for sarcoid or TB remains high — particularly in <b>women over 50</b>, in whom the yield over plain film is greatest.",
+   perf:"More sensitive AND more specific than CXR for both sarcoid and TB. In biopsy-proven sarcoid uveitis series, CT picks up nodes that plain films miss.",
+   pitfall:"More expensive, more radiation. Do not order reflexively — order it when a negative CXR has not resolved a genuine clinical question.",
+   cite:"Kaiser PK et al, Am J Ophthalmol 2002;133:499–505; Febvay C et al, BJO 2015;99:1372–6", dx:["sarcoid","TB"]},
+  {t:"Syphilis serology — reverse-sequence algorithm", tag:"core",
+   what:"Start with a <b>treponemal</b> test (TP-EIA/CIA). If positive, reflex to a quantitative <b>non-treponemal</b> test (RPR or VDRL). If the RPR is negative, a second, different treponemal test (TP-PA) adjudicates.",
+   when:"Every uveitis of unknown cause. Ocular syphilis is rising and it mimics every pattern.",
+   perf:"Treponemal tests are highly sensitive in early, late, latent and treated syphilis. RPR/VDRL <b>titre tracks disease activity</b>; ≥1:16 indicates active infection.",
+   pitfall:"Three traps. (1) Treponemal tests stay positive <b>for life</b> — a positive one does not prove the current inflammation is syphilitic. (2) The <b>prozone phenomenon</b>: very high antibody titres can produce a falsely NEGATIVE RPR — ask the laboratory to perform serial dilutions. (3) RPR falls in latency, tertiary disease and after treatment, so a negative RPR does not exclude active ocular syphilis. Conversely a <b>non-reactive treponemal test does reliably exclude it</b>.",
+   cite:"Joye &amp; Gonzales 2020 pp.149–151; CDC 2008 reverse-sequence recommendation; Wills 7e §12.1", dx:["syphilis"]},
+  {t:"HIV test", tag:"core",
+   what:"Fourth-generation antigen/antibody assay, with CD4 count and viral load if positive.",
+   when:"<b>Every case of ocular syphilis</b> — co-infection is common and changes both systemic management and prognosis. Also whenever the retinal picture is opportunistic, or immunosuppression is planned.",
+   perf:"Excellent. The clinical failure is not ordering it.",
+   pitfall:"CD4 predicts which opportunistic infection: CMV retinitis typically below ~50 cells/µL; toxoplasma and syphilis occur at any count. Starting antiretrovirals can precipitate <b>immune recovery uveitis</b>, which looks like a new inflammatory disease but is immune reconstitution.",
+   cite:"Joye &amp; Gonzales 2020 p.151; Foster 2e", dx:["HIV","CMV","syphilis"]},
+  {t:"IGRA (QuantiFERON-TB Gold / T-SPOT.TB)", tag:"core",
+   what:"Measures interferon-γ released by T cells previously sensitised to <i>M. tuberculosis</i>-specific antigens (ESAT-6, CFP-10).",
+   when:"First-line TB test in most uveitis patients, especially in low-prevalence populations.",
+   perf:"For <b>systemic</b> TB, IGRA outperforms TST (Se ~92%, Sp ~85% vs TST Se ~56%, Sp ~62%). For <b>OCULAR</b> TB the picture reverses in sensitivity: IGRA Se ~36–91% / Sp ~75–82%, TST Se ~72–96% / Sp ~51–73%. Discordance between the two runs up to 26.5%.",
+   pitfall:"There is <b>no gold standard for ocular TB</b>. IGRA cannot distinguish latent from active infection, and a positive result only carries a high PPV when the eye actually looks tubercular (SUN clinical criteria met) — otherwise the PPV falls towards zero. Bayesian analysis suggests the highest probability of ocular TB is when IGRA <i>and</i> TST are both positive, so in a high-suspicion eye consider doing both. Always involve TB services before committing to antituberculous therapy.",
+   cite:"Joye &amp; Gonzales 2020 pp.148–149; Ang M et al, Ophthalmology 2009 / Eye 2012; Feng Y et al, PLoS One 2012", dx:["TB"]},
+  {t:"Tuberculin skin test (Mantoux/TST)", tag:"targeted",
+   what:"Delayed type-IV hypersensitivity to intradermal purified protein derivative, read at 48–72 h.",
+   when:"Where IGRA is unavailable, in highly endemic populations, alongside IGRA when ocular TB suspicion is high — and, importantly, as part of a <b>sarcoid</b> work-up.",
+   perf:"See IGRA above — in ocular TB specifically the TST may be more sensitive but less specific.",
+   pitfall:"False positives after BCG vaccination or non-tuberculous mycobacterial exposure. <b>The sarcoid paradox:</b> a NEGATIVE TST in a BCG-vaccinated or previously TST-positive patient indicates cutaneous anergy — and anergy is a <i>supportive</i> investigational finding for sarcoidosis under the IWOS criteria.",
+   cite:"Joye &amp; Gonzales 2020 p.149, p.157; Herbort/IWOS 2009", dx:["TB","sarcoid"]}
+ ]},
+
+ {group:"Sarcoidosis work-up", note:"No single blood test makes the diagnosis. The IWOS framework combines intraocular signs with supportive systemic investigations, and biopsy remains the gold standard.", tests:[
+  {t:"IWOS criteria — how the diagnosis is actually assembled", tag:"core",
+   what:"Seven intraocular signs suggestive of ocular sarcoidosis: (1) mutton-fat KP and/or iris nodules (Koeppe at the pupil margin, Busacca in the stroma); (2) trabecular meshwork nodules and/or tent-shaped peripheral anterior synechiae; (3) snowballs / string-of-pearls vitreous opacities; (4) multiple peripheral chorioretinal lesions, active or atrophic; (5) nodular and/or segmental periphlebitis (± candle-wax drippings) and/or macroaneurysm in an inflamed eye; (6) optic disc nodule/granuloma and/or solitary choroidal nodule; (7) bilaterality.",
+   when:"Whenever granulomatous uveitis is being classified.",
+   perf:"Diagnostic tiers: <b>definite</b> = biopsy-supported with a compatible uveitis; <b>presumed</b> = no biopsy but bilateral hilar lymphadenopathy with a compatible uveitis; <b>probable</b> = no biopsy, no hilar nodes, but three suggestive intraocular signs plus two positive investigations; <b>possible</b> = negative biopsy but four intraocular signs plus two investigations.",
+   pitfall:"All tiers require that other causes — above all <b>tuberculous uveitis</b> — have been excluded first. Anterior granulomatous signs are erased quickly by topical steroid, so look for them <i>before</i> treating.",
+   cite:"Herbort CP et al, Ocul Immunol Inflamm 2009;17:160–9 (IWOS), revised 2017/2019; Takase H, ch.11 in Yu HG (ed), <i>Inflammatory and Infectious Ocular Disorders</i> 2020", dx:["sarcoid"]},
+  {t:"Serum ACE", tag:"targeted",
+   what:"Angiotensin-converting enzyme is actively secreted by the non-caseating granulomas of sarcoid, so the level tracks granuloma burden.",
+   when:"Suspected ocular sarcoidosis. A supportive IWOS investigation.",
+   perf:"At the standard 68 IU/L cut-off, specificity ~89% but sensitivity only ~46%. More than twice the upper limit of normal is more convincing. Reference range roughly 8–52 IU/L.",
+   pitfall:"<b>Falsely low on ACE inhibitors and on systemic steroid.</b> Falsely raised in TB, diabetes, hyperthyroidism, silicosis and other granulomatous lung disease. Children and some ethnic groups run higher. A normal ACE misses over half of sarcoid uveitis — it does not clear the diagnosis.",
+   cite:"Groen-Hakan F et al, BJO 2021 (PMC8479750); Joye &amp; Gonzales 2020 pp.156–157", dx:["sarcoid"]},
+  {t:"Serum lysozyme", tag:"targeted",
+   what:"A second granuloma-derived enzyme, secreted alongside ACE.",
+   when:"With ACE — elevation of either one counts as a supportive investigation under IWOS.",
+   perf:"Adds sensitivity to ACE alone; more useful in children, in whom ACE is unreliable.",
+   pitfall:"Even less specific than ACE — raised in TB, leukaemia and other granulomatous disease.",
+   cite:"Herbort/IWOS 2009; Joye &amp; Gonzales 2020 p.156", dx:["sarcoid"]},
+  {t:"Soluble IL-2 receptor (sIL-2R)", tag:"targeted",
+   what:"Shed from activated T lymphocytes; reflects T-cell activation in granulomatous disease.",
+   when:"When ACE is normal but sarcoid remains clinically likely — this is where it earns its keep.",
+   perf:"<b>Outperforms ACE</b> for sarcoid-associated uveitis: sensitivity ~88–98% versus ~46% for ACE, with comparable specificity.",
+   pitfall:"Not universally available; also elevated in lymphoma and other lymphoproliferative disease — which matters, since lymphoma is the very masquerade you may be trying to exclude.",
+   cite:"Groen-Hakan/Rothova, Am J Ophthalmol 2017 (PMC6583850)", dx:["sarcoid","lymphoma"]},
+  {t:"Serum and 24-hour urinary calcium; liver enzymes", tag:"targeted",
+   what:"Sarcoid granulomas convert 25-OH vitamin D to active 1,25-dihydroxyvitamin D, causing hypercalciuria and hypercalcaemia. Hepatic granulomas raise ALP/GGT.",
+   when:"Part of the supportive-investigation set under IWOS.",
+   perf:"Hypercalcaemia occurs in around 10% of sarcoid; hypercalciuria is commoner still and is the more sensitive of the two.",
+   pitfall:"Vitamin D supplementation can precipitate hypercalcaemia in sarcoid. Abnormal liver enzymes are non-specific but count toward the IWOS supportive tests.",
+   cite:"Herbort/IWOS 2009; Mochizuki M et al, revised IWOS criteria 2019", dx:["sarcoid"]},
+  {t:"Tissue biopsy for sarcoid", tag:"targeted",
+   what:"Histological demonstration of non-caseating epithelioid granuloma. This — not any blood test — is the gold standard.",
+   when:"When a definite diagnosis will change management, or when lymphoma/TB must be excluded.",
+   perf:"Yield depends entirely on choosing an accessible abnormal target: an infiltrated <b>skin lesion, scar or tattoo</b>, an enlarged <b>lacrimal gland</b>, a palpable <b>lymph node</b>, or a conjunctival nodule. <b>EBUS-guided transbronchial needle aspiration</b> of mediastinal nodes has high yield in thoracic sarcoid.",
+   pitfall:"<b>Blind</b> conjunctival biopsy without a visible nodule has a low yield and is not a substitute for a targeted one. Steroid started beforehand shrinks granulomas and can render the biopsy non-diagnostic. Always ask for stains and culture for mycobacteria — you are excluding TB at the same time.",
+   cite:"Joye &amp; Gonzales 2020 p.157; Herbort/IWOS 2009", dx:["sarcoid","TB"]},
+  {t:"FDG-PET / gallium-67 scintigraphy", tag:"selective",
+   what:"Whole-body functional imaging to localise occult granulomatous activity and identify a biopsy target.",
+   when:"When sarcoid is strongly suspected but CXR/CT and blood markers are unhelpful, or to assess cardiac involvement.",
+   perf:"FDG-PET is the modern choice and can direct biopsy to an unexpected site. The classic gallium 'panda' (lacrimal/parotid) and 'lambda' (hilar/paratracheal) signs are highly suggestive but gallium is now largely historical.",
+   pitfall:"Non-specific — malignancy and infection also light up. Expensive; arrange through respiratory or nuclear medicine, not directly from the eye clinic.",
+   cite:"Standard respiratory practice; Joye &amp; Gonzales 2020", dx:["sarcoid","lymphoma"]}
+ ]},
+
+ {group:"Ocular fluid sampling", note:"The single highest-yield manoeuvre in atypical or treatment-resistant uveitis — and consistently under-used. Volume is the limiting resource: decide your priorities before you tap.", tests:[
+  {t:"Anterior chamber paracentesis", tag:"targeted",
+   what:"Aqueous sample, typically 0.1–0.2 mL, taken at the slit lamp or in theatre through a limbal paracentesis under topical anaesthesia.",
+   when:"Unilateral hypertensive anterior uveitis with iris atrophy (herpetic), atypical or steroid-unresponsive anterior uveitis, suspected CMV anterior uveitis, atypical retinitis.",
+   perf:"Safe and quick, with useful diagnostic yield in anterior uveitis where a viral cause is suspected.",
+   pitfall:"<b>Volume limits how many PCR targets you can request</b> — you must nominate the pathogens. Tell the laboratory in advance what you want, and how the sample should be handled. Yield for posterior disease is lower than a vitreous sample.",
+   cite:"Anwar Z et al, Am J Ophthalmol 2013;155:781–6; Chronopoulos A et al, BMC Ophthalmol 2016;16:189; Wills 7e p.607", dx:["HSV","VZV","CMV","toxoplasma"]},
+  {t:"Vitreous biopsy / diagnostic vitrectomy", tag:"targeted",
+   what:"Undiluted vitreous obtained by tap or by pars plana vitrectomy, for cytology, flow cytometry, culture, PCR, cytokines and molecular studies.",
+   when:"Suspected primary vitreoretinal lymphoma; suspected endophthalmitis; posterior infective uveitis where aqueous PCR has failed; steroid-resistant vitritis in an older patient.",
+   perf:"For endophthalmitis, <b>vitreous culture is substantially more sensitive than an anterior chamber tap</b> — take vitreous unless it cannot be obtained safely.",
+   pitfall:"Cytology for lymphoma is fragile: cells lyse quickly, so the sample must reach a cytopathologist who is expecting it, ideally immediately and in appropriate medium. Prior corticosteroid destroys lymphoma cells and produces a false-negative — where safe, allow a washout of around two weeks. Low cell yield is the main reason a true PVRL is missed.",
+   cite:"Joye &amp; Gonzales 2020 pp.148, 157–158; Barza M et al, Arch Ophthalmol 1997 (EVS)", dx:["lymphoma","endophthalmitis","CMV","toxoplasma"]},
+  {t:"PCR of ocular fluid", tag:"targeted",
+   what:"Targeted amplification of pathogen DNA using specific primers. You must name the organism you are hunting.",
+   when:"Herpes family (HSV-1/2, VZV, CMV, EBV), <i>Toxoplasma gondii</i>; also <i>Tropheryma whipplei</i>, mycobacterial and fungal targets in the right context.",
+   perf:"A positive result effectively clinches the aetiology and redirects treatment immediately.",
+   pitfall:"A negative PCR does not exclude infection — the pathogen load at the moment of sampling may fall below the assay threshold, and antiviral or antiparasitic treatment started beforehand lowers yield further. Panel size is capped by sample volume. Some pathogens are simply not in the standard panel.",
+   cite:"Joye &amp; Gonzales 2020 pp.146–148; Sugita S et al, Ophthalmology 2013;120:1761–8", dx:["HSV","VZV","CMV","toxoplasma","TB"]},
+  {t:"Goldmann–Witmer coefficient (GWC)", tag:"selective",
+   what:"Ratio comparing intraocular to serum antibody, corrected for total IgG: (specific IgG in aqueous ÷ total IgG in aqueous) ÷ (specific IgG in serum ÷ total IgG in serum). A value <b>&gt;4</b> indicates local intraocular antibody production.",
+   when:"When clinical suspicion of a specific pathogen is high but the directed PCR came back negative — classically ocular toxoplasmosis, and ocular toxocariasis.",
+   perf:"Complements PCR: PCR detects organism, GWC detects the local immune response, and their yields peak at different points in the disease (PCR earlier, GWC later).",
+   pitfall:"Like PCR, you must nominate the pathogen. Not routinely available in many centres including much of the US and UK — check with your laboratory before promising it.",
+   cite:"Joye &amp; Gonzales 2020 p.148; de Groot-Mijnes JD et al, Am J Ophthalmol 2006;141:313–8; Wang ZJ et al, Acta Trop 2016", dx:["toxoplasma","toxocara"]},
+  {t:"Culture and sensitivities", tag:"targeted",
+   what:"Aqueous and vitreous plated for bacteria and fungi, with antimicrobial susceptibility testing.",
+   when:"Suspected endophthalmitis — post-operative, post-injection, post-traumatic, or endogenous in an immunosuppressed or injecting patient.",
+   perf:"Gives both the organism and its sensitivities, which nothing else does.",
+   pitfall:"<b>Ask for prolonged incubation (up to 14 days) if <i>Cutibacterium (Propionibacterium) acnes</i> is possible</b> — it is slow-growing and a standard 48-hour plate is reported as 'no growth'. Culture-negative endophthalmitis is common and does not exclude infection.",
+   cite:"Joye &amp; Gonzales 2020 p.148; EVS", dx:["endophthalmitis","P.acnes","candida"]},
+  {t:"Metagenomic deep sequencing (MDS)", tag:"rare",
+   what:"Unbiased amplification and sequencing of all DNA/RNA in the sample, followed by bioinformatic subtraction of human and contaminant reads and comparison against a pathogen database.",
+   when:"Elusive or rare pathogens after conventional testing has failed. Currently research-grade in most settings.",
+   perf:"Can identify organisms nobody thought to request, from the very small volumes ocular sampling yields.",
+   pitfall:"Expensive, limited availability, and interpretation requires expertise — contaminant reads are a real problem.",
+   cite:"Doan T et al, Genome Med 2016;8:90; Ophthalmology 2017;124:1247–8", dx:[]},
+  {t:"PVRL molecular panel — cytology, flow, IL-10:IL-6, IgH rearrangement, MYD88", tag:"targeted",
+   what:"The lymphoma work-up on a vitreous sample: cytopathology (large atypical lymphocytes with irregular nuclei, prominent nucleoli, scant basophilic cytoplasm), immunohistochemistry/flow cytometry for B-cell clonality, PCR for immunoglobulin heavy chain (IgH) or T-cell receptor rearrangement, cytokine ratio, and the <b>MYD88 L265P</b> mutation.",
+   when:"Any older patient with steroid-resistant vitritis, subretinal/sub-RPE infiltrates, or bilateral disease with CNS symptoms.",
+   perf:"Cytology is the most specific but the least sensitive because so few cells are recovered. <b>Vitreous IL-10:IL-6 ratio ≥1</b> discriminates PVRL from inflammatory uveitis with sensitivity ~93% and specificity ~100%. MYD88 L265P is present in the great majority of PVRL and can be detected in minute volumes.",
+   pitfall:"Do not send a lymphoma sample without warning the laboratory. Do not start steroid first if you can avoid it. And do the <b>MRI brain with gadolinium</b> in parallel — CNS involvement changes treatment entirely.",
+   cite:"Cassoux N et al 2017 (PMID 29135797); Chan CC et al, Oncologist 2011;16:1589–99; Joye &amp; Gonzales 2020 pp.157–158", dx:["lymphoma"]}
+ ]},
+
+ {group:"HLA typing — useful, but rarely decisive", note:"PPV of HLA testing in uveitis is under 0.50. These are supporting arguments, not diagnoses.", tests:[
+  {t:"HLA-B27", tag:"targeted",
+   what:"MHC class I allele, the strongest known HLA–disease association, linked to the seronegative spondyloarthropathies.",
+   when:"Young patient with acute, unilateral, recurrent, non-granulomatous anterior uveitis — especially with back or joint pain.",
+   perf:"Over <b>50% of acute anterior uveitis patients are HLA-B27 positive</b>, and 30–40% of ankylosing spondylitis patients have at least one episode of AAU.",
+   pitfall:"Population prevalence is around 7.5% in non-Hispanic white populations, and the cumulative incidence of AAU among B27 carriers is only about 1% — so a positive result in the wrong phenotype means very little. A negative result does not exclude AAU; most idiopathic AAU is B27-negative.",
+   cite:"Joye &amp; Gonzales 2020 pp.155–156; Foster 2e", dx:["HLA-B27","reactive","IBD","JIA"]},
+  {t:"HLA-A29", tag:"targeted",
+   what:"Class I allele associated with birdshot chorioretinopathy.",
+   when:"Evaluating a white-dot syndrome with cream, ovoid, postequatorial choroidal lesions radiating from the disc in a middle-aged or older patient.",
+   perf:"Present in approaching <b>100%</b> of birdshot cases — so <b>a negative result effectively excludes birdshot</b>. That negative predictive power is its real value.",
+   pitfall:"Prevalence in the US Caucasian population is about 8%, so a positive result alone cannot confirm birdshot. Diagnosis remains clinical, supported by ICGA and ERG.",
+   cite:"Joye &amp; Gonzales 2020 pp.155–156", dx:["birdshot"]},
+  {t:"HLA-B51", tag:"selective",
+   what:"Class I allele associated with Behçet's disease.",
+   when:"Supportive only, where the clinical picture already suggests Behçet.",
+   perf:"Raises the odds; population frequency varies enormously by ethnicity along the Silk Road.",
+   pitfall:"<b>Not part of the diagnostic criteria for Behçet.</b> Its absence must not be used to exclude the diagnosis when the clinical features fit — Behçet is diagnosed clinically.",
+   cite:"Joye &amp; Gonzales 2020 p.156; ISG / ICBD criteria", dx:["Behçet"]},
+  {t:"HLA-DRB1*0102", tag:"rare",
+   what:"Allele strongly correlated with tubulointerstitial nephritis and uveitis (TINU).",
+   when:"Effectively never in routine practice.",
+   perf:"Strong association, but the urinary β2-microglobulin and creatinine combination already performs so well that this adds nothing.",
+   pitfall:"Not widely available and not recommended.",
+   cite:"Joye &amp; Gonzales 2020 p.156", dx:["TINU"]}
+ ]},
+
+ {group:"Autoantibodies — mostly for scleritis, not uveitis", note:"Apart from ANA in suspected JIA, no autoantibody test has proven routine utility in uveitis. They become genuinely useful the moment the diagnosis is scleritis.", tests:[
+  {t:"Antinuclear antibody (ANA)", tag:"targeted",
+   what:"Autoantibodies against nuclear antigens, reported as a titre with a staining pattern.",
+   when:"<b>The one autoantibody with proven utility in uveitis</b> — in a child with suspected JIA-associated uveitis, where ANA positivity identifies the high-risk group needing tighter screening. Also where systemic features of SLE are present.",
+   perf:"Titres ≥1:160 are clinically meaningful. ANA-positive, RF-negative is the classic JIA-uveitis serology.",
+   pitfall:"Low titres (1:40–1:80) occur in healthy people and mean little. In adults with uveitis and no lupus features, ANA has poor PPV and should not be ordered reflexively — SLE causes scleritis, occlusive retinal vasculitis and ischaemic choroidopathy far more than it causes uveitis.",
+   cite:"Joye &amp; Gonzales 2020 pp.153–154; Wills 7e p.604", dx:["JIA","SLE"]},
+  {t:"Rheumatoid factor and anti-CCP", tag:"selective",
+   what:"RF targets the Fc region of IgG; anti-CCP targets cyclic citrullinated peptide.",
+   when:"Scleritis, particularly peripheral ulcerative keratitis with scleritis in suspected rheumatoid arthritis. RF also has a role in classifying JIA subtype.",
+   perf:"Anti-CCP is less sensitive but far more specific than RF and is the modern gold standard for RA.",
+   pitfall:"RF is non-specific — positive in RA, JIA, SLE, Sjögren and hepatitis C cryoglobulinaemia. RA does not typically cause uveitis; it causes scleritis and PUK, and the appearance of those signs may herald systemic progression.",
+   cite:"Joye &amp; Gonzales 2020 p.154", dx:["RA","JIA"]},
+  {t:"ANCA (PR3 / MPO)", tag:"targeted",
+   what:"Antibodies against proteinase-3 (cytoplasmic pattern) and myeloperoxidase (perinuclear pattern).",
+   when:"Scleritis, peripheral ulcerative keratitis, orbital inflammation, or retinal vasculitis with sinus, pulmonary or renal disease.",
+   perf:"c-ANCA/PR3 is highly specific for granulomatosis with polyangiitis and may predict progression from limited to systemic disease.",
+   pitfall:"p-ANCA/MPO is much less specific — microscopic polyangiitis, EGPA, IBD and drug-induced vasculitis all produce it. Levamisole-adulterated cocaine causes ANCA-positive midline destruction that convincingly mimics GPA. Always pair ANCA with urinalysis and renal function.",
+   cite:"Joye &amp; Gonzales 2020 p.154", dx:["GPA","SLE"]},
+  {t:"Antiretinal antibodies", tag:"rare",
+   what:"Serum antibodies against retinal antigens (recoverin, α-enolase and others), sought in autoimmune retinopathy including cancer- and melanoma-associated retinopathy.",
+   when:"Rapid, unexplained photoreceptor loss with an abnormal ERG and minimal inflammation, especially with a cancer history.",
+   perf:"Necessary to support the diagnosis of autoimmune retinopathy — but never sufficient.",
+   pitfall:"<b>Found in up to 62% of normal control sera</b>, and in birdshot, VKH, Behçet and retinitis pigmentosa. Poor specificity, no standardised assay. Interpret only alongside ERG and imaging.",
+   cite:"Joye &amp; Gonzales 2020 pp.154–155", dx:["AIR","RP"]}
+ ]},
+
+ {group:"Targeted systemic tests", note:"Ordered because a specific entity is on the table, not as part of a panel.", tests:[
+  {t:"Urine β2-microglobulin + serum creatinine (TINU)", tag:"targeted",
+   what:"Markers of proximal renal tubular dysfunction — β2-microglobulin is normally reabsorbed by the tubule, so it appears in urine when the tubule is inflamed.",
+   when:"Any young patient with bilateral, sudden-onset anterior uveitis, especially with fatigue, weight loss or a recent systemic illness.",
+   perf:"Combined elevated urinary β2-microglobulin (≥0.20 mg/L) with elevated serum creatinine (&gt;0.74 mg/dL if aged ≤15, &gt;1.17 mg/dL if older) gives a <b>positive predictive value of 100% and negative predictive value of 97%</b> for TINU. Few tests in uveitis perform this well.",
+   pitfall:"Under-ordered because it is unfamiliar. The uveitis may follow the nephritis by months, so creatinine can have normalised — a normal creatinine late in the course does not exclude TINU. Involve nephrology.",
+   cite:"Joye &amp; Gonzales 2020 p.156 (citing Hettinga YM et al)", dx:["TINU"]},
+  {t:"Toxoplasma IgG and IgM", tag:"targeted",
+   what:"Serology for prior (IgG) or recent (IgM) infection with <i>Toxoplasma gondii</i>.",
+   when:"Focal necrotising retinochoroiditis, particularly adjacent to a pigmented scar. Often the diagnosis is clinical and no serology is needed.",
+   perf:"The useful result is the negative one: <b>a negative IgG in an immunocompetent patient makes ocular toxoplasmosis very unlikely</b>, since reactivation requires prior exposure.",
+   pitfall:"A positive IgG only proves past exposure, and background seroprevalence is high — it is close to meaningless on its own. In atypical or immunosuppressed cases go to aqueous PCR or Goldmann–Witmer instead of relying on serology.",
+   cite:"Foster 2e Table 6.14; Joye &amp; Gonzales 2020 p.151", dx:["toxoplasma"]},
+  {t:"Lyme serology (two-tier: ELISA then immunoblot)", tag:"selective",
+   what:"Screening ELISA for <i>Borrelia burgdorferi</i>, confirmed by Western blot/immunoblot.",
+   when:"<b>Only</b> with genuine exposure in an endemic area plus systemic features of Lyme disease.",
+   perf:"Adequate when applied to an appropriate population.",
+   pitfall:"<b>Low positive predictive value when ordered indiscriminately</b>, and it should be avoided in the absence of endemic exposure and systemic findings. Cross-reactivity with syphilis and other spirochaetes produces false positives, which then generate unnecessary antibiotic courses and anxiety.",
+   cite:"Joye &amp; Gonzales 2020 p.151", dx:["Lyme"]},
+  {t:"Toxocara ELISA; Bartonella serology", tag:"selective",
+   what:"Serology for <i>Toxocara canis</i> and <i>Bartonella henselae</i>.",
+   when:"Toxocara: a child or young adult with a unilateral granuloma, tractional band, or chronic endophthalmitis picture, with dog/puppy exposure or pica. Bartonella: neuroretinitis with a macular star and disc swelling, with cat or kitten exposure.",
+   perf:"Toxocara serology supports the diagnosis; Goldmann–Witmer on aqueous is more specific for local infection.",
+   pitfall:"Seroprevalence in the general population limits specificity. Order these when the exposure history and the fundus picture already point there — not as part of a routine panel.",
+   cite:"Joye &amp; Gonzales 2020 p.151; Wang ZJ et al, Acta Trop 2016", dx:["toxocara","Bartonella"]},
+  {t:"Full blood count with differential, ESR, CRP", tag:"core",
+   what:"Baseline haematology and acute-phase markers.",
+   when:"Almost always — cheap, and the differential carries specific signals.",
+   perf:"<b>Lymphopenia &lt;1.0 ×10⁹/L is ~96.7% specific for sarcoid-associated uveitis</b> (though only ~15% sensitive); combined with a raised ACE, specificity approaches 99% with PPV ~74%. Eosinophilia points to parasites or EGPA. Leucopenia and thrombocytopenia support SLE.",
+   pitfall:"ESR is age- and sex-dependent (rough upper limit ≈ age/2, +5 for women). A high ESR with a disproportionately normal CRP suggests SLE. <b>Syphilitic uveitis characteristically has bland routine bloods</b> — a normal FBC with only a mildly raised ESR argues nothing against it.",
+   cite:"Groen-Hakan F et al, BJO 2021 (PMC8479750); Wills 7e §12.1", dx:["sarcoid","SLE","toxocara","syphilis"]},
+  {t:"Faecal calprotectin and ileocolonoscopy", tag:"selective",
+   what:"Non-invasive marker of intestinal inflammation; endoscopy with biopsy for definitive diagnosis.",
+   when:"Chronic diarrhoea, blood or mucus per rectum, nocturnal symptoms, weight loss, or erythema nodosum with anterior uveitis.",
+   perf:"Calprotectin usefully distinguishes inflammatory from functional bowel symptoms and triages who needs endoscopy.",
+   pitfall:"Also raised by NSAIDs — which many spondyloarthropathy patients are taking, so interpret with the drug list.",
+   cite:"Handbook ch.2; standard gastroenterology practice", dx:["IBD"]},
+  {t:"Antiphospholipid antibodies", tag:"selective",
+   what:"Lupus anticoagulant, anti-cardiolipin, anti-β2-glycoprotein I.",
+   when:"Retinal vaso-occlusion, occlusive vasculitis, or a history of thrombosis or recurrent miscarriage.",
+   perf:"Identifies a treatable prothrombotic state that changes management from immunosuppression to anticoagulation.",
+   pitfall:"Must be <b>repeated at 12 weeks</b> to confirm persistence — transient positivity after infection is common and does not constitute antiphospholipid syndrome.",
+   cite:"Handbook Table 2.2; Sydney APS classification criteria", dx:["APS","SLE"]}
+ ]},
+
+ {group:"Ocular imaging", note:"Imaging is not an add-on to the work-up — for VKH, birdshot, white-dot syndromes and posterior scleritis it often IS the diagnostic test.", tests:[
+  {t:"OCT — macula, and enhanced-depth choroid", tag:"core",
+   what:"Cross-sectional retinal and choroidal imaging.",
+   when:"Every uveitis patient at baseline and at each activity assessment.",
+   perf:"Quantifies <b>cystoid macular oedema</b>, the commonest cause of vision loss in uveitis and the endpoint you actually treat to. Shows epiretinal membrane, subretinal fluid, ellipsoid zone integrity (prognostic for visual recovery), and with enhanced-depth imaging the choroidal thickness — markedly thickened in acute VKH and thinning as it responds.",
+   pitfall:"CMO can be present with a quiet-looking anterior chamber; do not judge activity by cells alone. Conversely, chronic CMO with a disrupted ellipsoid zone may not improve however hard you treat.",
+   cite:"Handbook ch.2; standard uveitis practice", dx:[]},
+  {t:"Fundus fluorescein angiography (FFA), ideally widefield", tag:"targeted",
+   what:"Dye study of the retinal circulation.",
+   when:"Retinal vasculitis, suspected ischaemia, disc swelling, CMO of uncertain cause, VKH, Behçet.",
+   perf:"Reveals capillary non-perfusion, occlusive vasculitis and neovascularisation that are invisible clinically — widefield imaging in particular changes management in Behçet and sickle. In VKH, multiple pinpoint leaks at the RPE with pooling into subretinal spaces is characteristic, and <b>FFA findings may support the diagnosis of VKH without needing a lumbar puncture</b>. Behçet gives diffuse fern-like capillary leakage.",
+   pitfall:"FFA images the retinal circulation, not the choroid — it will miss deep choroidal lesions that ICGA shows plainly.",
+   cite:"Joye &amp; Gonzales 2020 p.158; Takase H, ch.11 (2020)", dx:["Behçet","VKH","sarcoid","sickle"]},
+  {t:"Indocyanine green angiography (ICGA)", tag:"targeted",
+   what:"Infrared dye study of the choroidal circulation, using a protein-bound dye that does not leak from choriocapillaris fenestrations.",
+   when:"Suspected choroidal inflammation: VKH, birdshot, serpiginous, APMPPE, MEWDS, sarcoid choroidal granuloma, sympathetic ophthalmia.",
+   perf:"Shows <b>hypofluorescent dark dots</b> corresponding to choroidal granulomas or infiltrates — routinely far more numerous than the lesions visible on fundoscopy or FFA. It distinguishes choriocapillaritis from stromal choroiditis, and it tracks subclinical disease during treatment, so it can show that an eye you thought was quiet is not.",
+   pitfall:"Under-used outside specialist centres. Requires a device with ICG capability and someone who reads it regularly.",
+   cite:"Takase H, ch.11 in Yu HG (ed) 2020; Herbort CP, ICGA in uveitis", dx:["VKH","birdshot","sarcoid","serpiginous","APMPPE","MEWDS"]},
+  {t:"Fundus autofluorescence (FAF)", tag:"targeted",
+   what:"Maps RPE lipofuscin — hyperautofluorescence indicates RPE stress, hypoautofluorescence indicates RPE loss.",
+   when:"White dot syndromes, serpiginous choroiditis, birdshot, syphilitic placoid chorioretinitis, AZOOR, monitoring outer retinal disease.",
+   perf:"Often shows disease extent far beyond what the fundus suggests, and is quick, non-invasive and repeatable — a good serial monitoring tool.",
+   pitfall:"Non-specific in isolation; read it with OCT and the clinical picture.",
+   cite:"Takase H, ch.11 (2020); standard practice", dx:["serpiginous","MEWDS","APMPPE","syphilis","birdshot"]},
+  {t:"B-scan ultrasonography", tag:"targeted",
+   what:"Ocular ultrasound of the posterior segment and sclera.",
+   when:"Media opacity preventing a view, suspected posterior scleritis, choroidal mass or granuloma, retinal detachment behind vitritis, suspected intraocular foreign body.",
+   perf:"Posterior scleritis shows scleral and choroidal thickening with fluid in the sub-Tenon's space producing the classic <b>'T-sign'</b> — frequently the finding that makes an obscure painful eye make sense. Also demonstrates choroidal granulomas and their elevation.",
+   pitfall:"Operator-dependent. Posterior scleritis is repeatedly missed because a B-scan was never performed.",
+   cite:"Takase H, ch.11 (2020); Wills 7e", dx:["scleritis","sarcoid","TB"]},
+  {t:"UBM and anterior-segment OCT", tag:"selective",
+   what:"High-frequency ultrasound / OCT of the anterior segment, angle, ciliary body and pars plana.",
+   when:"Suspected pars plana exudates in intermediate uveitis, ciliary body granuloma or detachment, hypotony, UGH syndrome, a retained lens fragment or malpositioned haptic, angle nodules.",
+   perf:"UBM images structures behind the iris that no other modality reaches.",
+   pitfall:"UBM requires a coupling bath and contact — avoid on a recently operated or perforated globe.",
+   cite:"Handbook ch.2; standard practice", dx:["pars planitis","lens-induced","sarcoid"]},
+  {t:"OCT angiography", tag:"selective",
+   what:"Dye-free depth-resolved imaging of retinal and choroidal flow.",
+   when:"Detecting inflammatory choroidal neovascularisation (PIC, POHS, serpiginous, VKH) and mapping choriocapillaris flow deficits in white-dot syndromes.",
+   perf:"Excellent for identifying CNV without dye, and repeatable often enough for serial follow-up.",
+   pitfall:"Small field, motion and projection artefacts, and it does not show leakage — so it does not replace FFA or ICGA for assessing inflammatory activity.",
+   cite:"Standard practice", dx:["PIC","POHS","serpiginous"]},
+  {t:"Electroretinography (ERG)", tag:"selective",
+   what:"Objective measure of global retinal function, full-field and multifocal.",
+   when:"Birdshot (a validated monitoring tool — 30 Hz flicker implicit time is the most sensitive marker of progression), suspected autoimmune retinopathy, and to unmask a retinal dystrophy masquerading as chronic uveitis.",
+   perf:"Detects functional deterioration in birdshot before visual acuity or fields change, which is exactly when you want to escalate treatment.",
+   pitfall:"Requires a properly equipped electrophysiology department and standardised protocols; not available everywhere.",
+   cite:"Standard practice; birdshot management literature", dx:["birdshot","AIR","RP"]}
+ ]},
+
+ {group:"Neuro-imaging, CSF and other systemic imaging", note:"Low yield when ordered routinely; decisive when ordered for a reason.", tests:[
+  {t:"MRI brain (± spine) with gadolinium", tag:"targeted",
+   what:"Contrast-enhanced neuro-imaging.",
+   when:"Three clear indications: (1) intermediate or anterior uveitis with neurological symptoms suggestive of MS; (2) <b>before starting anti-TNF therapy</b>, to exclude demyelination — anti-TNF can precipitate or worsen MS in the predisposed; (3) suspected primary vitreoretinal lymphoma, where CNS involvement changes the treatment regimen.",
+   perf:"Up to about <b>10% of intermediate uveitis patients go on to develop MS</b>. Behçet and VKH have characteristic white-matter and brainstem patterns.",
+   pitfall:"<b>Do not use MRI as a routine screening tool in intermediate uveitis</b> — it is low yield in the initial work-up and low specificity, and incidental white-matter changes cause considerable harm through misdiagnosis.",
+   cite:"Joye &amp; Gonzales 2020 pp.145–146; Petrushkin H, Kidd D, Pavesio C, BJO 2015;99:1591–3", dx:["MS","lymphoma","Behçet","VKH","sarcoid"]},
+  {t:"Lumbar puncture", tag:"selective",
+   what:"CSF for cell count, protein, glucose, oligoclonal bands, VDRL, cytology and flow cytometry, and opening pressure.",
+   when:"Suspected CNS lymphoma; ocular syphilis (a baseline CSF-VDRL before treatment); genuinely uncertain VKH; neuro-Behçet or neurosarcoid with neurological signs.",
+   perf:"CSF abnormalities are present in as many as <b>72% of patients with ocular syphilis</b>, which is precisely why ocular syphilis is managed as neurosyphilis (10–14 days of IV penicillin) regardless of neurological symptoms. CSF-VDRL provides the baseline against which treatment response is judged. Oligoclonal bands occur in MS, SLE, neurosarcoid and neuro-Behçet.",
+   pitfall:"Pleocytosis is non-specific, so <b>routine LP is not recommended for diagnosing uveitis</b>. In VKH, FFA findings often make the diagnosis without it. Always image before an LP if there is any possibility of raised intracranial pressure.",
+   cite:"Joye &amp; Gonzales 2020 pp.151, 158; CDC STI treatment guidelines", dx:["syphilis","lymphoma","VKH","MS","sarcoid","Behçet"]},
+  {t:"Sacroiliac joint imaging", tag:"targeted",
+   what:"Plain radiographs, or MRI with STIR sequences for early disease.",
+   when:"Inflammatory back pain with HLA-B27-pattern anterior uveitis.",
+   perf:"MRI detects active sacroiliitis (bone marrow oedema) years before radiographic change appears, which is what allows an early axial spondyloarthritis diagnosis.",
+   pitfall:"Normal plain films do not exclude axial spondyloarthritis. Refer to rheumatology rather than trying to make the diagnosis from the eye clinic.",
+   cite:"ASAS classification criteria; Handbook ch.2", dx:["HLA-B27","IBD","reactive"]},
+  {t:"ECG, echocardiogram, cardiac MRI", tag:"selective",
+   what:"Cardiac screening in sarcoidosis.",
+   when:"Confirmed or strongly suspected sarcoid — cardiac involvement can be clinically silent and presents with conduction block, ventricular arrhythmia or sudden death.",
+   perf:"ECG is the cheap first screen; cardiac MRI or FDG-PET characterises involvement.",
+   pitfall:"Easy to omit from an eye-clinic-led work-up. If you diagnose sarcoid, make sure someone screens the heart.",
+   cite:"Standard respiratory/cardiology practice", dx:["sarcoid"]},
+  {t:"Audiometry", tag:"selective",
+   what:"Formal pure-tone audiometry.",
+   when:"VKH (sensorineural loss and tinnitus are diagnostic criteria), Cogan syndrome, sympathetic ophthalmia, syphilis, GPA.",
+   perf:"In Cogan syndrome hearing loss can become permanent within days — audiometry plus urgent high-dose steroid is time-critical.",
+   pitfall:"Ask the patient about hearing directly; subtle sensorineural loss is not volunteered.",
+   cite:"Handbook ch.2; VKH revised diagnostic criteria", dx:["VKH","Cogan","sympathetic","syphilis"]}
+ ]}
+];
+
+/* ---- targeted panel builder ---- */
+const PB={loc:"",lat:"",gran:"",course:"",age:"",flags:{}};
+const PB_FLAGS=[
+ {k:"neuro",l:"Neurological symptoms"},
+ {k:"back",l:"Inflammatory back / joint pain"},
+ {k:"gi",l:"Chronic diarrhoea / blood PR"},
+ {k:"ulcer",l:"Recurrent oral ± genital ulcers"},
+ {k:"resp",l:"Cough / breathlessness / erythema nodosum"},
+ {k:"iop",l:"Raised IOP + iris atrophy"},
+ {k:"retinitis",l:"Necrotising retinitis"},
+ {k:"immuno",l:"Immunosuppressed / HIV risk"},
+ {k:"steroidfail",l:"Steroid-resistant or steroid-dependent"},
+ {k:"trauma",l:"Prior surgery / penetrating trauma"},
+ {k:"antitnf",l:"Anti-TNF therapy being considered"},
+ {k:"preg",l:"Pregnant or planning pregnancy"}
+];
+function buildPanel(){
+ const F=PB.flags, add=(arr,t,why)=>{if(!arr.some(x=>x.t===t))arr.push({t,why});};
+ const must=[],should=[],consider=[],avoid=[];
+ const noWorkup = PB.loc==="anterior" && PB.course==="first" && PB.lat==="unilateral" && PB.gran==="non-granulomatous"
+   && !Object.values(F).some(Boolean);
+
+ if(noWorkup){
+   avoid.push({t:"No laboratory work-up needed at this point",why:"A first episode of typical, unilateral, non-granulomatous acute anterior uveitis in a well patient does not need blood tests. Treat topically and investigate only if it recurs, becomes bilateral or granulomatous, or fails to settle (Wills 7e §12.1)."});
+ } else if(PB.loc){
+   add(must,"Treponemal syphilis serology + quantitative RPR","Syphilis mimics every uveitis pattern; the reverse-sequence algorithm starts treponemal. Non-reactive treponemal reliably excludes it.");
+   add(must,"IGRA (± TST if ocular TB suspicion is high)","TB masquerades as any uveitis; in ocular TB specifically TST may add sensitivity to IGRA.");
+   add(must,"Chest X-ray","Screens for sarcoid and TB — the two great imitators. A normal film does not clear either.");
+   add(must,"FBC + differential, ESR/CRP","Cheap, and the differential carries specific signal: lymphopenia <1.0 is ~96.7% specific for sarcoid uveitis.");
+ }
+
+ if(PB.loc==="anterior"){
+   if(PB.gran==="granulomatous"){
+     add(should,"Serum ACE + lysozyme + calcium","Granulomatous anterior uveitis puts sarcoid and TB at the front; these are the IWOS supportive investigations.");
+     add(consider,"Chest CT if the CXR is normal","More sensitive and specific than plain film, especially in women over 50.");
+   }
+   if(PB.course==="recurrent"||PB.course==="chronic"||F.back){
+     add(should,"HLA-B27","Acute, unilateral, recurrent, non-granulomatous AAU — >50% of AAU is B27-positive. Order it when the phenotype fits, not routinely.");
+   }
+   if(PB.age==="child"){
+     add(should,"ANA (Hep-2) and RF","The one autoantibody with proven utility in uveitis — ANA+/RF− identifies the high-risk JIA group needing tighter screening.");
+     add(consider,"Toxocara ELISA if a granuloma is present","Dog/puppy exposure or pica with a unilateral granuloma.");
+   }
+   if(PB.lat==="bilateral" && (PB.age==="child"||PB.age==="young")){
+     add(should,"Urine β2-microglobulin + serum creatinine","Bilateral sudden anterior uveitis in a young patient: combined elevation has ~100% PPV for TINU.");
+   }
+   if(F.iop){
+     add(should,"Aqueous PCR — HSV, VZV, CMV","Hypertensive unilateral anterior uveitis with iris atrophy is herpetic until proven otherwise; PCR settles it and changes treatment.");
+   }
+ }
+ if(PB.loc==="intermediate"){
+   add(should,"Serum ACE + lysozyme","Sarcoid is a leading identifiable cause of intermediate uveitis.");
+   add(consider,"Lyme serology ONLY with endemic exposure + systemic features","Ordered indiscriminately its PPV is poor and false positives are common.");
+   add(consider,"HTLV-1 serology if from an endemic region","Caribbean, Japan, West Africa — causes intermediate uveitis with vitreous opacities.");
+   if(F.neuro||F.antitnf) add(must,"MRI brain ± spine with gadolinium",F.antitnf?"Mandatory before anti-TNF — the drug can precipitate or worsen demyelination.":"Neurological symptoms with intermediate uveitis: up to ~10% develop MS.");
+   else avoid.push({t:"Routine MRI brain for intermediate uveitis","why":"Not recommended as a screening tool — low yield and low specificity. Reserve it for neurological symptoms, or before anti-TNF (Petrushkin, BJO 2015)."});
+ }
+ if(PB.loc==="posterior"||PB.loc==="pan"){
+   add(should,"Toxoplasma IgG (± IgM)","A negative IgG in an immunocompetent patient makes ocular toxoplasmosis very unlikely — that negative is the useful result.");
+   add(should,"Serum ACE + lysozyme + calcium","Sarcoid choroidal granuloma and periphlebitis.");
+   add(should,"HIV test","Changes which opportunistic infections are plausible, and mandatory in ocular syphilis.");
+   add(should,"OCT + FFA (widefield) + ICGA","ICGA shows choroidal lesions FFA cannot; for VKH and birdshot the imaging often IS the diagnostic test.");
+   if(F.retinitis) add(must,"Aqueous or vitreous PCR — HSV, VZV, CMV, toxoplasma","Necrotising retinitis is an emergency: PCR directs antiviral therapy and a delay costs retina.");
+   add(consider,"HLA-A29 if cream ovoid postequatorial lesions","Approaching 100% of birdshot is A29-positive, so a negative effectively excludes it.");
+   add(consider,"B-scan ultrasound","Posterior scleritis (T-sign) and choroidal granulomas are repeatedly missed for want of a B-scan.");
+ }
+ if(PB.loc==="scleritis"){
+   add(must,"ANCA (PR3 and MPO), ANA, RF, anti-CCP","This is where autoantibodies genuinely earn their place — GPA, RA and SLE cause scleritis far more than uveitis.");
+   add(must,"Urinalysis + renal function","Never assess suspected GPA without looking at the urine.");
+   add(should,"B-scan ultrasound","Posterior scleritis shows scleral thickening with a T-sign.");
+   add(consider,"CT sinuses and chest","Sinus, pulmonary and renal involvement in GPA.");
+ }
+ if(PB.age==="older"&&(PB.loc==="intermediate"||PB.loc==="posterior"||PB.loc==="pan")){
+   add(should,"MRI brain with gadolinium","Older patient with vitritis: exclude CNS involvement of primary vitreoretinal lymphoma before immunosuppressing.");
+   add(consider,"Diagnostic vitrectomy — cytology, flow, IL-10:IL-6, MYD88 L265P","IL-10:IL-6 ratio ≥1 discriminates PVRL with Se ~93%/Sp ~100%. Warn the lab; avoid steroid beforehand if you safely can.");
+ }
+ if(F.steroidfail){
+   add(must,"Reconsider infection and masquerade before escalating","Steroid resistance or steroid dependence is a diagnostic finding: think lymphoma, TB, syphilis, toxoplasma, P. acnes, and retained lens material.");
+   add(consider,"Ocular fluid sampling (PCR + culture ± cytology)","The highest-yield manoeuvre in treatment-resistant uveitis, and the most under-used.");
+ }
+ if(F.immuno){
+   add(must,"HIV test with CD4 and viral load","CMV retinitis appears below CD4 ~50; toxoplasma and syphilis occur at any count.");
+   add(should,"Aqueous PCR panel","Immunosuppression blunts inflammation, so retinitis can look bland — sample rather than assume.");
+ }
+ if(F.gi){ add(should,"Faecal calprotectin ± ileocolonoscopy","Chronic diarrhoea with uveitis is IBD until proven otherwise."); add(should,"HLA-B27","IBD-associated uveitis sits in the B27 spectrum."); }
+ if(F.ulcer){ add(should,"HLA-B51 (supportive only) + widefield FFA","Behçet is a clinical diagnosis; B51 supports it and must never exclude it. FFA shows the occlusive vasculitis that defines prognosis."); }
+ if(F.resp){ add(should,"Serum ACE, lysozyme, calcium; chest CT if CXR normal","Erythema nodosum with hilar nodes, arthritis and fever is Löfgren syndrome."); add(consider,"Biopsy an infiltrated skin lesion, scar or tattoo","The easiest route to tissue proof of sarcoid — far less invasive than lung biopsy.");}
+ if(F.back){ add(should,"MRI sacroiliac joints + rheumatology referral","MRI detects active sacroiliitis years before plain films change."); }
+ if(F.trauma){ add(should,"Examine BOTH eyes fully; OCT for serous fluid","Sympathetic ophthalmia after penetrating injury or surgery to the fellow eye — and it can present decades later."); add(consider,"Vitreous culture with 14-day incubation","Chronic post-operative inflammation with a capsular plaque is Cutibacterium acnes until excluded — standard 48-hour plates report it as no growth.");}
+ if(F.antitnf&&PB.loc!=="intermediate"){ add(must,"MRI brain to exclude demyelination + IGRA/CXR before biologics","Anti-TNF can unmask demyelination and reactivate latent TB.");}
+ if(F.preg){ add(must,"Pregnancy test before any teratogenic immunosuppression","Methotrexate, mycophenolate and cyclophosphamide are all teratogenic — plan drug choice with rheumatology and obstetrics.");}
+ if(PB.loc&&!noWorkup){
+   if(PB.loc!=="scleritis")avoid.push({t:"A broad autoantibody panel in uveitis",why:"Apart from ANA in suspected JIA, no autoantibody test has proven routine utility in uveitis. ANA, RF, anti-CCP and ANCA belong to the scleritis work-up (Joye & Gonzales 2020)."});
+   avoid.push({t:"HLA typing as routine screening",why:"PPV of HLA testing in uveitis is <0.50. Order B27, A29 or B51 only when a specific phenotype is already in front of you."});
+   avoid.push({t:"Serology for geographically implausible infections",why:"Testing for rare disease with low pre-test probability mainly generates false positives that then have to be chased."});
+ }
+ return {must,should,consider,avoid,noWorkup};
+}
+
+/* ============ RESULTS INTERPRETER ============ */
+/* value states per test; interpretation rules cite the source book */
+/* numeric fields carry unit sets [label,factorToSI]; SI stored. select fields carry opts. */
+const LABS=[
+ {group:"Full blood count &amp; differential", note:"Enter absolute counts. Differential counts are numerically identical in UK (×10⁹/L) and US (×10³/µL) — no conversion needed. Only Hb differs (g/L vs g/dL).", fields:[
+   {id:"wbc",label:"WBC",unit:"×10⁹/L",ph:"7.4"},
+   {id:"lymph",label:"Lymphocytes (abs)",unit:"×10⁹/L",ph:"1.6"},
+   {id:"neut",label:"Neutrophils (abs)",unit:"×10⁹/L",ph:"4.2"},
+   {id:"eos",label:"Eosinophils (abs)",unit:"×10⁹/L",ph:"0.2"},
+   {id:"hb",label:"Haemoglobin",units:[["g/L",1],["g/dL",10]],ph:"135"},
+   {id:"plt",label:"Platelets",unit:"×10⁹/L",ph:"250"}
+ ]},
+ {group:"Inflammatory markers", note:"ESR is age/sex-dependent (rough upper limit ≈ age⁄2, +5 for women). CRP: UK reports mg/L, US often mg/dL (×10).", fields:[
+   {id:"esr",label:"ESR",unit:"mm/hr",ph:"22"},
+   {id:"crp",label:"CRP",units:[["mg/L",1],["mg/dL",10]],ph:"6"}
+ ]},
+ {group:"Sarcoid markers", note:"ACE reference ≈ 8–52 IU/L; ACE-inhibitors falsely lower it; children/some ethnicities run higher. sIL-2R is more sensitive than ACE.", fields:[
+   {id:"ace",label:"Serum ACE",unit:"IU/L",ph:"45"},
+   {id:"lyso",label:"Serum lysozyme",type:"select",opts:["not done","normal","elevated"]},
+   {id:"sil2r",label:"Soluble IL-2R",type:"select",opts:["not done","normal","elevated"]},
+   {id:"ca",label:"Corrected calcium",units:[["mmol/L",1],["mg/dL",0.2495]],ph:"2.40"},
+   {id:"ucal",label:"24-h urinary calcium",type:"select",opts:["not done","normal","elevated"]}
+ ]},
+ {group:"Syphilis", note:"Treponemal test = infection ever; RPR/VDRL titre = activity. Ocular syphilis is treated as neurosyphilis.", fields:[
+   {id:"trep",label:"Treponemal (TPPA/FTA/EIA)",type:"select",opts:["not done","reactive","non-reactive"]},
+   {id:"rpr",label:"RPR / VDRL titre",type:"select",opts:["not done","non-reactive","1:1","1:2","1:4","1:8","1:16","1:32","1:64","≥1:128"]}
+ ]},
+ {group:"Tuberculosis", fields:[
+   {id:"igra",label:"IGRA (QuantiFERON)",type:"select",opts:["not done","positive","negative","indeterminate"]},
+   {id:"tst",label:"Tuberculin skin test (induration)",type:"select",opts:["not done","0 mm (no reaction)","1–4 mm","5–9 mm","10–14 mm","≥15 mm"]},
+   {id:"bcg",label:"BCG vaccinated?",type:"select",opts:["not known","yes","no"]},
+   {id:"cxr",label:"Chest imaging (CXR/CT)",type:"select",opts:["not done","normal","hilar nodes","other abnormal"]}
+ ]},
+ {group:"Autoimmune / vasculitis", fields:[
+   {id:"ana",label:"ANA titre",type:"select",opts:["not done","negative","1:40","1:80","1:160","1:320","≥1:640"]},
+   {id:"rf",label:"Rheumatoid factor",type:"select",opts:["not done","positive","negative"]},
+   {id:"anca",label:"ANCA",type:"select",opts:["not done","c-ANCA / PR3","p-ANCA / MPO","negative"]},
+   {id:"dsdna",label:"Anti-dsDNA",type:"select",opts:["not done","positive","negative"]},
+   {id:"ccp",label:"Anti-CCP",type:"select",opts:["not done","positive","negative"]},
+   {id:"b27",label:"HLA-B27",type:"select",opts:["not done","positive","negative"]}
+ ]},
+ {group:"Renal, TINU &amp; infection screen", note:"TINU is the diagnosis most often missed for want of a urine test. Enter creatinine in your local units — thresholds are age-dependent.", fields:[
+   {id:"b2m",label:"Urine β2-microglobulin",unit:"mg/L",ph:"0.30"},
+   {id:"creat",label:"Serum creatinine",units:[["µmol/L",1],["mg/dL",88.4]],ph:"78"},
+   {id:"paed",label:"Patient aged ≤15?",type:"select",opts:["not stated","yes","no"]},
+   {id:"hiv",label:"HIV serology",type:"select",opts:["not done","positive","negative"]},
+   {id:"cd4",label:"CD4 count (if HIV+)",unit:"cells/µL",ph:"320"}
+ ]},
+ {group:"Targeted / specialised", note:"Enter both vitreous cytokines to auto-compute the IL-10:IL-6 ratio.", fields:[
+   {id:"toxo",label:"Toxoplasma serology",type:"select",opts:["not done","IgG+ IgM-","IgM positive","negative"]},
+   {id:"hlaa29",label:"HLA-A29",type:"select",opts:["not done","positive","negative"]},
+   {id:"hlab51",label:"HLA-B51",type:"select",opts:["not done","positive","negative"]},
+   {id:"pcr",label:"Aqueous/vitreous PCR",type:"select",opts:["not done","HSV+","VZV+","CMV+","toxo+","negative"]},
+   {id:"gwc",label:"Goldmann–Witmer coefficient",unit:"ratio",ph:"6"},
+   {id:"il10",label:"Vitreous IL-10",unit:"pg/mL",ph:"400"},
+   {id:"il6",label:"Vitreous IL-6",unit:"pg/mL",ph:"120"},
+   {id:"myd88",label:"MYD88 L265P",type:"select",opts:["not done","detected","not detected"]},
+   {id:"cyto",label:"Vitreous cytology",type:"select",opts:["not done","atypical lymphoid cells","reactive lymphocytes only","inadequate sample","no malignant cells"]}
+ ]}
+];
+const lab={};      // select id -> value
+const num={};      // numeric id -> SI value (number) or null
+const unitSel={};  // numeric id -> chosen unit index
+
+/* interpretation engine: returns [{status,dx,line,why,cite}] */
+function titre(v){ // "1:16" -> 16, "≥1:128" -> 128, "≥1:640" -> 640, non-reactive/negative -> 0
+ if(!v||v==="not done")return null;
+ if(v==="non-reactive"||v==="negative")return 0;
+ const m=v.match(/1:(\d+)/); return m?parseInt(m[1]):null;
+}
+function interpret(){
+ const g=id=>lab[id]||"not done";       // select value
+ const n=id=>(typeof num[id]==="number"&&!isNaN(num[id]))?num[id]:null; // SI numeric or null
+ const out=[];
+ const push=(dx,status,line,why,cite)=>out.push({dx,status,line,why,cite});
+
+ /* ---------- FBC / differential nuance ---------- */
+ const fbc=[];
+ const lymph=n("lymph"), eos=n("eos"), neut=n("neut"), hb=n("hb"), plt=n("plt"), wbc=n("wbc");
+ if(lymph!==null){
+   if(lymph<1.0){
+     push("sarcoid","support",`Lymphopenia (${lymph} ×10⁹/L) — a specific pointer to sarcoid.`,
+       "Peripheral lymphopenia reflects sequestration of lymphocytes into granulomata. At &lt;1.0 ×10⁹/L its specificity for sarcoid-associated uveitis is ~96.7% (though sensitivity only ~15%); combined with a raised ACE, specificity rises to ~99% and PPV ~74%. Differential for lymphopenia also includes SLE, HIV, viral infection and lymphoma.",
+       "Groen-Hakan et al, BJO 2021 (PMC8479750); Sweiss et al, PLoS One 2010");
+   } else if(lymph<1.74){
+     push("sarcoid","live",`Borderline-low lymphocytes (${lymph} ×10⁹/L).`,
+       "Below the ROC-optimised cut-off of 1.74 ×10⁹/L (Se ~64%, Sp ~65% for sarcoid uveitis) but above the highly specific &lt;1.0 threshold. Weakly supportive — weigh with ACE/sIL-2R and imaging.",
+       "Groen-Hakan et al, BJO 2021 (PMC8479750)");
+   }
+ }
+ if(eos!==null && eos>0.5){
+   push("toxocara","support",`Eosinophilia (${eos} ×10⁹/L).`,
+     "Peripheral eosinophilia points to parasitic causes (toxocariasis, DUSN, onchocerciasis), eosinophilic GPA, or a drug hypersensitivity reaction. In a child with a granuloma this strongly supports toxocara.",
+     "Foster 2e; Handbook ch.2");
+   push("GPA","live","Consider eosinophilic GPA.","Marked eosinophilia with asthma/sinus disease and retinal vasculitis suggests EGPA (Churg–Strauss).","Foster 2e");
+ }
+ if(neut!==null && neut>7.5 && (wbc===null||wbc>11)){
+   push("Behçet","live",`Neutrophilia (${neut} ×10⁹/L).`,
+     "Behçet is a neutrophilic disease and flares with a neutrophil leucocytosis; also seen with bacterial/endophthalmitis and steroid effect. Non-specific on its own.","Handbook ch.2");
+ }
+ if(wbc!==null && wbc<4){
+   push("SLE","support",`Leucopenia (WBC ${wbc} ×10⁹/L).`,
+     "Leucopenia/lymphopenia is a haematological criterion for SLE. With a photosensitive rash, arthralgia and retinal vasculitis it is supportive — confirm with ANA/dsDNA.","Handbook Table 2.2; ACR SLE criteria");
+ }
+ if(hb!==null && hb<115){
+   push("TB","live",`Anaemia (Hb ${hb} g/L).`,
+     "Anaemia of chronic disease accompanies chronic granulomatous/inflammatory causes — TB, sarcoid, IBD, SLE — and marrow involvement by lymphoma. Non-specific but flags systemic disease burden.","Handbook ch.2");
+ }
+ if(plt!==null){
+   if(plt<150){
+     push("SLE","live",`Thrombocytopenia (platelets ${plt} ×10⁹/L).`,
+       "Thrombocytopenia occurs in SLE and antiphospholipid syndrome (with recurrent DVT/miscarriage and retinal vaso-occlusion), and with marrow infiltration by lymphoma.","Handbook Table 2.2");
+   }
+ }
+
+ /* ---------- Inflammatory markers ---------- */
+ const esr=n("esr"), crp=n("crp");
+ if(esr!==null && crp!==null){
+   if(esr>30 && crp<10){
+     push("SLE","live",`ESR–CRP dissociation (ESR ${esr}, CRP ${crp} mg/L).`,
+       "A high ESR with a disproportionately normal/low CRP is characteristic of SLE (CRP typically stays low unless there is serositis or infection). Prompts ANA/dsDNA/complement.","Rheumatology standard; Handbook ch.2");
+   }
+   if(esr>100){
+     push("lymphoma","live",`Markedly raised ESR (${esr} mm/hr).`,
+       "An ESR &gt;100 is a red flag for malignancy (incl. lymphoma), deep/occult infection (TB), GCA and active systemic vasculitis — widen the net beyond idiopathic uveitis.","General medicine");
+   }
+ }
+
+ /* ---------- SARCOID: ACE + sIL-2R ---------- */
+ const ace=n("ace"), sil2r=g("sil2r"), cxr=g("cxr");
+ let sarcoidDone=false;
+ if(ace!==null){
+   sarcoidDone=true;
+   if(ace>136){
+     push("sarcoid","support",`ACE strongly elevated (${ace} IU/L, &gt;2× ULN).`,
+       "An ACE more than twice the upper limit is more convincing (the marker tracks granuloma burden). Still correlate with imaging and sIL-2R.","Foster 2e; Handbook ch.2");
+   } else if(ace>68){
+     push("sarcoid","support",`ACE elevated (${ace} IU/L, above the 68 IU/L cut-off).`,
+       "At the standard 68 IU/L cut-off, specificity for sarcoid uveitis is ~89% but sensitivity only ~46% — a raised value supports, it does not confirm. Beware false positives in TB, diabetes and other granulomatous disease.","Groen-Hakan 2021; Foster 2e");
+   } else if(ace>52){
+     push("sarcoid","live",`ACE borderline (${ace} IU/L).`,
+       "Between the reference top (~52) and the diagnostic cut-off (68). Non-committal — lean on sIL-2R (more sensitive) and imaging.","Groen-Hakan 2021");
+   } else {
+     push("sarcoid","unlikely",`ACE normal (${ace} IU/L) — lowers but does not exclude.`,
+       "Normal ACE has a good negative predictive value (~89%) yet misses over half of sarcoid uveitis (Se ~46%); steroids and ACE-inhibitors suppress it, and children/some ethnicities run higher. If the eye is granulomatous, keep sarcoid live and get sIL-2R ± CT chest.","Groen-Hakan 2021; Foster 2e");
+   }
+ }
+ if(sil2r==="elevated"){
+   push("sarcoid","support","Soluble IL-2R elevated — a stronger sarcoid signal than ACE.",
+     "sIL-2R outperforms ACE for sarcoid-associated uveitis (Se ~88–98% vs ~46% for ACE, comparable specificity). An elevated sIL-2R argues for sarcoid more convincingly than ACE or CXR.","Groen-Hakan/Rothova, Am J Ophthalmol 2017 (PMC6583850)");
+ } else if(sil2r==="normal" && ace!==null && ace<=52){
+   push("sarcoid","unlikely","Normal ACE and normal sIL-2R together.",
+     "Both markers normal makes systemic sarcoid less likely, but neither excludes ocular sarcoid — tissue is still the gold standard if suspicion is high.","PMC6583850");
+ }
+ if(cxr==="hilar nodes"){
+   push("sarcoid","support","Bilateral hilar lymphadenopathy on imaging.",
+     "The classic radiological finding; strongly supportive alongside a compatible eye and raised markers. CT chest is more sensitive than plain film.","Handbook ch.2");
+ } else if(cxr==="normal" && !sarcoidDone && sil2r==="not done"){
+   push("sarcoid","live","A normal chest film alone does not clear sarcoid.",
+     "Plain CXR misses nodes a CT would show; pair with ACE/sIL-2R.","Foster 2e");
+ }
+
+ /* ---------- SYPHILIS ---------- */
+ const trep=g("trep"), rprT=titre(g("rpr"));
+ if(trep==="non-reactive"){
+   push("syphilis","excluded","Effectively excluded (treponemal non-reactive).",
+     "Treponemal tests (TPPA/FTA/EIA) stay reactive for life after infection, so a non-reactive result reliably rules syphilis out.","Wills 7e §12.1; CDC STI guidelines");
+ } else if(trep==="reactive"){
+   if(rprT!==null && rprT>=16){
+     push("syphilis","support",`Reactive treponemal test with a high RPR titre (1:${rprT}).`,
+       "A non-treponemal titre ≥1:16 indicates active infection (secondary syphilis territory). With ocular involvement this is ocular syphilis → manage as neurosyphilis (IV penicillin) and send CSF-VDRL.","CDC STI guidelines; Wills 7e §12.1");
+   } else if(rprT!==null && rprT>0){
+     push("syphilis","support",`Reactive treponemal test, low RPR titre (1:${rprT}).`,
+       "A low titre still fits active ocular syphilis (may be early/late/partially treated). Do NOT down-rank on titre alone — ocular = neurosyphilis; treat and send CSF-VDRL.","CDC STI guidelines");
+   } else if(rprT===0){
+     push("syphilis","live","Reactive treponemal test but non-reactive RPR — still on the table.",
+       "A non-reactive RPR does NOT exclude ocular syphilis: it can be serofast/late, or prozone (falsely negative at high titre — ask the lab to dilute). Treponemal-reactive + a compatible eye warrants treatment as neurosyphilis.","Wills 7e §12.1 (RPR may be falsely negative); CDC");
+   } else {
+     push("syphilis","live","Treponemal-reactive — confirm activity with an RPR titre.",
+       "Confirms exposure ever; send a quantitative RPR/VDRL to gauge activity and a CSF-VDRL given ocular involvement.","Wills 7e §12.1");
+   }
+ } else {
+   // treponemal not tested — prompt only when a work-up is actually underway, and as a NOTE that never feeds the differential
+   const anyEntered = Object.values(num).some(v=>typeof v==='number'&&!isNaN(v))
+     || Object.entries(lab).some(([k,v])=>k!=='trep'&&v&&v!=='not done');
+   if(esr!==null && esr>20 && (wbc===null||(wbc>=4&&wbc<=11)) && (lymph===null||lymph>=1.0)){
+     push("syphilis","note","Worth screening — a bland CBC with only a raised ESR does NOT argue against syphilis.",
+       "Syphilitic uveitis characteristically has unremarkable routine bloods; a normal differential with an isolated raised ESR is entirely compatible. It mimics any uveitis pattern — send treponemal serology before dismissing it.","Wills 7e §12.1; Foster 2e");
+   } else if(anyEntered){
+     push("syphilis","note","Not yet tested — consider treponemal serology.",
+       "Bilateral, granulomatous, posterior or recurrent uveitis should be screened for syphilis.","Wills 7e §12.1");
+   }
+ }
+
+ /* ---------- TB ---------- */
+ const igra=g("igra");
+ if(igra==="positive"){
+   push("TB","support","IGRA positive — supports presumed tubercular uveitis in the right context.",
+     "QuantiFERON has Se ~64%, Sp ~99%. In a low-prevalence setting its PPV for tubercular uveitis approaches 100% WHEN SUN clinical criteria are met, but ~0% when they are not — so anchor it to the phenotype. It cannot distinguish latent from active; involve TB services before ATT.",
+     "Kurup/Agrawal meta-analysis; SUN TB criteria 2021");
+ } else if(igra==="negative"){
+   push("TB","unlikely","IGRA negative — less likely, not excluded.",
+     "With Se only ~64%, a negative IGRA still misses about a third of tubercular uveitis, especially with endemic exposure. Down-rank but don't discard if the eye looks tubercular.","Kurup/Agrawal meta-analysis");
+ } else if(igra==="indeterminate"){
+   push("TB","live","Indeterminate IGRA — repeat.","Often technical or from immunosuppression; repeat and correlate.","Standard practice");
+ }
+ if(cxr==="normal"){
+   push("TB","live","A normal chest film does NOT clear TB uveitis.",
+     "Most ocular TB occurs in patients WITHOUT active pulmonary TB — the CXR helps when positive but its normality does not exclude tubercular uveitis.","Wills 7e §12.1 (p.604)");
+ }
+
+ /* ---------- HLA-B27 ---------- */
+ if(g("b27")==="positive"){
+   push("HLA-B27","support","HLA-B27 positive — supports spondyloarthropathy-linked AAU.",
+     "In typical acute, unilateral, recurrent, non-granulomatous anterior uveitis, B27 positivity strongly supports the diagnosis and prompts a spondyloarthropathy work-up.","Foster 2e; SUN criteria");
+ } else if(g("b27")==="negative"){
+   push("HLA-B27","unlikely","HLA-B27 negative — lowers, does not exclude AAU.",
+     "Many acute anterior uveitis cases are B27-negative; a negative reduces the spondyloarthropathy prior but idiopathic AAU remains possible.","Foster 2e");
+ }
+
+ /* ---------- ANA / RF / ANCA ---------- */
+ const anaT=titre(g("ana")), rf=g("rf"), anca=g("anca");
+ if(anaT!==null && anaT>0){
+   if(anaT>=160){
+     push("JIA","support",`ANA titre 1:${anaT} — significant.`,
+       "A titre ≥1:160 is clinically meaningful. In a child (RF-negative) it marks the high-risk JIA uveitis group and drives tighter screening; in an adult with rash/serositis think SLE.","Wills 7e (p.604); Handbook Table 2.1");
+     if(rf==="negative")push("JIA","support","ANA+ / RF− pattern.","The classic JIA-uveitis serology; ANA is a risk marker rather than diagnostic on its own.","Handbook Table 2.1");
+   } else {
+     push("JIA","live",`Low ANA titre (1:${anaT}).`,
+       "Titres of 1:40–1:80 occur in healthy people and are weakly meaningful; interpret only with the clinical picture.","Rheumatology standard");
+   }
+ }
+ if(anca==="c-ANCA / PR3"){
+   push("GPA","support","c-ANCA / PR3 positive — supports GPA.",
+     "c-ANCA (anti-PR3) is fairly specific for granulomatosis with polyangiitis; with scleritis/PUK, orbital disease or retinal vasculitis and sinus/renal signs it is strongly supportive.","Handbook ch.2");
+ } else if(anca==="p-ANCA / MPO"){
+   push("GPA","live","p-ANCA / MPO positive.","Less specific — seen in microscopic polyangiitis, EGPA and IBD; correlate with the systemic picture.","Handbook ch.2");
+ }
+
+ /* ---------- TOXOPLASMOSIS ---------- */
+ if(g("toxo")==="negative"){
+   push("toxoplasma","excluded","Toxoplasma IgG negative — very unlikely.",
+     "In the immunocompetent, negative IgG makes ocular toxoplasmosis very unlikely, as reactivation needs prior exposure.","Foster 2e Table 6.14");
+ } else if(g("toxo")==="IgG+ IgM-"){
+   push("toxoplasma","live","IgG+ / IgM− — confirms only past exposure.",
+     "A positive IgG merely shows prior infection (high background seroprevalence). Supports the diagnosis ONLY alongside a typical focal retinochoroiditis by a pigmented scar.","Foster 2e");
+ } else if(g("toxo")==="IgM positive"){
+   push("toxoplasma","support","IgM positive — recent/active infection possible.",
+     "Raises the possibility of recently acquired infection; correlate with fundus and consider aqueous PCR / Goldmann–Witmer if atypical.","Foster 2e Table 6.14");
+ }
+
+ /* ---------- PCR ---------- */
+ const pcr=g("pcr");
+ if(pcr==="HSV+"||pcr==="VZV+"){
+   push(pcr==="HSV+"?"HSV":"VZV","support",`Aqueous PCR ${pcr} — clinches viral aetiology.`,
+     "A positive HSV/VZV PCR establishes herpetic anterior uveitis (or ARN posteriorly); treat with antivirals.","Foster 2e; Wills 7e");
+ } else if(pcr==="CMV+"){
+   push("CMV","support","Aqueous PCR CMV+ — confirms CMV.","Confirms CMV anterior uveitis/retinitis; check immune status.","Foster 2e");
+ } else if(pcr==="toxo+"){
+   push("toxoplasma","support","Aqueous PCR toxo+ — confirms ocular toxoplasmosis.","Directly confirms the parasite in atypical cases.","Foster 2e");
+ }
+
+ /* ---------- BEHÇET / BIRDSHOT ---------- */
+ if(g("hlab51")==="positive"){
+   push("Behçet","support","HLA-B51 positive — supportive only.",
+     "Raises the odds but is neither necessary nor sufficient — Behçet stays a clinical diagnosis (recurrent oral ± genital ulcers, skin, occlusive retinal vasculitis, mobile hypopyon).","Handbook ch.2; SUN Behçet criteria");
+ }
+ if(g("hlaa29")==="positive"){
+   push("birdshot","support","HLA-A29 positive — strongly associated.",
+     "Present in the great majority of birdshot cases; supportive with cream oval choroidal lesions in an older Caucasian patient.","Handbook ch.2");
+ } else if(g("hlaa29")==="negative"){
+   push("birdshot","unlikely","HLA-A29 negative — birdshot unlikely.","Birdshot is very tightly HLA-A29 linked; negativity makes it unlikely.","Handbook ch.2");
+ }
+
+ /* ---------- VITREOUS IL-10 : IL-6 ---------- */
+ const il10=n("il10"), il6=n("il6");
+ if(il10!==null && il6!==null && il6>0){
+   const r=il10/il6;
+   if(r>=1){
+     push("lymphoma","support",`IL-10:IL-6 ratio ${r.toFixed(2)} (≥1) — favours vitreoretinal lymphoma.`,
+       "A vitreous IL-10:IL-6 ratio ≥1 discriminates primary vitreoretinal lymphoma from inflammatory uveitis with Se ~93% and Sp ~100%"+(il10>65?`, and IL-10 ${il10} pg/mL is above the ~65 pg/mL vitreous threshold`:"")+". Confirm with cytology/flow and MRI brain — the ratio screens, it does not replace tissue.",
+       "Cassoux/Fisson 2017 (PMID 29135797); Costopoulos ISOLD 2016");
+   } else {
+     push("lymphoma","unlikely",`IL-10:IL-6 ratio ${r.toFixed(2)} (&lt;1) — favours inflammation over lymphoma.`,
+       "An IL-6-dominant profile points to inflammatory uveitis rather than lymphoma, though a single sample can miss it — repeat if suspicion stays high.","Cassoux 2017 (PMID 29135797)");
+   }
+ } else if(il10!==null && il10>65){
+   push("lymphoma","live",`Vitreous IL-10 ${il10} pg/mL raised — enter IL-6 for the ratio.`,
+     "IL-10 above ~65 pg/mL is suspicious for lymphoma; the IL-10:IL-6 ratio (≥1) is the more discriminating measure.","Cassoux 2017 (PMID 29135797)");
+ }
+
+ /* ---------- SARCOID: lysozyme, calcium ---------- */
+ if(g("lyso")==="elevated"){
+   push("sarcoid","support","Serum lysozyme elevated.",
+     "Lysozyme, like ACE, is secreted by non-caseating granulomas, and elevation of either counts as a supportive investigation under the IWOS criteria. It adds sensitivity to ACE and is more useful in children, in whom ACE is unreliable \u2014 but it is even less specific, rising in TB, leukaemia and other granulomatous disease.",
+     "Herbort CP et al, IWOS, Ocul Immunol Inflamm 2009;17:160\u20139; Joye &amp; Gonzales 2020 p.156");
+ }
+ const ca=n("ca");
+ if(ca!==null && ca>2.60){
+   push("sarcoid","support",`Hypercalcaemia (corrected calcium ${ca} mmol/L).`,
+     "Sarcoid granulomas convert 25-OH vitamin D to active 1,25-dihydroxyvitamin D, causing hypercalciuria and, in around 10% of patients, frank hypercalcaemia. It is a supportive IWOS investigation. Also consider malignancy (including lymphoma), TB and hyperparathyroidism \u2014 and ask about vitamin D supplements, which can precipitate it in sarcoid.",
+     "Herbort/IWOS 2009; Mochizuki M et al, revised IWOS 2019");
+ }
+ if(g("ucal")==="elevated"){
+   push("sarcoid","support","Raised 24-hour urinary calcium.",
+     "Hypercalciuria is commoner and more sensitive than frank hypercalcaemia in sarcoid, and counts as a supportive IWOS investigation. Worth measuring when the serum calcium is normal but sarcoid is still in play.",
+     "Herbort/IWOS 2009");
+ }
+
+ /* ---------- TINU ---------- */
+ const b2m=n("b2m"), creat=n("creat"), paed=g("paed");
+ if(b2m!==null || creat!==null){
+   const creatHigh = creat!==null && (paed==="yes" ? creat>65.4 : creat>103.4);
+   const b2High = b2m!==null && b2m>=0.20;
+   if(b2High && creatHigh){
+     push("TINU","support",`Raised urinary \u03b22-microglobulin (${b2m} mg/L) with raised creatinine.`,
+       "Combined elevation of urinary \u03b22-microglobulin (\u22650.20 mg/L) and serum creatinine (&gt;0.74 mg/dL if aged \u226415, &gt;1.17 mg/dL if older) has a positive predictive value of 100% and a negative predictive value of 97% for tubulointerstitial nephritis and uveitis. Few tests in uveitis perform this well \u2014 involve nephrology.",
+       "Joye &amp; Gonzales 2020 p.156 (citing Hettinga YM et al)");
+   } else if(b2High){
+     push("TINU","live",`Raised urinary \u03b22-microglobulin (${b2m} mg/L) with a normal or unentered creatinine.`,
+       "Raised \u03b22-microglobulin alone indicates proximal tubular dysfunction and keeps TINU firmly on the table. Note that the uveitis may follow the nephritis by months, so creatinine can already have normalised \u2014 a normal creatinine late in the course does not exclude TINU.",
+       "Joye &amp; Gonzales 2020 p.156");
+   } else if(b2m!==null && !b2High && creat!==null && !creatHigh){
+     push("TINU","unlikely","Normal urinary \u03b22-microglobulin and creatinine.",
+       "The combination has a negative predictive value of ~97% for TINU \u2014 a reassuring pair of results in a young patient with bilateral anterior uveitis.",
+       "Joye &amp; Gonzales 2020 p.156");
+   }
+ }
+
+ /* ---------- TB: TST and IGRA/TST concordance ---------- */
+ const tst=g("tst"), bcg=g("bcg");
+ const tstMM = tst==="not done" ? null : (tst==="0 mm (no reaction)"?0: tst==="1\u20134 mm"?2: tst==="5\u20139 mm"?7: tst==="10\u201314 mm"?12: 15);
+ if(tstMM!==null){
+   if(tstMM>=10){
+     push("TB","support",`Tuberculin skin test ${tst} \u2014 positive by most thresholds.`,
+       "In OCULAR tuberculosis the TST may actually be MORE sensitive than an IGRA (TST Se ~72\u201396% vs IGRA ~36\u201391%), though less specific (Sp ~51\u201373% vs ~75\u201382%). A Bayesian analysis suggests the probability of ocular TB is highest when IGRA and TST are BOTH positive. Beware false positives after BCG or non-tuberculous mycobacterial exposure.",
+       "Ang M et al, Ophthalmology 2009 / Eye 2012; Joye &amp; Gonzales 2020 p.149");
+     if(g("igra")==="positive")push("TB","support","IGRA and TST both positive \u2014 the strongest serological combination for ocular TB.",
+       "Concordant positivity gives the highest post-test probability of tubercular uveitis. It still does not distinguish latent from active infection: anchor the decision to the ocular phenotype and involve TB services before antituberculous therapy.","Ang M et al; SUN TB criteria 2021");
+     if(g("igra")==="negative")push("TB","live","Discordant tests \u2014 TST positive, IGRA negative.",
+       "Discordance between IGRA and TST runs up to 26.5% and there is no gold standard for ocular TB. Given the TST's higher sensitivity in ocular disease, do not use the negative IGRA to dismiss a tubercular-looking eye.","Ang M et al, Eye 2012");
+   } else if(tstMM===0 && (bcg==="yes")){
+     push("sarcoid","support","Anergic (no reaction) tuberculin skin test in a BCG-vaccinated patient.",
+       "This is the sarcoid paradox: a negative TST in someone BCG-vaccinated or previously TST-positive indicates suppressed delayed-type hypersensitivity \u2014 cutaneous anergy \u2014 which is a SUPPORTIVE investigational finding for sarcoidosis under the IWOS criteria.",
+       "Herbort/IWOS 2009; Joye &amp; Gonzales 2020 p.157");
+     push("TB","unlikely","Anergy also limits what the TST can say about TB.","In an anergic patient a negative TST cannot be used to exclude tuberculosis \u2014 rely on the IGRA and the clinical picture.","Joye &amp; Gonzales 2020");
+   }
+ }
+
+ /* ---------- HIV / CD4 ---------- */
+ const cd4=n("cd4");
+ if(g("hiv")==="positive"){
+   push("HIV","support","HIV positive.",
+     "Reframes the whole differential. CD4 count decides which opportunistic infection is plausible; syphilis co-infection is common and syphilis behaves more aggressively; starting antiretrovirals can precipitate immune recovery uveitis, which mimics a new inflammatory disease.",
+     "Joye &amp; Gonzales 2020 p.151; Foster 2e");
+   if(cd4!==null && cd4<50)push("CMV","support",`CD4 ${cd4} cells/\u00b5L \u2014 in the CMV retinitis range.`,
+     "CMV retinitis typically appears below a CD4 of about 50. Look for haemorrhagic necrotising retinitis with strikingly little vitritis, and sample aqueous for PCR rather than treating empirically if the picture is atypical.","Foster 2e; Jabs DA et al");
+   else if(cd4!==null && cd4>=50)push("toxoplasma","live",`CD4 ${cd4} cells/\u00b5L.`,
+     "Above ~50 CMV retinitis becomes less likely, but toxoplasmosis, syphilis and TB occur at any CD4 count \u2014 do not let a reassuring CD4 close the infective differential.","Foster 2e");
+ } else if(g("hiv")==="negative"){
+   push("HIV","excluded","HIV negative.","Removes the opportunistic-infection framing, though a very recent exposure within the window period would not yet be detected.","Standard practice");
+ }
+
+ /* ---------- dsDNA / anti-CCP ---------- */
+ if(g("dsdna")==="positive"){
+   push("SLE","support","Anti-dsDNA positive.",
+     "Highly specific for SLE and often tracks disease activity, particularly renal activity. In the eye, SLE more often produces occlusive retinal vasculitis, cotton-wool spots, ischaemic choroidopathy and scleritis than true uveitis \u2014 so a positive dsDNA with a granulomatous panuveitis should make you question whether SLE really explains the eye.",
+     "Joye &amp; Gonzales 2020 pp.153\u2013154; ACR/EULAR SLE criteria");
+ }
+ if(g("ccp")==="positive"){
+   push("RA","support","Anti-CCP positive.",
+     "Less sensitive but far more specific than rheumatoid factor, and the modern gold standard for rheumatoid arthritis. Remember RA causes SCLERITIS and peripheral ulcerative keratitis rather than uveitis \u2014 the appearance of either may herald systemic progression and needs prompt systemic treatment.",
+     "Joye &amp; Gonzales 2020 p.154");
+ }
+
+ /* ---------- Goldmann-Witmer ---------- */
+ const gwc=n("gwc");
+ if(gwc!==null){
+   if(gwc>4){
+     push("toxoplasma","support",`Goldmann\u2013Witmer coefficient ${gwc} (&gt;4) \u2014 local intraocular antibody production.`,
+       "A GWC above 4 indicates that the specific antibody is being produced inside the eye rather than merely leaking from serum, which implicates the pathogen you asked the lab to test for (most often toxoplasma, sometimes toxocara or a herpesvirus). It complements PCR: PCR detects organism and peaks early, GWC detects the local immune response and peaks later, so a negative PCR with a positive GWC is a coherent and useful result.",
+       "de Groot-Mijnes JD et al, Am J Ophthalmol 2006;141:313\u20138; Joye &amp; Gonzales 2020 p.148");
+   } else {
+     push("toxoplasma","unlikely",`Goldmann\u2013Witmer coefficient ${gwc} (\u22644) \u2014 no evidence of local antibody production.`,
+       "Argues against local production of antibody to the pathogen tested. Interpret against the timing of sampling \u2014 very early in the disease, local antibody may not yet be detectable.",
+       "de Groot-Mijnes JD et al 2006");
+   }
+ }
+
+ /* ---------- PVRL molecular ---------- */
+ if(g("myd88")==="detected"){
+   push("lymphoma","support","MYD88 L265P mutation detected in the ocular sample.",
+     "The L265P mutation is present in the overwhelming majority of primary vitreoretinal lymphomas and can be detected from the very small volumes ocular sampling yields. In a compatible eye this is strongly confirmatory \u2014 arrange MRI brain with gadolinium and refer to haemato-oncology.",
+     "Joye &amp; Gonzales 2020 pp.157\u2013158; Chan CC et al, Oncologist 2011;16:1589\u201399");
+ }
+ const cyt=g("cyto");
+ if(cyt==="atypical lymphoid cells"){
+   push("lymphoma","support","Atypical lymphoid cells on vitreous cytology.",
+     "Large cells with irregular nuclei, prominent nucleoli and scant basophilic cytoplasm are the most specific finding for primary vitreoretinal lymphoma. Support it with flow cytometry, IgH rearrangement and the IL-10:IL-6 ratio, and image the brain.",
+     "Joye &amp; Gonzales 2020 pp.157\u2013158");
+ } else if(cyt==="reactive lymphocytes only"||cyt==="no malignant cells"||cyt==="inadequate sample"){
+   push("lymphoma","live","A cytology sample without malignant cells does NOT exclude lymphoma.",
+     "Cell yield from diagnostic vitrectomy is low and lymphoma cells lyse quickly, so sensitivity is poor \u2014 and prior corticosteroid destroys them outright. If suspicion remains, repeat the sample after a steroid washout (around two weeks where safe), warn the cytopathologist in advance, and send for IL-10:IL-6 and MYD88 in parallel.",
+     "Joye &amp; Gonzales 2020 p.157");
+ }
+
+ /* ---------- LYMPHOMA masquerade cue from bland bloods ---------- */
+ if(esr!==null && esr<20 && ace!==null && ace<=52 && (lymph===null||lymph>=1.0) && il10===null){
+   push("lymphoma","live","Bland systemic bloods do not exclude a masquerade.",
+     "Normal inflammatory markers are the norm in intraocular lymphoma. In an older patient with steroid-resistant vitritis, escalate to diagnostic vitrectomy (cytology, IL-10:IL-6, MYD88) and MRI brain rather than reassure.","Foster 2e; Handbook ch.2");
+ }
+
+ return out;
+}
+
+/* ============ RENDER ============ */
+const flagged=new Set(); const qDx={}; const qText={}; const qTests={};
+function renderQ(container,data,prefix){
+ data.forEach((grp,gi)=>{
+   const h=document.createElement('h2');h.className='sys';h.textContent=grp.sys;container.appendChild(h);
+   if(grp.note){const n=document.createElement('div');n.className='sysnote';n.textContent=grp.note;container.appendChild(n);}
+   grp.items.forEach((it,ii)=>{
+     const id=prefix+gi+'_'+ii; qDx[id]=it.dx||[]; qText[id]=it.q; qTests[id]=it.tests||[];
+     const card=document.createElement('div');card.className='q';card.id=id;
+     let html=`<div class="qhead"><div class="qtxt">${it.q}</div>
+       <div class="toggle"><button class="tbtn yes" data-a="yes">Yes</button><button class="tbtn no" data-a="no">No</button></div></div>
+       <div class="drill"><h4>Ask next — step by step</h4><ul>${it.fu.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+     if(it.exam)html+=`<h4>Examine on the body</h4><ul>${it.exam.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+     if(it.eye)html+=`<h4>Expect in the eye</h4><ul>${it.eye.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+     if(it.dx&&it.dx.length)html+=`<h4>Points toward</h4><div>${it.dx.map(d=>`<span class="pill dx">${(DXMETA[d]||{}).name||d}</span>`).join('')}</div>`;
+     if(it.tests)html+=`<h4>Targeted tests</h4><div>${it.tests.map(t=>`<span class="pill">${t}</span>`).join('')}</div>`;
+     html+=`</div>`;
+     card.innerHTML=html;
+     card.querySelectorAll('.tbtn').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();
+       const a=b.dataset.a,yes=card.querySelector('.yes'),no=card.querySelector('.no');
+       if(a==='yes'){const on=yes.classList.toggle('on');no.classList.remove('on');card.classList.toggle('pos',on);on?flagged.add(id):flagged.delete(id);}
+       else{const on=no.classList.toggle('on');yes.classList.remove('on');card.classList.remove('pos');flagged.delete(id);}
+       recompute();}));
+     card.querySelector('.qhead').addEventListener('click',()=>card.classList.toggle('pos'));
+     container.appendChild(card);
+   });
+ });
+}
+renderQ(document.getElementById('v-hx'),HX,'h');
+renderQ(document.getElementById('v-ros'),ROS,'r');
+
+/* ---- EYE SIGNS render ---- */
+const examSel=new Set();          // "gi_si" selected signs
+const examMeta={};                // id -> {pts, why, t}
+const eg=document.getElementById('examgrid');
+EYE.forEach((grp,gi)=>{
+ const wrap=document.createElement('div');wrap.className='examgrp';
+ let h=`<div class="eg-h">${grp.region}</div>`;
+ if(grp.note)h+=`<div class="eg-note">${grp.note}</div>`;
+ h+=`<div class="eg-chips">`;
+ grp.signs.forEach((s,si)=>{const id=gi+'_'+si;examMeta[id]={pts:s.pts,why:s.why,t:s.t,gi,multi:grp.multi!==false};
+   h+=`<button class="echip" data-id="${id}">${s.t}</button>`;});
+ h+=`</div><div class="eg-why" id="why_${gi}"></div>`;
+ wrap.innerHTML=h;eg.appendChild(wrap);
+});
+document.querySelectorAll('.echip').forEach(b=>b.addEventListener('click',()=>{
+ const id=b.dataset.id,m=examMeta[id];
+ if(!m.multi){ // single-select within its region group: clear siblings
+   document.querySelectorAll(`.echip[data-id^="${m.gi}_"]`).forEach(x=>{if(x!==b){x.classList.remove('on');examSel.delete(x.dataset.id);}});
+ }
+ const on=b.classList.toggle('on'); on?examSel.add(id):examSel.delete(id);
+ // show 'why' notes for this region's active chips
+ const why=document.getElementById('why_'+m.gi);
+ const active=[...document.querySelectorAll(`.echip.on[data-id^="${m.gi}_"]`)].map(x=>examMeta[x.dataset.id]);
+ why.innerHTML=active.map(a=>`<div class="whyline"><b>${a.t}:</b> ${a.why}</div>`).join('');
+ recompute();buildSummary();
+}));
+
+/* labs UI — grouped panels; numeric inputs (with unit dropdowns) + selects */
+const lg=document.getElementById('labgrid');
+LABS.forEach(G=>{
+ const panel=document.createElement('div');panel.className='labpanel';
+ let h=`<div class="lp-h">${G.group}</div>`;
+ if(G.note)h+=`<div class="lp-note">${G.note}</div>`;
+ h+=`<div class="lp-fields">`;
+ G.fields.forEach(f=>{
+   if(f.type==="select"){
+     lab[f.id]="not done";
+     h+=`<div class="fld" data-id="${f.id}"><label>${f.label}</label>
+       <select class="fsel" data-id="${f.id}">${f.opts.map(o=>`<option${o==='not done'?' selected':''}>${o}</option>`).join('')}</select></div>`;
+   } else {
+     num[f.id]=null; unitSel[f.id]=0;
+     const units=f.units||[[f.unit,1]];
+     const usel=units.length>1
+       ? `<select class="funit" data-id="${f.id}">${units.map((u,i)=>`<option value="${i}">${u[0]}</option>`).join('')}</select>`
+       : `<span class="ustatic">${units[0][0]}</span>`;
+     h+=`<div class="fld" data-id="${f.id}"><label>${f.label}</label>
+       <div class="numrow"><input class="fnum" type="number" step="any" inputmode="decimal" placeholder="${f.ph||''}" data-id="${f.id}">${usel}</div></div>`;
+   }
+ });
+ h+=`</div>`;
+ panel.innerHTML=h;
+ lg.appendChild(panel);
+});
+/* wire inputs */
+const factor=id=>{const f=LABS.flatMap(G=>G.fields).find(x=>x.id===id);const units=f.units||[[f.unit,1]];return units[unitSel[id]||0][1];};
+document.querySelectorAll('.fnum').forEach(inp=>inp.addEventListener('input',()=>{
+ const id=inp.dataset.id;const raw=parseFloat(inp.value);
+ num[id]=isNaN(raw)?null:raw*factor(id); // store SI (factor: SI = entered × factor)
+ renderInterp();recompute();
+}));
+document.querySelectorAll('.funit').forEach(sel=>sel.addEventListener('change',()=>{
+ const id=sel.dataset.id;unitSel[id]=parseInt(sel.value);
+ const inp=document.querySelector(`.fnum[data-id="${id}"]`);const raw=parseFloat(inp.value);
+ num[id]=isNaN(raw)?null:raw/factor(id);
+ renderInterp();recompute();
+}));
+document.querySelectorAll('.fsel').forEach(sel=>sel.addEventListener('change',()=>{
+ lab[sel.dataset.id]=sel.value;renderInterp();recompute();
+}));
+
+function renderInterp(){
+ const res=interpret();
+ const box=document.getElementById('interp');
+ const order={support:0,live:1,unlikely:2,excluded:3,note:4};
+ res.sort((a,b)=>order[a.status]-order[b.status]);
+ if(!res.length){box.innerHTML=`<div class="empty">Enter results above and the reasoning appears here.</div>`;return;}
+ const label={support:"supported",live:"on the table",unlikely:"less likely",excluded:"excluded",note:"worth checking"};
+ box.innerHTML=res.map(r=>`<div class="icard">
+   <div class="ih"><span class="status s-${r.status}">${label[r.status]}</span>
+     <span class="dxn">${(DXMETA[r.dx]||{}).name||r.dx}</span></div>
+   <div class="body"><p>${r.line}</p><p class="why">${r.why}</p><p class="cite">${r.cite}</p></div>
+ </div>`).join('');
+}
+
+/* differential tally: history + ROS flags, plus interpreter status boosts */
+function recompute(){
+ const rows=computeScores();
+ const list=document.getElementById('dxlist'),note=document.getElementById('flagnote');
+ const nf=flagged.size+examSel.size;
+ note.textContent=nf?`${flagged.size} history/ROS + ${examSel.size} eye sign${examSel.size===1?'':'s'} flagged.`:'Nothing flagged yet.';
+ if(!rows.length){list.innerHTML='<div class="empty">Flag findings in History, ROS or Eye signs, or enter results, and the likely diagnoses rank here.</div>';return;}
+ const max=rows[0][1];
+ list.innerHTML=rows.map(([d,v])=>`<div class="dxrow"><span class="dxname">${(DXMETA[d]||{}).name||d}</span>
+   <span class="bar" style="width:${Math.max(10,(v/max)*110)}px"></span>
+   <span class="cnt">${v%1?v.toFixed(1):v}</span></div>`).join('');
+ const mc=document.getElementById('mobcount');if(mc)mc.textContent=rows.length;
+}
+/* shared scoring: history/ROS flags + eye signs + interpreter, returns sorted [dx,score] */
+function computeScores(){
+ const score={};
+ flagged.forEach(id=>qDx[id].forEach(d=>score[d]=(score[d]||0)+1));
+ examSel.forEach(id=>examMeta[id].pts.forEach(d=>score[d]=(score[d]||0)+1));
+ interpret().forEach(r=>{
+   if(score[r.dx]===undefined && (r.status==='support'||r.status==='live'))score[r.dx]=0;
+   if(r.status==='support')score[r.dx]=(score[r.dx]||0)+1.5;
+   else if(r.status==='live')score[r.dx]=(score[r.dx]||0)+0.5;
+   else if(r.status==='unlikely')score[r.dx]=(score[r.dx]||0)-1;
+   else if(r.status==='excluded')score[r.dx]=-99;
+ });
+ return Object.entries(score).filter(([,v])=>v>-90 && v>0).sort((a,b)=>b[1]-a[1]);
+}
+
+/* tabs */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');
+ document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+ document.getElementById('v-'+t.dataset.v).classList.add('on');
+ if(t.dataset.v==='summary')buildSummary();
+ window.scrollTo(0,0);
+}));
+function goTab(v){const t=[...document.querySelectorAll('.tab')].find(x=>x.dataset.v===v);if(t)t.click();}
+
+
+/* ---- INVESTIGATIONS render ---- */
+function renderStrategy(){
+ document.getElementById('stratbox').innerHTML = STRATEGY.map(x=>
+  `<div class="stratcard"><h4>${x.h}</h4><p>${x.p}</p><div class="cite">${x.cite}</div></div>`).join('');
+}
+function renderInvestGrid(){
+ const box=document.getElementById('investgrid');
+ box.innerHTML = INVEST.map((G,gi)=>{
+  let h=`<h2 class="sys">${G.group}</h2>`;
+  if(G.note)h+=`<div class="sysnote">${G.note}</div>`;
+  h+=G.tests.map((t,ti)=>`<div class="tcard" id="tc_${gi}_${ti}">
+    <div class="th"><span class="tag tag-${t.tag}">${t.tag}</span><span class="tname">${t.t}</span><span class="chev">\u25be</span></div>
+    <div class="tbody">
+      <h5>What it measures</h5><p>${t.what}</p>
+      <h5>When to order</h5><p>${t.when}</p>
+      <h5>How it performs</h5><p>${t.perf}</p>
+      <h5>The trap</h5><p>${t.pitfall}</p>
+      <div class="cite">${t.cite}</div>
+    </div></div>`).join('');
+  return h;
+ }).join('');
+ box.querySelectorAll('.tcard .th').forEach(th=>th.addEventListener('click',()=>th.parentElement.classList.toggle('open')));
+}
+function renderPB(){
+ const fb=document.getElementById('pbflags');
+ fb.innerHTML=PB_FLAGS.map(f=>`<button class="pbchip" data-f="${f.k}">${f.l}</button>`).join('');
+ fb.querySelectorAll('.pbchip').forEach(b=>b.addEventListener('click',()=>{
+   const k=b.dataset.f; PB.flags[k]=!PB.flags[k]; b.classList.toggle('on',!!PB.flags[k]); renderPBOut(); buildSummary();
+ }));
+ document.querySelectorAll('.pbsel').forEach(sel=>sel.addEventListener('change',()=>{
+   PB[sel.dataset.k]=sel.value; renderPBOut(); buildSummary();
+ }));
+}
+function renderPBOut(){
+ const out=document.getElementById('pbout');
+ if(!PB.loc){out.innerHTML=`<div class="empty">Choose an anatomical location above and a tailored panel appears here \u2014 with what to order, what to consider, and what NOT to order.</div>`;return;}
+ const P=buildPanel();
+ const sec=(cls,title,arr)=>arr.length?`<div class="rxgrp ${cls}"><h4>${title}</h4><ul>${arr.map(x=>`<li><b>${x.t}</b><i>${x.why}</i></li>`).join('')}</ul></div>`:'';
+ out.innerHTML = sec('rx-must','Order these',P.must)
+   + sec('rx-should','Add for this phenotype',P.should)
+   + sec('rx-consider','Consider, depending on the picture',P.consider)
+   + sec('rx-avoid','Do NOT order routinely',P.avoid);
+}
+function summarisePanel(){
+ if(!PB.loc)return null;
+ const P=buildPanel(); const L=[];
+ const bits=[PB.loc,PB.lat,PB.gran,PB.course,PB.age].filter(Boolean).join(', ');
+ L.push('  Phenotype entered: '+bits);
+ const fl=PB_FLAGS.filter(f=>PB.flags[f.k]).map(f=>f.l);
+ if(fl.length)L.push('  Plus: '+fl.join('; '));
+ const blk=(t,a)=>{if(a.length){L.push('  '+t);a.forEach(x=>L.push('    - '+x.t));}};
+ blk('ORDER:',P.must); blk('ADD FOR THIS PHENOTYPE:',P.should);
+ blk('CONSIDER:',P.consider); blk('DO NOT ORDER ROUTINELY:',P.avoid);
+ return L;
+}
+
+/* ---- CLINICAL SUMMARY ---- */
+function buildSummary(){
+ const L=[];
+ /* interpreter lines are written as HTML; unescape them for the plain-text note */
+ const pad=t=>{const d=document.createElement('div');d.innerHTML=String(t);return d.textContent;};
+ L.push('UVEITIS WORKUP — SUMMARY');
+ L.push('Generated by Uveitis Clinic Companion · decision-support, not a diagnosis');
+ L.push('='.repeat(48));
+ // positive history + ROS
+ const posHx=[...flagged].filter(id=>id[0]==='h').map(id=>qText[id]);
+ const posRos=[...flagged].filter(id=>id[0]==='r').map(id=>qText[id]);
+ if(posHx.length){L.push('','HISTORY — positive:');posHx.forEach(t=>L.push('  • '+pad(t)));}
+ if(posRos.length){L.push('','REVIEW OF SYSTEMS — positive:');posRos.forEach(t=>L.push('  • '+pad(t)));}
+ // eye signs
+ if(examSel.size){L.push('','EYE SIGNS:');[...examSel].forEach(id=>L.push('  • '+examMeta[id].t));}
+ // labs entered
+ const labLines=[];
+ LABS.forEach(G=>G.fields.forEach(f=>{
+   if(f.type==='select'){if(lab[f.id]&&lab[f.id]!=='not done')labLines.push('  • '+f.label+': '+lab[f.id]);}
+   else if(typeof num[f.id]==='number'&&!isNaN(num[f.id])){const u=(f.units||[[f.unit,1]]);const disp=(num[f.id]/u[unitSel[f.id]||0][1]);labLines.push('  • '+f.label+': '+ (+disp.toFixed(3)) +' '+u[unitSel[f.id]||0][0]);}
+ }));
+ if(labLines.length){L.push('','RESULTS entered:');labLines.push(...[]);labLines.forEach(x=>L.push(x));}
+ // interpretation
+ const ip=interpret();
+ if(ip.length){L.push('','INTERPRETATION:');
+   const lbl={support:'SUPPORTED',live:'ON THE TABLE',unlikely:'LESS LIKELY',excluded:'EXCLUDED',note:'WORTH CHECKING'};
+   ip.forEach(r=>L.push('  • ['+lbl[r.status]+'] '+((DXMETA[r.dx]||{}).name||r.dx)+' — '+pad(r.line)));}
+ // differential
+ const rows=computeScores();
+ if(rows.length){L.push('','WORKING DIFFERENTIAL (by findings explained):');
+   rows.forEach(([d,v],i)=>L.push('  '+(i+1)+'. '+((DXMETA[d]||{}).name||d)+'  ('+(v%1?v.toFixed(1):v)+')'));}
+ // investigation plan from the panel builder
+ const plan=summarisePanel();
+ if(plan){L.push('','INVESTIGATION PLAN (targeted panel):');plan.forEach(x=>L.push(x));}
+ // suggested tests (from flagged question metadata + interpreter)
+ const tset=[];
+ flagged.forEach(id=>{const t=qTests[id];if(t)t.forEach(x=>{if(!tset.includes(x))tset.push(x);});});
+ if(tset.length){L.push('','SUGGESTED NEXT TESTS:');tset.forEach(t=>L.push('  • '+t));}
+ if(posHx.length+posRos.length+examSel.size+labLines.length===0)L.push('','(Nothing entered yet — work through the tabs and this fills in.)');
+ document.getElementById('summaryout').textContent=L.join('\n');
+}
+function copySummary(){buildSummary();const t=document.getElementById('summaryout').textContent;
+ navigator.clipboard.writeText(t).then(()=>{const b=event.target;const o=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=o,1500);})
+  .catch(()=>{const r=document.createRange();r.selectNode(document.getElementById('summaryout'));getSelection().removeAllRanges();getSelection().addRange(r);});
+}
+
+function resetAll(){flagged.clear();
+ document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
+ document.querySelectorAll('.q').forEach(c=>c.classList.remove('pos'));
+ Object.keys(lab).forEach(k=>lab[k]="not done");
+ Object.keys(num).forEach(k=>num[k]=null);
+ document.querySelectorAll('.fnum').forEach(i=>i.value="");
+ document.querySelectorAll('.fsel').forEach(s=>s.selectedIndex=0);
+ Object.keys(PB.flags).forEach(k=>delete PB.flags[k]);
+ PB.loc=PB.lat=PB.gran=PB.course=PB.age="";
+ document.querySelectorAll('.pbsel').forEach(x=>x.selectedIndex=0);
+ document.querySelectorAll('.pbchip').forEach(x=>x.classList.remove('on'));
+ if(document.getElementById('pbout'))renderPBOut();
+ examSel.clear();
+ document.querySelectorAll('.echip').forEach(c=>c.classList.remove('on'));
+ document.querySelectorAll('.eg-why').forEach(w=>w.innerHTML="");
+ renderInterp();recompute();buildSummary();
+}
+
+document.getElementById('footer').innerHTML='Sources: Foster CS &amp; Vitale AT, <i>Diagnosis &amp; Treatment of Uveitis</i> 2e (Tessler survey, test tables, pp.117–130); Samalia P, ch.2 in <i>Uveitis Management: A Clinical Handbook</i> (World Scientific, 2023); <i>Wills Eye Manual</i> 7e §12.1 (pp.603–606); <i>Oxford Handbook of Ophthalmology</i> 4e (pp.452–454). All in D:/ebooks. Abbreviations: AAU acute anterior uveitis · GPA granulomatosis with polyangiitis · IBD inflammatory bowel disease · TINU tubulointerstitial nephritis &amp; uveitis · VKH Vogt–Koyanagi–Harada · FHU/FUS Fuchs uveitis syndrome · PUK peripheral ulcerative keratitis. <b>Decision-support only — not a substitute for clinical assessment.</b>';
+
+renderStrategy();renderInvestGrid();renderPB();renderPBOut();
+renderInterp();recompute();buildSummary();
+</script>
+
+<script>
+/* Offline: register the service worker when served over https or localhost.
+   The app itself has zero external requests, so it also runs fine straight from a file. */
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('./sw.js').then(function(reg){
+      reg.addEventListener('updatefound',function(){
+        var nw=reg.installing; if(!nw)return;
+        nw.addEventListener('statechange',function(){
+          if(nw.state==='installed'&&navigator.serviceWorker.controller){
+            var b=document.getElementById('updbar'); if(b)b.style.display='block';
+          }
+        });
+      });
+    }).catch(function(){});
+  });
+}
+function applyUpdate(){navigator.serviceWorker.getRegistration().then(function(r){
+  if(r&&r.waiting)r.waiting.postMessage('SKIP_WAITING');setTimeout(function(){location.reload();},300);});}
+</script>
+</body>
+</html>
