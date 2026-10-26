@@ -1,7 +1,7 @@
 /* Uveitis Workup - offline service worker.
    Pages: network-first, so a phone that is online always gets the latest version;
    offline it falls back to the cached copy. Icons/manifest: cache-first. */
-const CACHE = 'uveitis-v4';
+const CACHE = 'uveitis-v5';
 const ASSETS = ['./','./index.html','./manifest.webmanifest',
   './icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
 
