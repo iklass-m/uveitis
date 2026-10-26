@@ -670,8 +670,8 @@ const IMG=[
    {t:"‘Punched-in’ sub-RPE nodule / ‘punched-out’ atrophic lesion", pts:["PIC","MFC"], why:"Sub-RPE nodular infiltrate that herniates through Bruch, then leaves a punched-out scar = PIC/MFC. OCTA separates secondary CNV (common) from an inflammatory lesion."},
    {t:"Choroidal thickening + septate serous RD", pts:["VKH","sympathetic"], why:"Bilateral thick choroid on EDI with multiloculated serous RDs (septae / bacillary-layer detachment) = VKH or sympathetic ophthalmia. Choroidal thickness is a good treatment-response marker."},
    {t:"Full-thickness retinal hyperreflectivity / necrosis", pts:["ARN","CMV","toxoplasma"], why:"Disorganised full-thickness hyperreflective retina with posterior shadowing = necrotising retinitis (ARN, CMV, toxoplasma)."},
-   {t:"Pre-retinal hyperreflective ‘stalagmites’", pts:["ARN","amyloid"], why:"From your notes: stalagmite-like hyperreflective deposits rising from the inner retina are described in ARN — and also in vitreous amyloidosis."},
-   {t:"Sub-RPE hyperreflective deposits / RPE nodularity", pts:["lymphoma"], why:"Nodular sub-RPE hyperreflective infiltrates (± vertical hyperreflective lesions, vitreous dots) in an older patient = vitreoretinal lymphoma until proven otherwise. CMO is characteristically absent despite the vitritis."},
+   {t:"Pre-retinal deposits: stalagmite / needle-shaped", pts:["amyloid","toxoplasma","ARN"], why:"Needle-shaped deposits standing perpendicular to the retinal surface (68% of post-vitrectomy hATTR eyes in one series) = vitreous amyloidosis. Oval or stalagmite-like deposits with retinitis = infectious posterior uveitis (oval favours toxoplasma; also ARN, syphilis); they fade with treatment."},
+   {t:"Sub-RPE hyperreflective deposits / RPE nodularity", pts:["lymphoma"], why:"Nodular sub-RPE hyperreflective infiltrates (± vertical hyperreflective lesions, vitreous dots) in an older patient = vitreoretinal lymphoma until proven otherwise. CMO, ERM and central thickening are uncommon despite the vitritis (CMO 12% vs 36% in uveitis)."},
    {t:"Nodular RPE thickening under a placoid lesion", pts:["syphilis"], why:"Placoid lesion with EZ loss and nodular hyperreflective RPE thickening (± punctate choroidal hyperreflectivity) = acute syphilitic posterior placoid chorioretinitis."},
    {t:"Solitary choroidal granuloma with outer-retinal involvement", pts:["TB"], why:"From your notes: TB granulomas are solitary, large, intensely yellow, with more outer-retinal involvement (‘contact sign’) on OCT; sarcoid lesions are many, small, dull yellow and spare the outer retina more."},
    {t:"Multiple small choroidal granulomas, outer retina spared", pts:["sarcoid"], why:"Many small, dull-yellow choroidal lesions with relatively preserved outer retina favour sarcoid over TB."},
@@ -685,13 +685,13 @@ const IMG=[
    {t:"Placoid lesions: early hypo, late hyper (staining)", pts:["APMPPE","serpiginous","syphilis"], why:"‘Block early, stain late’ = choriocapillaris disease: APMPPE, serpiginous (active edge stains), syphilitic placoid (adds leopard-spot hypo dots within the lesion)."},
    {t:"Wreath-like early punctate hyperfluorescence round fovea", pts:["MEWDS"], why:"Early punctate hyperfluorescent dots in a wreath pattern with late staining and disc leakage = MEWDS."},
    {t:"Disc + capillary leakage and CMO; lesions barely visible on FA", pts:["birdshot"], why:"Birdshot spots are poorly seen on FA; what shows is vascular/disc leakage, CMO and a prolonged arteriovenous transit time. Use ICGA for the spots."},
-   {t:"Leopard-spot hypo/hyperfluorescence", pts:["lymphoma"], why:"Round hypofluorescent spots (blockage by sub-RPE infiltrate) alternating with window defects = vitreoretinal lymphoma; little or no CMO."},
+   {t:"Leopard-spot hypo/hyperfluorescence", pts:["lymphoma"], why:"Round hypofluorescent spots (blockage by sub-RPE infiltrate) alternating with window defects = vitreoretinal lymphoma; CMO uncommon."},
    {t:"Late disc + diffuse posterior-pole leakage, delayed filling, non-perfusion", pts:["sickle","APS"], why:"Delayed arteriolar filling with non-perfusion should prompt thinking of masquerades — ocular ischaemia, haemoglobinopathy, antiphospholipid."}
  ]},
  {region:"ICG angiography (ICGA)", note:"Choroid. Herbort: choriocapillaritis (geographic hypo areas, no HDDs) vs stromal choroiditis (hypo dark dots + fuzzy vessels + disc hyper). Wait 20–30 min for late frames.", multi:true, signs:[
    {t:"Hypo dots appearing only in late phase (20–30 min)", pts:["MEWDS"], why:"From your notes: MEWDS dots are hypo only late, because dysfunctional RPE does not take up ICG — the dots ‘sit on spots’ and fade with resolution. Wait for the late frames or you'll miss them."},
    {t:"Geographic hypo areas, early AND late", pts:["APMPPE","serpiginous","MFC"], why:"Hypocyanescence from the earliest frames that persists = choriocapillaris non-perfusion (APMPPE, serpiginous, MFC). In APMPPE the hypo is there from the beginning, unlike MEWDS."},
-   {t:"Regular small round hypo dark dots (HDDs), more than clinically", pts:["birdshot","sarcoid","TB"], why:"Evenly distributed HDDs in early–mid phase, far more numerous than on exam or FA = stromal choroiditis: birdshot (100% in series), sarcoid, TB. Use to stage activity — new dots = activity."},
+   {t:"Regular small round hypo dark dots (HDDs), more than clinically", pts:["birdshot","sarcoid","TB"], why:"Evenly distributed HDDs in early–mid phase, far more numerous than on exam or FA = stromal choroiditis: birdshot (100% in series), sarcoid, TB — they don't distinguish the cause. New dots = activity; dots that persist unchanged after treatment may be healed stromal fibrosis."},
    {t:"HDDs + fuzzy stromal vessels + disc hypercyanescence", pts:["VKH","sympathetic"], why:"Delayed choroidal perfusion, fuzzy large vessels, HDDs and disc hyper = VKH / sympathetic. HDDs persist even with a normal fundus/FA — best marker of subclinical choroiditis."},
    {t:"Peripapillary cluster of hypo spots (enlarged blind spot)", pts:["MFC","PIC","MEWDS"], why:"Hypo spots clustered round the disc correlate with an enlarged blind spot on fields — MFC/PIC spectrum and MEWDS."}
  ]},
@@ -706,7 +706,7 @@ const IMG=[
    {t:"B-scan: posterior scleral thickening with T-sign", pts:["scleritis"], why:"Fluid in sub-Tenon's space round the nerve (T-sign) = posterior scleritis."},
    {t:"B-scan: diffuse low-reflective choroidal thickening + serous RD", pts:["VKH","sympathetic"], why:"Diffuse choroidal thickening with exudative RD on ultrasound — VKH/SO when the fundus view is poor."},
    {t:"B-scan: vitreous membranes / traction, no calcium", pts:["toxocara"], why:"Membranes/traction band to a granuloma without calcification → toxocara (calcium suggests retinoblastoma in a child)."},
-   {t:"ERG: delayed 30-Hz flicker implicit time / generalised dysfunction", pts:["birdshot","AIR"], why:"Delayed 30-Hz flicker implicit time tracks birdshot activity; widespread dysfunction out of proportion to the fundus → autoimmune retinopathy."}
+   {t:"ERG: delayed 30-Hz flicker implicit time / generalised dysfunction", pts:["birdshot","AIR"], why:"Light-adapted 30-Hz flicker implicit (peak) time is the most sensitive ERG marker of birdshot activity (consensus; used in trials) — where ERG is available; widespread dysfunction out of proportion to the fundus → autoimmune retinopathy."}
  ]}
 ];
 
@@ -733,7 +733,7 @@ const IMGATLAS=[
         ["ICGA","Hypo from the earliest frames, persisting late (choriocapillaris non-perfusion) — unlike MEWDS."],
         ["FAF","Variable; outer-retinal oedema can mask it."],
         ["OCT","Outer-retinal hyperreflectivity ± sub/intraretinal fluid; settles with RPE change."]],
-  pearl:"Ask about headache or neurological symptoms — associated cerebral vasculitis needs urgent systemic steroid and neuro-imaging."},
+  pearl:"Ask about headache (half of patients in one series) and neurological symptoms. Stroke from cerebral vasculitis is the most serious complication, so arrange MRI ± CSF. Systemic steroids are used for CNS involvement — decide with neurology."},
  {dx:"Serpiginous / TB serpiginous-like choroiditis", wiki:"Serpiginous_Choroidopathy", q:"serpiginous choroiditis", look:["Grey-yellow geographic lesion contiguous with the disc", "Active pseudopodial edge next to old atrophic scar", "Minimal vitritis, bilateral but asymmetric", "TB-like: multifocal discrete lesions that coalesce, vitritis, TB-endemic origin"],
   tag:"choriocapillaritis",
   rows:[["FA","Early blocked choroidal flush, late staining of the active edge; early hyper + late leak = CNV."],
@@ -759,7 +759,7 @@ const IMGATLAS=[
  {dx:"ARN / PORN", wiki:"Acute_Retinal_Necrosis", q:"acute retinal necrosis", look:["Peripheral full-thickness white necrotising retinitis with a sharp edge, spreading circumferentially", "Occlusive arteriolitis, haemorrhage", "Marked AC reaction and vitritis, granulomatous KP, raised IOP", "PORN: deep patchy outer-retinal whitening, posterior pole, perivascular clearing, little vitritis, immunosuppressed"],
   tag:"necrotising herpetic retinitis",
   rows:[["Clinical","ARN: peripheral confluent necrotising retinitis, occlusive arteriolitis, prominent vitritis. PORN: outer-retinal, posterior pole early, little vitritis, perivascular clearing, immunosuppressed."],
-        ["OCT","Full-thickness hyperreflective necrosis; pre-retinal ‘stalagmites’ (also seen in amyloid)."],
+        ["OCT","Full-thickness hyperreflective necrosis; pre-retinal deposits may overlie active retinitis."],
         ["FA","Occlusive arteriolitis, non-perfusion."],
         ["Lab","Aqueous PCR: VZV > HSV-1 > HSV-2 (younger patients) > CMV."]],
   pearl:"Start antivirals before the PCR result. Watch the fellow eye. Retinal detachment risk is high. HSV-2 ARN carries a higher encephalitis/meningitis risk."},
@@ -784,11 +784,11 @@ const IMGATLAS=[
  {dx:"Vitreoretinal lymphoma (masquerade)", wiki:"Primary_Vitreoretinal_Lymphoma", q:"vitreoretinal lymphoma", look:["Over 50, bilateral vitritis with sheets or clumps of cells", "Little flare, no CMO, eye looks quiet", "Creamy yellow sub-RPE infiltrates", "Neurological or cognitive change; incomplete steroid response"],
   tag:"older patient · steroid-resistant vitritis",
   rows:[["Vitreous","Sheets or strands of cells (‘aurora borealis’), little flare, often bilateral."],
-        ["OCT","Sub-RPE hyperreflective nodules, vertical hyperreflective lesions; CMO strikingly absent."],
+        ["OCT","Sub-RPE hyperreflective nodules, vertical hyperreflective lesions, inner-retinal dots; CMO, ERM and central thickening uncommon (CMO 12% vs 36% in uveitis)."],
         ["FA","Round hypo spots with window defects — ‘leopard spot’."],
         ["FAF","Granular hyper/hypo-AF."],
         ["ICGA","Ill-defined late hypo lesions."]],
-  pearl:"Vitreous IL-10:IL-6 >1 and MYD88 L265P support it. Stop steroids before the biopsy. Get brain MRI and CSF."},
+  pearl:"Vitreous IL-10:IL-6 >1 (sensitivity ~88–92%) and MYD88 L265P (up to ~87% of cases) support it; neither is a stand-alone cut-off. Stop steroids before the biopsy. Get brain MRI and CSF."},
  {dx:"TB vs sarcoid choroidal granulomas", wiki:"Sarcoid_Uveitis", q:"choroidal tuberculoma granuloma", look:["TB: solitary large yellow mass, broad PAS, occlusive periphlebitis, serpiginous-like choroiditis", "Sarcoid: many small lesions, candle-wax drippings, snowballs, Koeppe/Busacca nodules", "Chest symptoms, lymphadenopathy, erythema nodosum (either)", "TB contacts or endemic origin"],
   tag:"",
   rows:[["TB","Solitary, large, intense yellow; more outer-retinal involvement on OCT; serpiginous-like pattern; ICGA hypo early+late, more than clinically."],
@@ -804,7 +804,7 @@ const IMGATLAS=[
   rows:[["Vitreous","‘Glass-wool’ veils, footplates on the posterior capsule; no AC cells."],
         ["Anterior","Scalloped / irregular pupil margin (near-pathognomonic), glaucoma, dry eye with reduced corneal sensation."],
         ["Fundus","Retinal amyloid angiopathy, haemorrhages, cotton-wool spots."],
-        ["OCT","Pre-retinal ‘stalagmite’ deposits (also seen in ARN)."]],
+        ["OCT","Needle-shaped pre-retinal deposits perpendicular to the retinal surface, especially after vitrectomy (~68% of hATTR eyes in one series)."]],
   pearl:"Ask about peripheral/autonomic neuropathy, cardiomyopathy and family history (TTR mutation). Confirm on vitrectomy with Congo red. Recurs after vitrectomy (RPE makes TTR) and needs IOP follow-up."}
 ];
 
