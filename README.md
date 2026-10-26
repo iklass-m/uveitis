@@ -1,14 +1,14 @@
 # Uveitis Workup
 
-Front-of-patient uveitis workup tool: History · Review of systems · Eye signs · Investigations · Results · Summary.
+Front-of-patient uveitis workup tool: History · Review of systems · Eye signs · Imaging · Investigations · Results · Summary.
 Plain HTML/CSS/JS in a single `index.html` — no build step, no external requests, no data leaves the device.
 
 Live site: https://iklass-m.github.io/uveitis/ (not indexed by search engines — see `robots.txt`).
 
-## Switching GitHub Pages on (one time)
+## Publishing
 
-Settings → Pages → Build and deployment → **Source: GitHub Actions**.
-After that, every push to `main` publishes automatically via `.github/workflows/pages.yml`.
+GitHub Pages deploys from the `main` branch (root). Any change merged to `main` is live within a minute or two.
+Installed phones fetch the latest page whenever they are online and fall back to the cached copy offline.
 
 ## Install on Android
 
