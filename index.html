@@ -134,6 +134,10 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
 .at-body{padding:6px 12px 10px;font-size:13.5px}
 .at-row{display:flex;gap:10px;padding:4px 0;border-bottom:1px dotted var(--line)}
 .at-m{flex:0 0 62px;font-variant:small-caps;letter-spacing:.04em;color:var(--rust);font-weight:bold}
+.at-look{margin:2px 0 6px}.at-look b{color:var(--rust);font-variant:small-caps;letter-spacing:.04em}
+.at-look ul{margin:3px 0 4px;padding-left:20px}.at-look li{margin:2px 0}
+.at-links{margin-top:8px;font-size:12.5px;color:var(--ink2)}.at-links a{color:var(--ink);font-weight:bold}
+.at-off{font-style:italic;color:#8a7c5e}
 .at-pearl{margin-top:8px;background:#f0e2d2;border-left:3px solid var(--rust);padding:6px 9px;border-radius:0 5px 5px 0}
 .eg-why:not(:empty){padding:0 12px 10px}
 .whyline{font-size:12.5px;color:var(--ink2);margin:4px 0;border-left:2px solid var(--rust);padding-left:8px}
@@ -221,7 +225,7 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
       <div class="hint"><b>Multimodal imaging.</b> Tap what the OCT, FA, ICGA, FAF or B-scan shows — each finding feeds the differential like an eye sign. Below: the imaging signature of each condition, from your BCSC notes. <b>FA</b> = retinal vessels and leakage · <b>ICGA</b> = choroid (wait 20–30 min) · <b>FAF</b> = RPE activity · <b>OCT</b> = macula and outer retina · <b>EDI-OCT / B-scan</b> = choroidal thickness and sclera.</div>
       <div id="imggrid"></div>
       <h2 class="sys">Imaging signatures by condition</h2>
-      <div class="sysnote">Tap a condition to open it.</div>
+      <div class="sysnote">Tap a condition: what to look for, the imaging signature, a pearl, and links to example images.</div>
       <div id="imgatlas"></div>
     </div>
     <div id="v-invest" class="view">
@@ -708,81 +712,95 @@ const IMG=[
 
 /* disease → imaging signature (reference cards on the Imaging tab) */
 const IMGATLAS=[
- {dx:"Birdshot chorioretinopathy", tag:"stromal choroiditis · HLA-A29",
+ {dx:"Birdshot chorioretinopathy", wiki:"Birdshot_Retinochoroidopathy", q:"birdshot chorioretinopathy", look:["Cream ovoid spots behind the equator, radiating from the disc (nasal/inferior)", "Quiet AC, mild vitritis; CMO and disc swelling", "Symptoms (night vision, colour, floaters) worse than the acuity", "Usually over 50, white European; HLA-A29"],
+  tag:"stromal choroiditis · HLA-A29",
   rows:[["ICGA","Regular small hypo dark dots early–mid phase, far more than clinically; active ones become iso late, atrophic stay hypo. New dots = activity."],
         ["FA","Spots barely visible. Shows vascular + disc leakage, CMO, prolonged AV transit."],
         ["FAF","Hypo-AF areas that don't match the cream spots (choroid and RPE affected independently)."],
         ["OCT","CMO, EZ loss, choroidal infiltration / later thinning."],
         ["Other","Visual fields (30-2 MD) and ERG 30-Hz flicker implicit time are the best monitoring tools."]],
   pearl:"Old spots don't go away, so monitor by symptoms (new photopsia), OCT, FA for leakage, ICGA for new lesions. Responds incompletely to steroid alone."},
- {dx:"MEWDS", tag:"photoreceptor–RPE disease",
+ {dx:"MEWDS", wiki:"Multiple_Evanescent_White_Dot_Syndrome", q:"MEWDS multiple evanescent white dot", look:["Unilateral, young myopic woman, often after a viral illness", "Small grey-white dots at the posterior pole and mid-periphery", "Orange granular fovea (persists after the dots fade)", "Photopsia, enlarged blind spot; mild vitreous cells"],
+  tag:"photoreceptor–RPE disease",
   rows:[["FA","Early punctate wreath-like hyperfluorescence round the fovea; late staining, disc leakage."],
         ["ICGA","Hypo dots appear late (wait 20–30 min); ‘dots on spots’; fade with recovery."],
         ["FAF","Hyper-AF spots exceeding the clinical lesions."],
         ["OCT","EZ disruption, dome-shaped outer-retinal hyperreflectivity; fully resolves. OCTA: choriocapillaris normal."]],
   pearl:"Young myopic woman, unilateral, granular fovea. Consider secondary MEWDS (after PIC/MFC, or a new CNV)."},
- {dx:"APMPPE", tag:"choriocapillaritis",
+ {dx:"APMPPE", wiki:"Acute_Posterior_Multifocal_Placoid_Pigment_Epitheliopathy", q:"APMPPE placoid", look:["Bilateral multiple cream-yellow flat placoid lesions at RPE level, posterior pole", "Young adult, flu-like prodrome", "Headache or neurological symptoms (cerebral vasculitis)", "Lesions heal over weeks, leaving RPE mottling"],
+  tag:"choriocapillaritis",
   rows:[["FA","Block early, stain late."],
         ["ICGA","Hypo from the earliest frames, persisting late (choriocapillaris non-perfusion) — unlike MEWDS."],
         ["FAF","Variable; outer-retinal oedema can mask it."],
         ["OCT","Outer-retinal hyperreflectivity ± sub/intraretinal fluid; settles with RPE change."]],
   pearl:"Ask about headache or neurological symptoms — associated cerebral vasculitis needs urgent systemic steroid and neuro-imaging."},
- {dx:"Serpiginous / TB serpiginous-like choroiditis", tag:"choriocapillaritis",
+ {dx:"Serpiginous / TB serpiginous-like choroiditis", wiki:"Serpiginous_Choroidopathy", q:"serpiginous choroiditis", look:["Grey-yellow geographic lesion contiguous with the disc", "Active pseudopodial edge next to old atrophic scar", "Minimal vitritis, bilateral but asymmetric", "TB-like: multifocal discrete lesions that coalesce, vitritis, TB-endemic origin"],
+  tag:"choriocapillaritis",
   rows:[["FA","Early blocked choroidal flush, late staining of the active edge; early hyper + late leak = CNV."],
         ["ICGA","Hypo throughout all phases, both active and old lesions."],
         ["FAF","Active edge hyper-AF, atrophic centre hypo-AF — best non-invasive activity marker."],
         ["OCT","Outer-retinal hyperreflectivity at the active edge; CNV at scar borders."]],
   pearl:"Classic serpiginous starts at the disc and creeps outwards. Multifocal, posterior-pole, non-contiguous lesions with vitritis in someone from a TB-endemic area = TB serpiginous-like choroiditis. Do an IGRA before immunosuppression."},
- {dx:"PIC / multifocal choroiditis", tag:"choriocapillaritis",
+ {dx:"PIC / multifocal choroiditis", wiki:"Punctate_Inner_Choroidopathy", q:"punctate inner choroidopathy", look:["Small (100–300 µm) yellow-white punched-out spots at the posterior pole", "Myopic woman, 20s–40s", "PIC: no vitritis · MFC: AC/vitreous cells and peripheral scars", "New distortion or a blur = CNV until proven otherwise"],
+  tag:"choriocapillaritis",
   rows:[["OCT","Sub-RPE nodule → ‘punched-in’ herniation through Bruch → ‘punched-out’ atrophic scar."],
         ["OCTA","Distinguishes secondary CNV (very common) from inflammatory lesion."],
         ["FA","Early hyper, late staining; leakage suggests CNV."],
         ["ICGA","Hypo spots, more than clinically, often peripapillary."],
         ["FAF","Hundreds of small hypo-AF spots."]],
   pearl:"PIC: young myopic woman, no vitritis. MFC: same lesions plus AC/vitreous inflammation and peripheral scars."},
- {dx:"VKH / sympathetic ophthalmia", tag:"stromal choroiditis",
+ {dx:"VKH / sympathetic ophthalmia", wiki:"Vogt-Koyanagi-Harada_Disease", q:"Vogt-Koyanagi-Harada", look:["Bilateral disc hyperaemia/oedema with multifocal serous RDs", "Headache, tinnitus, meningism (prodrome)", "Later: sunset-glow fundus, Sugiura sign, poliosis, vitiligo, alopecia", "Sympathetic: history of surgery or penetrating injury to the other eye; Dalen–Fuchs nodules"],
+  tag:"stromal choroiditis",
   rows:[["FA","‘Starry sky’ pinpoint leaks pooling into serous RD; disc leakage. Chronic: window defects."],
         ["ICGA","Delayed choroidal filling, fuzzy stromal vessels, hypo dark dots, disc hyper. HDDs persist when FA is normal."],
         ["OCT","EDI: thick choroid that thins with treatment; septate serous RD / bacillary-layer detachment."],
         ["B-scan","Diffuse low-reflective choroidal thickening."]],
   pearl:"Always ask about previous eye surgery or penetrating trauma (sympathetic). Treat early and hard: delay leads to sunset-glow fundus and chronic recurrences."},
- {dx:"ARN / PORN", tag:"necrotising herpetic retinitis",
+ {dx:"ARN / PORN", wiki:"Acute_Retinal_Necrosis", q:"acute retinal necrosis", look:["Peripheral full-thickness white necrotising retinitis with a sharp edge, spreading circumferentially", "Occlusive arteriolitis, haemorrhage", "Marked AC reaction and vitritis, granulomatous KP, raised IOP", "PORN: deep patchy outer-retinal whitening, posterior pole, perivascular clearing, little vitritis, immunosuppressed"],
+  tag:"necrotising herpetic retinitis",
   rows:[["Clinical","ARN: peripheral confluent necrotising retinitis, occlusive arteriolitis, prominent vitritis. PORN: outer-retinal, posterior pole early, little vitritis, perivascular clearing, immunosuppressed."],
         ["OCT","Full-thickness hyperreflective necrosis; pre-retinal ‘stalagmites’ (also seen in amyloid)."],
         ["FA","Occlusive arteriolitis, non-perfusion."],
         ["Lab","Aqueous PCR: VZV > HSV-1 > HSV-2 (younger patients) > CMV."]],
   pearl:"Start antivirals before the PCR result. Watch the fellow eye. Retinal detachment risk is high. HSV-2 ARN carries a higher encephalitis/meningitis risk."},
- {dx:"CMV retinitis", tag:"immunosuppressed",
+ {dx:"CMV retinitis", wiki:{"q": "CMV retinitis"}, q:"CMV retinitis", look:["Granular white edge with satellite dots (‘brushfire’)", "Haemorrhagic ‘pizza-pie’ along vessels, or indolent granular form", "Minimal vitritis", "HIV with CD4 under 50, transplant, or heavy immunosuppression"],
+  tag:"immunosuppressed",
   rows:[["Clinical","Granular-bordered (brushfire) or haemorrhagic ‘pizza-pie’ retinitis, minimal vitritis; early lesion can mimic a cotton-wool spot."],
         ["OCT","Full-thickness hyperreflectivity and disorganisation."],
         ["Other","Can produce frosted-branch angiitis."]],
   pearl:"Diagnosis is clinical in HIV or immunosuppression. PCR confirms the cause in atypical cases."},
- {dx:"Toxoplasma retinochoroiditis", tag:"",
+ {dx:"Toxoplasma retinochoroiditis", wiki:{"q": "ocular toxoplasmosis"}, q:"toxoplasma retinochoroiditis", look:["Focal fluffy white retinitis next to a pigmented scar", "Dense overlying vitritis (‘headlight in the fog’)", "Kyrieleis plaques on nearby arteries", "Granulomatous AU, raised IOP"],
+  tag:"",
   rows:[["OCT","Focal full-thickness retinal hyperreflectivity with shadowing, thickened posterior hyaloid, vitreous dots, choroidal thickening beneath."],
         ["FA","Early hypo centre, late hyper / leaking border."]],
   pearl:"Older and immunocompromised patients get atypical large, multifocal or bilateral lesions without a scar. Get PCR if in doubt."},
- {dx:"Syphilis (posterior placoid)", tag:"the great mimic",
+ {dx:"Syphilis (posterior placoid)", wiki:"Syphilitic_Uveitis", q:"syphilitic posterior placoid chorioretinitis", look:["Large yellow placoid lesion at the macula or disc", "Also: punctate inner retinitis, vasculitis, papillitis — any uveitis", "Palm/sole rash, HIV risk factors", "Steroid makes it worse"],
+  tag:"the great mimic",
   rows:[["FA","Early hypo, late staining, with leopard-spotting inside the lesion and perivenous staining."],
         ["ICGA","Hypo spots corresponding to the lesion."],
         ["FAF","Hyper-AF placoid lesion."],
         ["OCT","EZ loss with nodular RPE thickening; resolves with penicillin."]],
   pearl:"Do syphilis serology in every uveitis. If the patient reports a penicillin allergy, test it — most aren't truly allergic, and true allergy can be desensitised."},
- {dx:"Vitreoretinal lymphoma (masquerade)", tag:"older patient · steroid-resistant vitritis",
+ {dx:"Vitreoretinal lymphoma (masquerade)", wiki:"Primary_Vitreoretinal_Lymphoma", q:"vitreoretinal lymphoma", look:["Over 50, bilateral vitritis with sheets or clumps of cells", "Little flare, no CMO, eye looks quiet", "Creamy yellow sub-RPE infiltrates", "Neurological or cognitive change; incomplete steroid response"],
+  tag:"older patient · steroid-resistant vitritis",
   rows:[["Vitreous","Sheets or strands of cells (‘aurora borealis’), little flare, often bilateral."],
         ["OCT","Sub-RPE hyperreflective nodules, vertical hyperreflective lesions; CMO strikingly absent."],
         ["FA","Round hypo spots with window defects — ‘leopard spot’."],
         ["FAF","Granular hyper/hypo-AF."],
         ["ICGA","Ill-defined late hypo lesions."]],
   pearl:"Vitreous IL-10:IL-6 >1 and MYD88 L265P support it. Stop steroids before the biopsy. Get brain MRI and CSF."},
- {dx:"TB vs sarcoid choroidal granulomas", tag:"",
+ {dx:"TB vs sarcoid choroidal granulomas", wiki:"Sarcoid_Uveitis", q:"choroidal tuberculoma granuloma", look:["TB: solitary large yellow mass, broad PAS, occlusive periphlebitis, serpiginous-like choroiditis", "Sarcoid: many small lesions, candle-wax drippings, snowballs, Koeppe/Busacca nodules", "Chest symptoms, lymphadenopathy, erythema nodosum (either)", "TB contacts or endemic origin"],
+  tag:"",
   rows:[["TB","Solitary, large, intense yellow; more outer-retinal involvement on OCT; serpiginous-like pattern; ICGA hypo early+late, more than clinically."],
         ["Sarcoid","Many, smaller, dull yellow; outer retina relatively spared; periphlebitis / candle-wax drippings; ICGA HDDs."]],
   pearl:"Both cause granulomatous panuveitis. Chest imaging, IGRA, ACE/sIL-2R and lysozyme together — the Investigations tab has the detail."},
- {dx:"Behçet's", tag:"occlusive vasculitis",
+ {dx:"Behçet's", wiki:{"q": "Behcet disease ocular"}, q:"Behcet retinal vasculitis", look:["Mobile ‘cold’ hypopyon in a fairly quiet eye", "Transient white retinal infiltrates; occlusive vasculitis with haemorrhage, BRVO", "Oral and genital ulcers, erythema nodosum, pathergy", "Young adult, Silk Road ancestry"],
+  tag:"occlusive vasculitis",
   rows:[["FA","Diffuse fern-like capillary leakage even in clinical quiescence; occlusive vasculitis, ischaemia, NV, CMO."],
         ["Clinical","Mobile hypopyon, transient retinal infiltrates, branch vein occlusions."]],
   pearl:"Adjust therapy to the FA leakage — subclinical leakage predicts damage. Start biologics early (infliximab) in severe posterior disease."},
- {dx:"Vitreous amyloidosis (masquerade)", tag:"ATTR",
+ {dx:"Vitreous amyloidosis (masquerade)", wiki:"Uveitis_Masquerade_Syndromes", q:"vitreous amyloidosis", look:["‘Glass-wool’ vitreous veils, footplates on the posterior lens capsule", "Scalloped pupil margin, glaucoma", "Retinal haemorrhages, cotton-wool spots", "Neuropathy, cardiomyopathy, family history; no AC cells"],
+  tag:"ATTR",
   rows:[["Vitreous","‘Glass-wool’ veils, footplates on the posterior capsule; no AC cells."],
         ["Anterior","Scalloped / irregular pupil margin (near-pathognomonic), glaucoma, dry eye with reduced corneal sensation."],
         ["Fundus","Retinal amyloid angiopathy, haemorrhages, cotton-wool spots."],
@@ -1695,9 +1713,13 @@ function renderSignGroups(groups,el,pre,src){groups.forEach((grp,n)=>{
 });}
 renderSignGroups(EYE,document.getElementById('examgrid'),'','eye');
 renderSignGroups(IMG,document.getElementById('imggrid'),'i','img');
+/* reference links only — opening one sends nothing but the search words; needs internet */
+function atlasLinks(a){const e=encodeURIComponent,ext='target="_blank" rel="noopener noreferrer"';
+ const wiki=typeof a.wiki==='string'?'https://eyewiki.org/'+a.wiki:'https://eyewiki.org/index.php?search='+e(a.wiki.q);
+ return `<div class="at-links">See examples: <a href="${wiki}" ${ext}>EyeWiki</a> · <a href="https://multimedia.asrs.org/search?q=${e(a.q)}" ${ext}>Retina Image Bank</a> · <a href="https://www.google.com/search?tbm=isch&q=${e(a.q)}" ${ext}>Google Images</a> <span class="at-off">(needs internet)</span></div>`;}
 document.getElementById('imgatlas').innerHTML=IMGATLAS.map(a=>`<details class="atlas"><summary><span class="at-dx">${a.dx}</span>${a.tag?`<span class="at-tag">${a.tag}</span>`:''}</summary>
- <div class="at-body">${a.rows.map(([m,t])=>`<div class="at-row"><span class="at-m">${m}</span><span>${t}</span></div>`).join('')}
- <div class="at-pearl"><b>Pearl:</b> ${a.pearl}</div></div></details>`).join('');
+ <div class="at-body"><div class="at-look"><b>What to look for</b><ul>${a.look.map(x=>`<li>${x}</li>`).join('')}</ul></div>${a.rows.map(([m,t])=>`<div class="at-row"><span class="at-m">${m}</span><span>${t}</span></div>`).join('')}
+ <div class="at-pearl"><b>Pearl:</b> ${a.pearl}</div>${atlasLinks(a)}</div></details>`).join('');
 document.querySelectorAll('.echip').forEach(b=>b.addEventListener('click',()=>{
  const id=b.dataset.id,m=examMeta[id];
  if(!m.multi){ // single-select within its region group: clear siblings
