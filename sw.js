@@ -1,5 +1,5 @@
-/* Uveitis Workup - offline service worker. Cache version: 2026102601 */
-const CACHE = 'uveitis-2026102601';
+/* Uveitis Workup - offline service worker. Cache version: 2026102602 */
+const CACHE = 'uveitis-2026102602';
 const ASSETS = ['./','./index.html','./manifest.webmanifest',
   './icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
 
