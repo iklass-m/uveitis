@@ -1,5 +1,7 @@
-/* Uveitis Workup - offline service worker. Cache version: 2026102603 */
-const CACHE = 'uveitis-2026102603';
+/* Uveitis Workup - offline service worker.
+   Pages: network-first, so a phone that is online always gets the latest version;
+   offline it falls back to the cached copy. Icons/manifest: cache-first. */
+const CACHE = 'uveitis-v4';
 const ASSETS = ['./','./index.html','./manifest.webmanifest',
   './icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
 
@@ -13,18 +15,21 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('message', e => { if (e.data === 'SKIP_WAITING') self.skipWaiting(); });
 
-/* Cache-first: once installed the app never needs the network again. */
+function save(req, res) {
+  if (res && res.ok && new URL(req.url).origin === location.origin) {
+    const copy = res.clone();
+    caches.open(CACHE).then(c => c.put(req, copy));
+  }
+  return res;
+}
+
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
-  e.respondWith(
-    caches.match(e.request, {ignoreSearch: true}).then(hit => hit ||
-      fetch(e.request).then(res => {
-        if (res && res.ok && new URL(e.request.url).origin === location.origin) {
-          const copy = res.clone();
-          caches.open(CACHE).then(c => c.put(e.request, copy));
-        }
-        return res;
-      }).catch(() => caches.match('./index.html'))
-    )
-  );
+  const req = e.request;
+  if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  if (req.mode === 'navigate' || req.destination === 'document') {
+    e.respondWith(fetch(req).then(res => save(req, res))
+      .catch(() => caches.match(req, {ignoreSearch: true}).then(hit => hit || caches.match('./index.html'))));
+    return;
+  }
+  e.respondWith(caches.match(req, {ignoreSearch: true}).then(hit => hit || fetch(req).then(res => save(req, res))));
 });
