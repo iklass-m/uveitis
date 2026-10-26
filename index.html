@@ -126,6 +126,16 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
 .echip:hover{background:#e7ddc4}
 .echip.on{background:var(--rust);border-color:var(--rust);color:#fff}
 .eg-why{padding:0 12px}
+.qtext{width:100%;font-family:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--ink2);border-radius:7px;background:#fff;color:var(--ink);resize:vertical;margin:4px 0 6px}
+.qtext:focus{outline:2px solid var(--rust);border-color:var(--rust)}
+.qseen{margin:4px 0}.qlab{font-variant:small-caps;letter-spacing:.05em;font-size:13px;color:var(--ink2);margin-bottom:3px}
+.qchip{display:inline-block;font-size:12.5px;padding:2px 9px;margin:2px 3px 2px 0;border-radius:12px;background:var(--ink);color:var(--paper)}
+.qchip.neg{background:var(--ok)}.qchip.ign{background:transparent;color:var(--ink2);border:1px dashed var(--ink2);text-decoration:line-through}
+.qalert{background:#f6dcd2;border-left:4px solid var(--rust);padding:7px 10px;margin:6px 0;font-size:13.5px;border-radius:0 6px 6px 0}
+.qrow{background:var(--paper2);border:1px solid var(--line);border-radius:7px;padding:8px 12px;margin:7px 0;box-shadow:var(--shadow)}
+.qtop{display:flex;align-items:center;gap:8px}.qn{font-weight:bold;color:var(--rust);min-width:16px}
+.qdx{font-weight:bold;flex:1 1 auto}.qwhy{font-size:12.5px;color:var(--ink2);margin-top:3px}
+.qtest{font-size:13px;margin-top:4px}.qtest b{color:var(--rust)}
 .atlas{background:var(--paper2);border:1px solid var(--line);border-radius:7px;margin:7px 0;box-shadow:var(--shadow)}
 .atlas summary{cursor:pointer;padding:10px 12px;font-size:14.5px;list-style-position:inside}
 .atlas[open] summary{border-bottom:1px solid var(--line)}
@@ -192,6 +202,7 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
   .tab{font-size:13px;padding:8px 12px}
   h1{font-size:22px}
 }
+body.onquick .mobjump{display:none!important}
 @media print{.tabs,.side,.mobjump,.controls,.sumbtn,.hint{display:none!important}}
 </style>
 </head>
@@ -204,6 +215,7 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
 </header>
 
 <div class="tabs">
+  <button class="tab" data-v="quick">⚡ Quick DDx</button>
   <button class="tab on" data-v="hx">1 · History</button>
   <button class="tab" data-v="ros">2 · Review of systems</button>
   <button class="tab" data-v="exam">3 · Eye signs</button>
@@ -215,6 +227,14 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
 
 <div class="layout">
   <div class="main">
+    <div id="v-quick" class="view">
+      <div class="hint"><b>Quick differential.</b> Type what the patient has, in your own words — age, laterality, course, signs, imaging, results. Negatives count too (“no vitritis”, “no synechiae”). It ranks the differential, shows why, and suggests next tests. Runs on the phone; nothing is sent or saved. <button class="sumbtn" onclick="quickExample()">Example</button> <button class="sumbtn" onclick="quickClear()">Clear</button></div>
+      <textarea id="qtext" class="qtext" rows="5" placeholder="e.g. 34 yo woman, bilateral, mutton-fat KP, iris nodules, snowballs, candle-wax, cough, erythema nodosum, no back pain"></textarea>
+      <div id="qseen" class="qseen"></div>
+      <div id="qalerts"></div>
+      <div id="qout"></div>
+      <div class="sysnote">Keyword matching for decision support — check the “Recognised” list, and work through the tabs for a full assessment.</div>
+    </div>
     <div id="v-hx" class="view on"></div>
     <div id="v-ros" class="view"></div>
     <div id="v-exam" class="view">
@@ -1823,6 +1843,7 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');
  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
  document.getElementById('v-'+t.dataset.v).classList.add('on');
+ document.body.classList.toggle('onquick',t.dataset.v==='quick');
  if(t.dataset.v==='summary')buildSummary();
  window.scrollTo(0,0);
 }));
@@ -1915,6 +1936,9 @@ function buildSummary(){
    const lbl={support:'SUPPORTED',live:'ON THE TABLE',unlikely:'LESS LIKELY',excluded:'EXCLUDED',note:'WORTH CHECKING'};
    ip.forEach(r=>L.push('  • ['+lbl[r.status]+'] '+((DXMETA[r.dx]||{}).name||r.dx)+' — '+pad(r.line)));}
  // differential
+ const qk=window._quick;
+ if(qk&&qk.raw){L.push('','FREE-TEXT FINDINGS:','  '+qk.raw);
+   if(qk.rows.length){L.push('QUICK DDx:');qk.rows.slice(0,6).forEach(([d],i)=>L.push('  '+(i+1)+'. '+((DXMETA[d]||{}).name||d)));}}
  const rows=computeScores();
  if(rows.length){L.push('','WORKING DIFFERENTIAL (by findings explained):');
    rows.forEach(([d,v],i)=>L.push('  '+(i+1)+'. '+((DXMETA[d]||{}).name||d)+'  ('+(v%1?v.toFixed(1):v)+')'));}
@@ -1933,7 +1957,231 @@ function copySummary(){buildSummary();const t=document.getElementById('summaryou
   .catch(()=>{const r=document.createRange();r.selectNode(document.getElementById('summaryout'));getSelection().removeAllRanges();getSelection().addRange(r);});
 }
 
+/* ============ QUICK DDx — free-text findings → ranked differential ============ */
+/* Runs entirely on the device: keyword/synonym rules, no network, nothing stored.
+   Each rule: [regex, {dx:weight}, label, {dx:weight} used instead when the finding is negated]. */
+const QRULES=[
+ // demographics & exposures
+ [/\b(child|paediatric|pediatric|girl|boy|toddler)\b/, {JIA:2,toxocara:1.5,Blau:1}, "child"],
+ [/\bmyop/, {PIC:2,MEWDS:2,MFC:1}, "myopia"],
+ [/\b(woman|female|lady)\b/, {MEWDS:.5,PIC:.5,SLE:.5,MS:.5}, "female"],
+ [/\b(man|male)\b/, {"HLA-B27":.5,"Behçet":.5}, "male"],
+ [/hla-?\s?b27/, {"HLA-B27":4}, "HLA-B27", {}],
+ [/hla-?\s?a29/, {birdshot:4}, "HLA-A29", {}],
+ [/back ?pain|stiff(ness)? back|sacroil|ankylos|spondyl/, {"HLA-B27":3}, "inflammatory back pain"],
+ [/psoria/, {"HLA-B27":2}, "psoriasis"],
+ [/diarrh|crohn|colitis|\bibd\b|bloody stool/, {IBD:3,"HLA-B27":1}, "bowel symptoms / IBD"],
+ [/urethritis|dysuria|\bsti\b|chlamydia/, {reactive:3,"HLA-B27":1}, "urethritis / STI"],
+ [/arthrit|joint pain|arthralg|swollen joint/, {"HLA-B27":1,JIA:1,sarcoid:1,SLE:.5,Lyme:.5,Whipple:.5}, "arthritis"],
+ [/(oral|mouth) ulcer|aphth/, {"Behçet":3}, "oral ulcers"],
+ [/genital ulcer/, {"Behçet":3,syphilis:1}, "genital ulcers"],
+ [/erythema nodosum/, {sarcoid:2,"Behçet":2,TB:1,IBD:1}, "erythema nodosum"],
+ [/palm|sole/, {syphilis:3}, "palm/sole rash"],
+ [/\brash\b/, {syphilis:1,SLE:1,Lyme:1}, "rash"],
+ [/vitiligo|poliosis|alopecia|hair loss/, {VKH:3}, "vitiligo / poliosis / alopecia"],
+ [/tinnitus|hearing loss|deaf|dysacusis|vertigo/, {VKH:3,Cogan:2}, "tinnitus / hearing loss"],
+ [/headache|meningism|neck stiff/, {VKH:2,APMPPE:2,lymphoma:.5}, "headache / meningism"],
+ [/cough|breathless|dyspn|\bsob\b|hilar|\bbhl\b|lymphaden|lung/, {sarcoid:2,TB:2}, "chest symptoms / lymphadenopathy"],
+ [/night sweat|weight loss|fever/, {TB:2,lymphoma:1,Whipple:1,endophthalmitis:.5}, "systemic symptoms"],
+ [/\btb\b|tubercul|endemic|india|pakistan|bangladesh|africa|tb contact/, {TB:3}, "TB exposure / endemic origin"],
+ [/\bhiv\b|\baids\b|\bcd4\b/, {CMV:3,HIV:2,syphilis:2,toxoplasma:1,VZV:1}, "HIV"],
+ [/immunosupp|immunocomp|chemo|transplant|on steroids|biologic/, {CMV:3,candida:2,VZV:1,toxoplasma:1}, "immunosuppressed"],
+ [/\bivdu\b|iv drug|intravenous drug|central line|\btpn\b|picc|neutropen/, {candida:3,endophthalmitis:2}, "IV drug use / lines"],
+ [/post-?op|after (cataract|surgery)|recent (eye )?surgery|phaco|vitrectomy/, {endophthalmitis:2,"P.acnes":2,"lens-induced":1,sympathetic:1}, "recent eye surgery"],
+ [/trauma|penetrating|injur/, {sympathetic:3,endophthalmitis:1}, "eye trauma"],
+ [/\bcats?\b|kitten|scratch/, {Bartonella:3,toxoplasma:1}, "cat contact"],
+ [/\bdogs?\b|pupp|\bsoil\b|pica/, {toxocara:3}, "dog / soil exposure"],
+ [/\btick|lyme|camping/, {Lyme:3}, "tick exposure"],
+ [/raw meat|undercooked/, {toxoplasma:2}, "undercooked meat"],
+ [/unpasteuri|raw milk|livestock|\bfarm/, {brucella:2,leptospirosis:1}, "farm / raw milk"],
+ [/flu-?like|viral (illness|prodrome)/, {APMPPE:2,MEWDS:2}, "viral prodrome"],
+ [/zoster|shingles/, {VZV:3,ARN:1}, "zoster"],
+ [/cold sore|\bhsv\b|herpes simplex/, {HSV:3,ARN:1}, "HSV history"],
+ [/multiple sclerosis|\bms\b|numbness|tingling|optic neuritis/, {MS:3,"pars planitis":1}, "neurological / MS"],
+ [/haematuria|hematuria|proteinuria|nephritis|renal|kidney/, {TINU:3,GPA:2,SLE:1}, "renal involvement"],
+ [/sinus|epistaxis|nosebleed|saddle nose|haemoptysis/, {GPA:3}, "ENT / sinus disease"],
+ [/ear cartilage|polychondritis/, {polychondritis:3}, "cartilage inflammation"],
+ [/miscarriage|thrombos|\bdvt\b|clot/, {APS:3,"Behçet":1,SLE:1}, "thrombosis / miscarriage"],
+ [/sickle|hbsc/, {sickle:3}, "sickle"],
+ [/rifabutin|bisphosphonate|cidofovir|checkpoint|nivolumab|pembrolizumab|ipilimumab|braf|mek inhib|moxifloxacin/, {drug:3}, "implicated drug"],
+ [/confus|memory|cognit|seizure|behaviou?r change/, {lymphoma:2}, "neuro-cognitive change"],
+ [/neuropath|cardiomyopath|amyloid|\bttr\b/, {amyloid:3}, "neuropathy / amyloid"],
+ [/japan|caribbean|htlv/, {HTLV1:2,VKH:.5}, "HTLV-1 region"],
+ // results
+ [/(raised|high|elevated|positive)\s+(ace|lysozyme|sil-?2r)|(ace|lysozyme|sil-?2r)\s+(raised|high|elevated|positive|\+)/, {sarcoid:3}, "raised ACE / lysozyme / sIL-2R"],
+ [/(quantiferon|igra|mantoux|t-?spot)\s*(positive|\+|pos)|positive\s+(quantiferon|igra|mantoux)/, {TB:3}, "positive IGRA"],
+ [/(tppa|rpr|vdrl|syphilis serology|treponem)\s*(positive|\+|pos|reactive)|positive\s+(tppa|rpr|vdrl)/, {syphilis:4}, "positive syphilis serology"],
+ [/\banca\b/, {GPA:3}, "ANCA"],
+ // course & laterality
+ [/unilateral|one eye|right eye|left eye|\bod\b|\bos\b/, {"HLA-B27":1,Fuchs:1,HSV:1,VZV:1,Posner:1,toxoplasma:1,MEWDS:1,ARN:1}, "unilateral"],
+ [/bilateral|both eyes|\bou\b/, {sarcoid:1,VKH:2,birdshot:1,JIA:1,sympathetic:1,TINU:1,lymphoma:1,"pars planitis":1}, "bilateral"],
+ [/alternat/, {"HLA-B27":2}, "alternating sides"],
+ [/acute|sudden|painful|photophob|red eye/, {"HLA-B27":2,reactive:1}, "acute / painful"],
+ [/recurr|relaps|episod/, {"HLA-B27":1,HSV:1,"Behçet":1,Posner:1}, "recurrent"],
+ [/chronic|insidious|white eye|quiet eye|painless/, {JIA:2,Fuchs:2,lymphoma:1,birdshot:1,"pars planitis":1}, "chronic / quiet eye"],
+ // anterior segment
+ [/non-?granulomatous|fine kp/, {"HLA-B27":2,"Behçet":1}, "non-granulomatous"],
+ [/(?<!non-?)granulomatous|mutton[- ]?fat/, {sarcoid:3,TB:3,syphilis:2,VKH:2,sympathetic:2,HSV:1}, "granulomatous / mutton-fat KP"],
+ [/stellate kp|diffuse kp/, {Fuchs:3,HSV:1,VZV:1}, "stellate KP"],
+ [/heterochromi/, {Fuchs:4}, "heterochromia"],
+ [/iris atrophy|transillumin/, {HSV:3,VZV:3,Fuchs:1}, "iris atrophy"],
+ [/iris nodule|koeppe|busacca/, {sarcoid:3,TB:2,syphilis:1}, "iris nodules"],
+ [/hypopyon/, {"Behçet":3,"HLA-B27":2,endophthalmitis:3,lymphoma:.5}, "hypopyon"],
+ [/fibrin/, {"HLA-B27":3,endophthalmitis:1}, "fibrin"],
+ [/raised iop|high iop|iop (of )?[3-6]\d|ocular hypertension|high pressure/, {HSV:2,VZV:2,Posner:3,Fuchs:1,sarcoid:1,toxoplasma:1}, "raised IOP"],
+ [/dendrit/, {HSV:3}, "dendrite"],
+ [/interstitial keratitis|\bik\b/, {syphilis:3,Cogan:3,TB:1}, "interstitial keratitis"],
+ [/band keratopathy/, {JIA:3}, "band keratopathy"],
+ [/scleritis/, {RA:2,GPA:2,scleritis:2,polychondritis:1,VZV:1}, "scleritis"],
+ [/synechia/, {"HLA-B27":1,sarcoid:1,JIA:1}, "posterior synechiae", {Fuchs:2,Posner:2}],
+ [/capsular plaque|white plaque/, {"P.acnes":3}, "capsular plaque"],
+ // vitreous
+ [/snowball|snowbank|pars plana exudate/, {"pars planitis":3,sarcoid:2,MS:1,Lyme:1}, "snowballs / snowbanking"],
+ [/intermediate uveitis/, {"pars planitis":2,MS:2,sarcoid:2,Lyme:1,TB:1,lymphoma:1}, "intermediate uveitis"],
+ [/vitritis|vitreous (cells|haze)/, {lymphoma:.5,toxoplasma:.5,sarcoid:.5}, "vitritis", {CMV:1.5,VZV:1,PIC:.5,POHS:.5,serpiginous:.5}],
+ [/dense vitritis|heavy vitritis|headlight|marked vitritis/, {toxoplasma:3,lymphoma:2,endophthalmitis:2,ARN:1}, "dense vitritis"],
+ [/sheets?|aurora|clumps? of cells/, {lymphoma:3}, "sheets of vitreous cells"],
+ [/glass[- ]?wool|veil/, {amyloid:3,lymphoma:1}, "glass-wool vitreous"],
+ [/string of pearls|fluff ?ball|puff ?ball/, {candida:4}, "string-of-pearls"],
+ [/panuveitis/, {VKH:2,sarcoid:2,TB:2,syphilis:2,"Behçet":2,sympathetic:2}, "panuveitis"],
+ // retina
+ [/retinitis|necrotising|necrotizing|retinal whitening|retinal necrosis/, {ARN:2,CMV:2,toxoplasma:1,syphilis:1}, "retinitis"],
+ [/peripheral (necrotising |necrotizing )?retinitis|confluent|circumferential/, {ARN:3}, "peripheral confluent retinitis"],
+ [/pigmented scar|old scar|satellite|adjacent scar|next to (a )?scar/, {toxoplasma:4}, "satellite to a scar"],
+ [/haemorrhagic retinitis|hemorrhagic retinitis|pizza|brushfire|granular border/, {CMV:4}, "haemorrhagic / granular retinitis"],
+ [/outer retin|porn|cracked mud|perivascular clearing/, {VZV:3,HIV:1}, "outer-retinal necrosis"],
+ [/vasculitis|sheathing|periphlebitis|phlebitis/, {sarcoid:1,"Behçet":1,TB:1,MS:1,SLE:1}, "retinal vasculitis"],
+ [/candle[- ]?wax/, {sarcoid:4}, "candle-wax drippings"],
+ [/occlusive|non-?perfusion|\bbrvo\b|branch vein|arteriolitis/, {"Behçet":2,SLE:2,ARN:2,TB:1,APS:1}, "occlusive vasculitis"],
+ [/kyrieleis/, {toxoplasma:2,syphilis:1}, "Kyrieleis plaques"],
+ [/frosted branch/, {CMV:2,toxoplasma:1,lymphoma:1}, "frosted-branch angiitis"],
+ [/eales|neovasc|vitreous haemorrhage|vitreous hemorrhage/, {TB:2,sarcoid:1,sickle:2}, "neovascularisation / VH"],
+ [/macular oedema|macular edema|\bcmo\b|\bcme\b/, {"pars planitis":1,birdshot:1,sarcoid:1,"HLA-B27":1}, "macular oedema", {lymphoma:1}],
+ [/serous (rd|detachment)|exudative (rd|detachment)|subretinal fluid/, {VKH:4,sympathetic:2,scleritis:2}, "serous RD"],
+ [/disc (swelling|oedema|edema)|papillitis|hyperaemic disc|swollen disc/, {VKH:2,syphilis:1,Bartonella:1,sarcoid:1,birdshot:1}, "disc swelling"],
+ [/macular star|neuroretinitis/, {Bartonella:4,syphilis:1,Lyme:1}, "neuroretinitis / macular star"],
+ [/sunset[- ]?glow|sugiura/, {VKH:4}, "sunset-glow fundus"],
+ [/dalen/, {sympathetic:3,VKH:2,sarcoid:1}, "Dalen–Fuchs nodules"],
+ // choroid
+ [/cream(-coloured| coloured)? (ovoid|oval|spots|lesions|dots)|birdshot|ovoid/, {birdshot:4}, "cream ovoid spots"],
+ [/placoid/, {APMPPE:3,syphilis:3,serpiginous:1}, "placoid lesions"],
+ [/serpigin|geographic|helicoid|peripapillary (lesion|choroiditis)/, {serpiginous:3,TB:2}, "geographic / serpiginous lesion"],
+ [/white dots?|dots/, {MEWDS:2,PIC:1,MFC:1,birdshot:1}, "white dots"],
+ [/granular fovea|foveal granular/, {MEWDS:3}, "granular fovea"],
+ [/punched[- ]?out/, {PIC:3,MFC:2,POHS:2}, "punched-out lesions"],
+ [/choroidal (granuloma|mass|tubercle)|tuberculoma/, {TB:3,sarcoid:2}, "choroidal granuloma"],
+ [/multifocal choroiditis/, {MFC:3,sarcoid:1,TB:1,syphilis:1}, "multifocal choroiditis"],
+ [/sub-?rpe|leopard/, {lymphoma:3}, "sub-RPE infiltrates"],
+ [/\bcnv\b|choroidal neovasc/, {PIC:2,MFC:1,POHS:2,serpiginous:1}, "CNV"],
+ // symptoms & imaging
+ [/photopsia|flashes/, {MEWDS:1,birdshot:1,AZOOR:2}, "photopsia"],
+ [/night blind|nyctalop|colou?r vision/, {birdshot:2,AIR:2,RP:2}, "night / colour vision loss"],
+ [/scotoma|blind spot/, {MEWDS:2,AZOOR:2,MFC:1}, "scotoma / enlarged blind spot"],
+ [/ellipsoid|\bez\b/, {MEWDS:2,AZOOR:2,AIR:1}, "EZ loss on OCT"],
+ [/starry sky/, {VKH:3,sympathetic:1}, "starry-sky FA"],
+ [/fern|diffuse (capillary )?leak/, {"Behçet":3}, "fern-like FA leakage"],
+ [/dark dots|\bhdds?\b|hypocyanescent dots/, {birdshot:2,sarcoid:2,VKH:2,TB:1}, "ICGA dark dots"],
+ [/t-?sign/, {scleritis:4}, "B-scan T-sign"],
+ [/choroidal thicken|thick choroid/, {VKH:2,sympathetic:1,scleritis:1}, "choroidal thickening"],
+ [/stalagmite|needle-?shaped/, {amyloid:2,toxoplasma:1,ARN:1}, "pre-retinal deposits"]
+];
+const QTESTS={
+ "HLA-B27":"HLA-B27; MRI sacroiliac joints / rheumatology if back pain",
+ sarcoid:"CXR (or CT chest), ACE, lysozyme, sIL-2R, calcium",
+ TB:"IGRA (QuantiFERON), CXR/CT chest — before any immunosuppression",
+ syphilis:"Treponemal serology (EIA/TPPA) + RPR, and an HIV test",
+ VKH:"OCT/EDI-OCT, FA + ICGA, B-scan; high-dose steroid early",
+ sympathetic:"OCT/EDI, FA + ICGA; ask about previous surgery or injury",
+ "Behçet":"FA (subclinical leakage), HLA-B51, pathergy; rheumatology",
+ toxoplasma:"Clinical diagnosis; toxo serology, aqueous PCR if atypical",
+ ARN:"URGENT aqueous tap for HSV/VZV/CMV PCR — start antivirals now",
+ VZV:"Aqueous PCR; HIV test if outer-retinal necrosis",
+ HSV:"Aqueous PCR if posterior involvement",
+ CMV:"HIV test + CD4, aqueous PCR",
+ lymphoma:"Diagnostic vitrectomy (cytology, IL-10:IL-6, MYD88), MRI brain ± LP; stop steroids first",
+ birdshot:"HLA-A29, ICGA, visual fields, ERG (30-Hz flicker)",
+ MS:"MRI brain with contrast before anti-TNF",
+ "pars planitis":"Syphilis + TB tests, MRI brain if neuro symptoms",
+ JIA:"ANA; slit-lamp screening schedule",
+ TINU:"U&E/creatinine, urinalysis, urine β2-microglobulin",
+ GPA:"ANCA, urinalysis, CXR",
+ Lyme:"Lyme serology",
+ Bartonella:"Bartonella henselae serology",
+ endophthalmitis:"SAME-DAY vitreous tap and intravitreal antibiotics",
+ candida:"Blood cultures, vitreous sample, systemic antifungal",
+ "P.acnes":"Aqueous/vitreous sample (prolonged culture), capsular bag sample",
+ MEWDS:"OCT, FAF, ICGA (late frames); visual field",
+ APMPPE:"OCT, FA/ICGA; MRI ± LP if headache or neurological signs",
+ serpiginous:"IGRA (exclude TB), FAF to monitor",
+ PIC:"OCT + OCTA (CNV?)",
+ MFC:"Syphilis, TB, sarcoid work-up; OCTA for CNV",
+ POHS:"Clinical; OCTA for CNV",
+ amyloid:"Vitrectomy with Congo red, TTR genetics, cardiology/neurology",
+ SLE:"ANA, dsDNA, complement",
+ APS:"Antiphospholipid antibodies",
+ IBD:"GI referral, faecal calprotectin",
+ reactive:"STI screen (chlamydia/gonorrhoea)",
+ Fuchs:"Clinical — no steroids needed; aqueous PCR (rubella/CMV) if doubt",
+ Posner:"Clinical; aqueous PCR for CMV if recurrent",
+ drug:"Review and consider stopping the drug",
+ scleritis:"B-scan, ANCA, RF/anti-CCP, syphilis/TB",
+ toxocara:"Toxocara serology, B-scan",
+ AZOOR:"OCT (EZ), FAF, visual field, ERG",
+ AIR:"ERG, anti-retinal antibodies, cancer screen"
+};
+function qNegated(txt,idx){
+ const before=txt.slice(Math.max(0,idx-28),idx);
+ return /\b(no|not|nil|without|absent|negative|neg|denies|never)\b[^.,;:]*$/.test(before);
+}
+function quickAnalyse(){
+ const raw=document.getElementById('qtext').value, txt=raw.toLowerCase();
+ const score={},why={},seen=[];
+ const add=(map,label)=>Object.entries(map).forEach(([d,w])=>{score[d]=(score[d]||0)+w;(why[d]=why[d]||[]).push(label);});
+ QRULES.forEach(([re,pos,label,neg])=>{
+   const m=new RegExp(re.source,'g'); let hit=null,isNeg=false,r;
+   while((r=m.exec(txt))){ if(!qNegated(txt,r.index)){hit=r;isNeg=false;break;} hit=r;isNeg=true; if(m.lastIndex===r.index)m.lastIndex++; }
+   if(!hit)return;
+   if(isNeg){ if(neg){add(neg,'no '+label);seen.push(['no '+label,1]);} else seen.push(['no '+label,2]); }
+   else {add(pos,label);seen.push([label,0]);}
+ });
+ // age
+ const am=txt.match(/\b(\d{1,2})\s*(y\/?o|yo|yrs?|years?)\b|\b(?:aged?|age)\s*(\d{1,2})\b/);
+ const age=am?+(am[1]||am[3]):null;
+ if(age!==null){
+   if(age<16)add({JIA:2,toxocara:1,Blau:1},'age '+age);
+   else if(age>=60)add({lymphoma:2.5,birdshot:1,amyloid:1},'age '+age);
+   else if(age>=50)add({lymphoma:1.5,birdshot:1.5},'age '+age);
+   else if(age<=40)add({"HLA-B27":.5,VKH:.5,MEWDS:.5,PIC:.5,"Behçet":.5},'age '+age);
+   if(age>=18)['JIA','toxocara','Blau'].forEach(d=>{if(score[d])score[d]*=.25;});
+   seen.unshift(['age '+age,0]);
+ }
+ const rows=Object.entries(score).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,10);
+ // must-not-miss alerts
+ const has=l=>seen.some(([s,n])=>n===0&&s===l), A=[];
+ const vit=has('vitritis')||has('dense vitritis')||has('sheets of vitreous cells');
+ if(raw.trim())A.push('Always exclude <b>syphilis</b> (serology) and <b>TB</b> (IGRA) before steroids or immunosuppression.');
+ if(age!==null&&age>=50&&vit)A.push('Over 50 with vitritis: think <b>vitreoretinal lymphoma</b>, especially if it is steroid-resistant.');
+ if(seen.some(([s,n])=>n===0&&/retinitis|necrosis|satellite|haemorrhagic/.test(s)))A.push('Retinitis = infection until proven otherwise: <b>aqueous PCR</b>; don\'t give steroid without antimicrobial cover.');
+ if(has('recent eye surgery')&&(has('hypopyon')||has('fibrin')||has('acute / painful')))A.push('Post-op inflammation with hypopyon or pain: <b>endophthalmitis</b> — same-day tap and inject.');
+ if(has('immunosuppressed')||has('HIV'))A.push('Immunosuppressed: CMV, VZV (PORN), toxoplasma, syphilis, fungal — atypical presentations are the rule.');
+ if(has('serous RD')&&!has('bilateral'))A.push('Unilateral serous RD: also consider posterior scleritis (B-scan T-sign) and CSC.');
+ // render
+ const chips=seen.map(([s,n])=>`<span class="qchip${n===1?' neg':n===2?' ign':''}" title="${n===2?'negated — not used':''}">${s}</span>`).join('');
+ document.getElementById('qseen').innerHTML=raw.trim()?(chips?`<div class="qlab">Recognised</div>${chips}`:'<div class="empty">No findings recognised yet — try terms like “bilateral”, “mutton-fat KP”, “vitritis”, “serous RD”, “age 62”.</div>'):'';
+ document.getElementById('qalerts').innerHTML=A.map(a=>`<div class="qalert">⚠ ${a}</div>`).join('');
+ const max=rows.length?rows[0][1]:1;
+ document.getElementById('qout').innerHTML=rows.map(([d,v],i)=>`<div class="qrow">
+   <div class="qtop"><span class="qn">${i+1}</span><span class="qdx">${(DXMETA[d]||{}).name||d}</span><span class="bar" style="width:${Math.max(10,(v/max)*90)}px"></span></div>
+   <div class="qwhy">Fits: ${[...new Set(why[d])].join(' · ')}</div>
+   ${QTESTS[d]?`<div class="qtest"><b>Next:</b> ${QTESTS[d]}</div>`:''}</div>`).join('');
+ window._quick={raw:raw.trim(),rows};
+}
+let _qT;document.getElementById('qtext').addEventListener('input',()=>{clearTimeout(_qT);_qT=setTimeout(()=>{quickAnalyse();buildSummary();},250);});
+function quickClear(){document.getElementById('qtext').value='';quickAnalyse();buildSummary();}
+function quickExample(){document.getElementById('qtext').value='62 yo man, bilateral painless blurred vision, dense vitritis with sheets of cells, no CMO, creamy sub-RPE lesions, partial response to steroid, some memory problems';quickAnalyse();buildSummary();}
+
 function resetAll(){flagged.clear();
+ document.getElementById('qtext').value='';quickAnalyse();
  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
  document.querySelectorAll('.q').forEach(c=>c.classList.remove('pos'));
  Object.keys(lab).forEach(k=>lab[k]="not done");
