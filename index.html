@@ -40,7 +40,7 @@ h1{font-size:26px;margin:2px 0 4px;font-weight:normal}
 .layout{display:flex;gap:20px;align-items:flex-start;margin-top:12px}
 .main{flex:1 1 auto;min-width:0}
 .side{flex:0 0 290px;position:sticky;top:56px}
-@media(max-width:880px){.layout{flex-direction:column}.side{position:static;flex-basis:auto;width:100%}}
+@media(max-width:880px){.layout{flex-direction:column}.main{width:100%}.side{position:static;flex-basis:auto;width:100%}}
 
 h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--ink);
   border-bottom:1px solid var(--line);padding-bottom:5px;margin:22px 0 4px}
@@ -130,7 +130,7 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
 .whyline b{color:var(--rust);font-style:normal}
 /* summary */
 .summaryout{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
-  font-size:12.5px;line-height:1.5;color:var(--ink);white-space:pre-wrap;overflow-x:auto;box-shadow:var(--shadow)}
+  font-size:12.5px;line-height:1.5;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:auto;box-shadow:var(--shadow)}
 .sumbtn{font-family:inherit;font-size:12px;padding:3px 11px;border-radius:5px;border:1px solid var(--ink);
   background:var(--ink);color:var(--paper);cursor:pointer;margin-left:4px}
 .sumbtn:hover{background:var(--ink2)}
