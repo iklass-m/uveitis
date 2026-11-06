@@ -136,6 +136,13 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
 .qtop{display:flex;align-items:center;gap:8px}.qn{font-weight:bold;color:var(--rust);min-width:16px}
 .qdx{font-weight:bold;flex:1 1 auto}.qwhy{font-size:12.5px;color:var(--ink2);margin-top:3px}
 .qtest{font-size:13px;margin-top:4px}.qtest b{color:var(--rust)}
+.qagainst{font-size:12.5px;color:var(--rust);margin-top:2px}
+.qcard{font-family:inherit;font-size:12px;margin-top:6px;padding:3px 10px;border-radius:5px;border:1px solid var(--ink2);background:transparent;color:var(--ink);cursor:pointer}
+.qpickwrap{margin:4px 0 6px;background:var(--paper2);border:1px solid var(--line);border-radius:7px}
+.qpickwrap summary{cursor:pointer;padding:8px 12px;font-variant:small-caps;letter-spacing:.05em;font-size:14px;color:var(--ink)}
+#qpicks{padding:0 10px 8px}.qpg{margin:4px 0}.qpl{display:inline-block;min-width:64px;font-size:12px;color:var(--rust);font-weight:bold;font-variant:small-caps}
+.qpick{font-family:inherit;font-size:12.5px;margin:2px 3px 2px 0;padding:3px 9px;border-radius:12px;border:1px solid var(--ink2);background:transparent;color:var(--ink);cursor:pointer}
+.qpick:active{background:var(--rust);color:#fff}
 .atlas{background:var(--paper2);border:1px solid var(--line);border-radius:7px;margin:7px 0;box-shadow:var(--shadow)}
 .atlas summary{cursor:pointer;padding:10px 12px;font-size:14.5px;list-style-position:inside}
 .atlas[open] summary{border-bottom:1px solid var(--line)}
@@ -228,7 +235,8 @@ body.onquick .mobjump{display:none!important}
 <div class="layout">
   <div class="main">
     <div id="v-quick" class="view">
-      <div class="hint"><b>Quick differential.</b> Type what the patient has, in your own words — age, laterality, course, signs, imaging, results. Negatives count too (“no vitritis”, “no synechiae”). It ranks the differential, shows why, and suggests next tests. Runs on the phone; nothing is sent or saved. <button class="sumbtn" onclick="quickExample()">Example</button> <button class="sumbtn" onclick="quickClear()">Clear</button></div>
+      <div class="hint"><b>Quick differential.</b> Type what the patient has, in your own words — age, laterality, course, signs, imaging, results. Negatives count too (“no vitritis”, “no synechiae”) and clinic shorthand (bilat, PS, AAU, KPs, LBP, 68F, x3). It ranks the differential, shows what fits and what argues against, and suggests next tests. Runs on the phone; nothing is sent or saved. <button class="sumbtn" onclick="quickExample()">Example</button> <button class="sumbtn" onclick="quickClear()">Clear</button></div>
+      <details class="qpickwrap"><summary>Tap to add findings</summary><div id="qpicks"></div></details>
       <textarea id="qtext" class="qtext" rows="5" placeholder="e.g. 34 yo woman, bilateral, mutton-fat KP, iris nodules, snowballs, candle-wax, cough, erythema nodosum, no back pain"></textarea>
       <div id="qseen" class="qseen"></div>
       <div id="qalerts"></div>
@@ -1985,7 +1993,7 @@ const QRULES=[
  [/night sweat|weight loss|fever/, {TB:2,lymphoma:1,Whipple:1,endophthalmitis:.5}, "systemic symptoms"],
  [/\btb\b|tubercul|endemic|india|pakistan|bangladesh|africa|tb contact/, {TB:3}, "TB exposure / endemic origin"],
  [/\bhiv\b|\baids\b|\bcd4\b/, {CMV:3,HIV:2,syphilis:2,toxoplasma:1,VZV:1}, "HIV"],
- [/immunosupp|immunocomp|chemo|transplant|on steroids|biologic/, {CMV:3,candida:2,VZV:1,toxoplasma:1}, "immunosuppressed"],
+ [/immunosupp|immunocomp|chemo|transplant|biologic|tacrolimus|ciclosporin|cyclosporin|mycophenol|methotrexate|azathioprine|adalimumab|infliximab|rituximab/, {CMV:3,candida:2,VZV:1,toxoplasma:1}, "immunosuppressed"],
  [/\bivdu\b|iv drug|intravenous drug|central line|\btpn\b|picc|neutropen/, {candida:3,endophthalmitis:2}, "IV drug use / lines"],
  [/post-?op|after (cataract|surgery)|recent (eye )?surgery|phaco|vitrectomy/, {endophthalmitis:2,"P.acnes":2,"lens-induced":1,sympathetic:1}, "recent eye surgery"],
  [/trauma|penetrating|injur/, {sympathetic:3,endophthalmitis:1}, "eye trauma"],
@@ -2007,6 +2015,8 @@ const QRULES=[
  [/confus|memory|cognit|seizure|behaviou?r change/, {lymphoma:2}, "neuro-cognitive change"],
  [/neuropath|cardiomyopath|amyloid|\bttr\b/, {amyloid:3}, "neuropathy / amyloid"],
  [/japan|caribbean|htlv/, {HTLV1:2,VKH:.5}, "HTLV-1 region"],
+ [/turk|iran|persian|middle east|arab|korea|chin(a|ese)|mediterran|silk road/, {"Behçet":1.5}, "Silk Road ancestry"],
+ [/asian|hispanic|latin|native american|indigenous|japanese/, {VKH:1}, "pigmented ancestry"],
  // results
  [/(raised|high|elevated|positive)\s+(ace|lysozyme|sil-?2r)|(ace|lysozyme|sil-?2r)\s+(raised|high|elevated|positive|\+)/, {sarcoid:3}, "raised ACE / lysozyme / sIL-2R"],
  [/(quantiferon|igra|mantoux|t-?spot)\s*(positive|\+|pos)|positive\s+(quantiferon|igra|mantoux)/, {TB:3}, "positive IGRA"],
@@ -2020,6 +2030,13 @@ const QRULES=[
  [/recurr|relaps|episod/, {"HLA-B27":1,HSV:1,"Behçet":1,Posner:1}, "recurrent"],
  [/chronic|insidious|white eye|quiet eye|painless/, {JIA:2,Fuchs:2,lymphoma:1,birdshot:1,"pars planitis":1}, "chronic / quiet eye"],
  // anterior segment
+ [/acute anterior uveitis/, {"HLA-B27":3,reactive:1,HSV:.5}, "acute anterior uveitis"],
+ [/(?<!acute )anterior uveitis/, {"HLA-B27":1,HSV:.5,Fuchs:.5,JIA:.5,Posner:.5,sarcoid:.5}, "anterior uveitis"],
+ [/posterior uveitis/, {toxoplasma:1,birdshot:.5,sarcoid:.5,TB:.5,syphilis:.5}, "posterior uveitis"],
+ [/(anterior chamber|\bac\b)( cells)? ?[3-4] ?\+|[3-4] ?\+ (ac |anterior chamber )?cells/, {"HLA-B27":2,endophthalmitis:.5,"Behçet":.5}, "marked AC cells"],
+ [/corneal sensation|hypoaesth|hypoesth/, {HSV:2,VZV:2,leprosy:1}, "reduced corneal sensation"],
+ [/glaucomatocyclitic|posner/, {Posner:5}, "glaucomatocyclitic crisis"],
+ [/\bana\b/, {JIA:2,SLE:1}, "ANA"],
  [/non-?granulomatous|fine kp/, {"HLA-B27":2,"Behçet":1}, "non-granulomatous"],
  [/(?<!non-?)granulomatous|mutton[- ]?fat/, {sarcoid:3,TB:3,syphilis:2,VKH:2,sympathetic:2,HSV:1}, "granulomatous / mutton-fat KP"],
  [/stellate kp|diffuse kp/, {Fuchs:3,HSV:1,VZV:1}, "stellate KP"],
@@ -2039,17 +2056,23 @@ const QRULES=[
  [/snowball|snowbank|pars plana exudate/, {"pars planitis":3,sarcoid:2,MS:1,Lyme:1}, "snowballs / snowbanking"],
  [/intermediate uveitis/, {"pars planitis":2,MS:2,sarcoid:2,Lyme:1,TB:1,lymphoma:1}, "intermediate uveitis"],
  [/vitritis|vitreous (cells|haze)/, {lymphoma:.5,toxoplasma:.5,sarcoid:.5}, "vitritis", {CMV:1.5,VZV:1,PIC:.5,POHS:.5,serpiginous:.5}],
- [/dense vitritis|heavy vitritis|headlight|marked vitritis/, {toxoplasma:3,lymphoma:2,endophthalmitis:2,ARN:1}, "dense vitritis"],
+ [/dense vitritis|heavy vitritis|headlight|marked vitritis|vitreous haze [2-4] ?\+|[3-4] ?\+ vitreous/, {toxoplasma:3,lymphoma:2,endophthalmitis:2,ARN:1}, "dense vitritis"],
  [/sheets?|aurora|clumps? of cells/, {lymphoma:3}, "sheets of vitreous cells"],
  [/glass[- ]?wool|veil/, {amyloid:3,lymphoma:1}, "glass-wool vitreous"],
  [/string of pearls|fluff ?ball|puff ?ball/, {candida:4}, "string-of-pearls"],
  [/panuveitis/, {VKH:2,sarcoid:2,TB:2,syphilis:2,"Behçet":2,sympathetic:2}, "panuveitis"],
  // retina
+ [/\btoxo\b|toxoplasm/, {toxoplasma:3}, "toxoplasma"],
+ [/fluffy/, {toxoplasma:1,candida:1}, "fluffy lesion"],
+ [/sub-?retinal infiltrat/, {lymphoma:2}, "subretinal infiltrates"],
+ [/cotton[- ]?wool/, {HIV:1,SLE:1,"Behçet":.5,CMV:.5}, "cotton-wool spots"],
+ [/(not|poor(ly)?|partial(ly)?|incomplete(ly)?) (respond|response|responding)[^.,;]{0,25}steroid|steroid[- ](resistant|refractory|dependent)/, {lymphoma:2,TB:.5,syphilis:.5}, "steroid-resistant"],
  [/retinitis|necrotising|necrotizing|retinal whitening|retinal necrosis/, {ARN:2,CMV:2,toxoplasma:1,syphilis:1}, "retinitis"],
  [/peripheral (necrotising |necrotizing )?retinitis|confluent|circumferential/, {ARN:3}, "peripheral confluent retinitis"],
  [/pigmented scar|old scar|satellite|adjacent scar|next to (a )?scar/, {toxoplasma:4}, "satellite to a scar"],
  [/haemorrhagic retinitis|hemorrhagic retinitis|pizza|brushfire|granular border/, {CMV:4}, "haemorrhagic / granular retinitis"],
- [/outer retin|porn|cracked mud|perivascular clearing/, {VZV:3,HIV:1}, "outer-retinal necrosis"],
+ [/outer retin|cracked mud|perivascular clearing/, {VZV:3,HIV:1}, "outer-retinal necrosis"],
+ [/\bporn\b|progressive outer retinal/, {VZV:5,HIV:1}, "PORN"],
  [/vasculitis|sheathing|periphlebitis|phlebitis/, {sarcoid:1,"Behçet":1,TB:1,MS:1,SLE:1}, "retinal vasculitis"],
  [/candle[- ]?wax/, {sarcoid:4}, "candle-wax drippings"],
  [/occlusive|non-?perfusion|\bbrvo\b|branch vein|arteriolitis/, {"Behçet":2,SLE:2,ARN:2,TB:1,APS:1}, "occlusive vasculitis"],
@@ -2129,12 +2152,65 @@ const QTESTS={
  AZOOR:"OCT (EZ), FAF, visual field, ERG",
  AIR:"ERG, anti-retinal antibodies, cancer screen"
 };
+/* clinic shorthand → words the rules know */
+const QABBR=[
+ [/\bbilat\b/g,'bilateral'],[/\bunilat\b/g,'unilateral'],[/\bps\b/g,'posterior synechiae'],
+ [/\bkps\b/g,'kp'],[/\baau\b/g,'acute anterior uveitis'],[/\bau\b/g,'anterior uveitis'],
+ [/\biu\b/g,'intermediate uveitis'],[/\bpu\b/g,'posterior uveitis'],[/\blbp\b/g,'back pain'],
+ [/\bvh\b/g,'vitreous haemorrhage'],[/\bsrf\b/g,'subretinal fluid'],[/\bnv[de]\b/g,'neovascularisation'],
+ [/\bcws\b/g,'cotton wool spots'],[/\berm\b/g,'epiretinal membrane'],[/\bvit\b/g,'vitreous'],
+ [/\bx ?[2-9]\b|\b[2-9] ?(episodes|attacks)\b/g,'recurrent'],[/\bpred(nisolone)?\b|\bsteroids\b/g,'steroid'],
+ [/\b(hla[- ]?)?a29\b/g,'hla-a29'],[/\b(hla[- ]?)?b27\b/g,'hla-b27'],
+ [/\br eye\b/g,'right eye'],[/\bl eye\b/g,'left eye'],[/\bpost pole\b/g,'posterior pole'],
+ [/\b(\d{1,2}) ?f\b/g,'$1 yo female'],[/\b(\d{1,2}) ?m\b/g,'$1 yo male'],[/\b(\d{1,2})[- ]years?[- ]old\b/g,'$1 yo']
+];
+function qExpand(t){t=t.toLowerCase();QABBR.forEach(([re,r])=>{t=t.replace(re,r);});return t;}
+/* findings that argue AGAINST a diagnosis: [test(ctx), {dx:penalty}, label] */
+const QAGAINST=[
+ [c=>c.pos('granulomatous / mutton-fat KP'), {"HLA-B27":2,"Behçet":1,Posner:1}, "granulomatous"],
+ [c=>c.pos('bilateral'), {Fuchs:1.5,Posner:2,ARN:1,HSV:1,VZV:1,MEWDS:1,toxoplasma:.5}, "bilateral (usually one eye)"],
+ [c=>c.pos('posterior synechiae'), {Fuchs:2,Posner:2}, "synechiae present"],
+ [c=>c.neg('vitritis'), {toxoplasma:2,ARN:2,lymphoma:2,endophthalmitis:2,"pars planitis":2}, "no vitritis"],
+ [c=>c.pos('chronic / quiet eye'), {"HLA-B27":1.5,endophthalmitis:2,reactive:1}, "chronic / quiet eye"],
+ [c=>c.pos('acute / painful')||c.pos('marked AC cells'), {Fuchs:1.5,birdshot:1,lymphoma:1,JIA:1}, "acute / painful"],
+ [c=>c.age!==null&&c.age>=50, {MEWDS:1,PIC:1,JIA:2}, "age over 50"],
+ [c=>c.age!==null&&c.age<40, {lymphoma:1.5,birdshot:1.5,amyloid:1}, "age under 40"],
+ [c=>c.neg('macular oedema'), {"pars planitis":1,birdshot:.5}, "no CMO"],
+ [c=>c.pos('heterochromia')||c.pos('stellate KP'), {"HLA-B27":1}, "Fuchs features"]
+];
+/* tap-to-add findings, for typing less on a phone */
+const QPICK=[
+ ["Who",["child","young adult","over 50","female","male","myopic","immunosuppressed","HIV","from TB-endemic area","recent eye surgery","eye trauma"]],
+ ["Eye",["unilateral","bilateral","acute painful","chronic quiet eye","recurrent","alternating"]],
+ ["Anterior",["fine KP","mutton-fat KP","stellate KP","fibrin","hypopyon","posterior synechiae","no synechiae","iris nodules","iris atrophy","heterochromia","raised IOP","reduced corneal sensation"]],
+ ["Vitreous",["vitritis","no vitritis","dense vitritis","snowballs","sheets of cells","glass-wool vitreous"]],
+ ["Fundus",["retinitis","peripheral retinitis","next to a pigmented scar","vasculitis","occlusive vasculitis","candle-wax","serous RD","disc swelling","CMO","no CMO","cream ovoid spots","white dots","placoid lesions","punched-out lesions","choroidal granuloma","sub-RPE infiltrates"]],
+ ["Systemic",["back pain","psoriasis","IBD","oral ulcers","genital ulcers","erythema nodosum","cough","headache","tinnitus","vitiligo","rash on palms","renal disease","steroid-resistant"]]
+];
+/* diagnosis → its card on the Imaging tab */
+const QATLAS={birdshot:"Birdshot chorioretinopathy",MEWDS:"MEWDS",APMPPE:"APMPPE",serpiginous:"Serpiginous / TB serpiginous-like choroiditis",
+ PIC:"PIC / multifocal choroiditis",MFC:"PIC / multifocal choroiditis",VKH:"VKH / sympathetic ophthalmia",sympathetic:"VKH / sympathetic ophthalmia",
+ ARN:"ARN / PORN",VZV:"ARN / PORN",CMV:"CMV retinitis",toxoplasma:"Toxoplasma retinochoroiditis",syphilis:"Syphilis (posterior placoid)",
+ lymphoma:"Vitreoretinal lymphoma (masquerade)",TB:"TB vs sarcoid choroidal granulomas",sarcoid:"TB vs sarcoid choroidal granulomas",
+ "Behçet":"Behçet's",amyloid:"Vitreous amyloidosis (masquerade)"};
+function qOpenAtlas(name){goTab('img');const d=[...document.querySelectorAll('#imgatlas details')].find(x=>x.querySelector('.at-dx').textContent===name);
+ if(d){d.open=true;setTimeout(()=>d.scrollIntoView({behavior:'smooth',block:'start'}),60);}}
+function qAdd(t){const el=document.getElementById('qtext');const v=el.value.trim();el.value=v?(v.replace(/[,;]\s*$/,'')+', '+t):t;quickAnalyse();buildSummary();}
+function qRenderPicks(){document.getElementById('qpicks').innerHTML=QPICK.map(([g,xs])=>`<div class="qpg"><span class="qpl">${g}</span>${xs.map(x=>`<button class="qpick" type="button">${x}</button>`).join('')}</div>`).join('');
+ document.querySelectorAll('.qpick').forEach(b=>b.addEventListener('click',()=>qAdd(b.textContent)));}
+function qAge(txt){
+ const am=txt.match(/\b(\d{1,2})\s*(y\/?o|yo|yrs?|years?)\b|\b(?:aged?|age)\s*(\d{1,2})\b/);
+ if(am)return +(am[1]||am[3]);
+ if(/\b(over|>) ?(50|60)\b|elderly|older (patient|adult|man|woman)/.test(txt))return 60;
+ if(/young adult/.test(txt))return 30;
+ return null;
+}
 function qNegated(txt,idx){
  const before=txt.slice(Math.max(0,idx-28),idx);
  return /\b(no|not|nil|without|absent|negative|neg|denies|never)\b[^.,;:]*$/.test(before);
 }
 function quickAnalyse(){
- const raw=document.getElementById('qtext').value, txt=raw.toLowerCase();
+ const raw=document.getElementById('qtext').value, txt=qExpand(raw);
  const score={},why={},seen=[];
  const add=(map,label)=>Object.entries(map).forEach(([d,w])=>{score[d]=(score[d]||0)+w;(why[d]=why[d]||[]).push(label);});
  QRULES.forEach(([re,pos,label,neg])=>{
@@ -2145,17 +2221,22 @@ function quickAnalyse(){
    else {add(pos,label);seen.push([label,0]);}
  });
  // age
- const am=txt.match(/\b(\d{1,2})\s*(y\/?o|yo|yrs?|years?)\b|\b(?:aged?|age)\s*(\d{1,2})\b/);
- const age=am?+(am[1]||am[3]):null;
+ const age=qAge(txt);
  if(age!==null){
    if(age<16)add({JIA:2,toxocara:1,Blau:1},'age '+age);
    else if(age>=60)add({lymphoma:2.5,birdshot:1,amyloid:1},'age '+age);
    else if(age>=50)add({lymphoma:1.5,birdshot:1.5},'age '+age);
    else if(age<=40)add({"HLA-B27":.5,VKH:.5,MEWDS:.5,PIC:.5,"Behçet":.5},'age '+age);
    if(age>=18)['JIA','toxocara','Blau'].forEach(d=>{if(score[d])score[d]*=.25;});
-   seen.unshift(['age '+age,0]);
+   seen.unshift([(/\b\d{1,2}\s*(y\/?o|yo|yrs?|years?)\b|\bage\s*\d/.test(txt)?'age ':'age ~')+age,0]);
  }
+ // findings that argue against
+ const ctx={age,pos:l=>seen.some(([s,n])=>n===0&&s===l),neg:l=>seen.some(([s,n])=>n>0&&s==='no '+l)}, against={};
+ QAGAINST.forEach(([test,map,label])=>{if(!test(ctx))return;Object.entries(map).forEach(([d,w])=>{if(score[d]>0){score[d]-=w;(against[d]=against[d]||[]).push(label);}});});
  const rows=Object.entries(score).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,10);
+ // phrases nothing understood, so gaps are visible
+ const unk=raw.split(/[,;\n]|\band\b|\bwith\b/i).map(x=>x.trim()).filter(x=>x.length>2).filter(seg=>{const e=qExpand(seg);
+   return !QRULES.some(([re])=>re.test(e))&&qAge(e)===null&&!/^(no|not|nil|patient|pt|history of|hx of|on|presents?|presenting|c\/o)\b/.test(e);});
  // must-not-miss alerts
  const has=l=>seen.some(([s,n])=>n===0&&s===l), A=[];
  const vit=has('vitritis')||has('dense vitritis')||has('sheets of vitreous cells');
@@ -2167,16 +2248,20 @@ function quickAnalyse(){
  if(has('serous RD')&&!has('bilateral'))A.push('Unilateral serous RD: also consider posterior scleritis (B-scan T-sign) and CSC.');
  // render
  const chips=seen.map(([s,n])=>`<span class="qchip${n===1?' neg':n===2?' ign':''}" title="${n===2?'negated — not used':''}">${s}</span>`).join('');
- document.getElementById('qseen').innerHTML=raw.trim()?(chips?`<div class="qlab">Recognised</div>${chips}`:'<div class="empty">No findings recognised yet — try terms like “bilateral”, “mutton-fat KP”, “vitritis”, “serous RD”, “age 62”.</div>'):'';
+ const unkHtml=unk.length?`<div class="qlab">Not recognised</div>${unk.map(u=>`<span class="qchip ign" style="text-decoration:none">${u.replace(/</g,'&lt;')}</span>`).join('')}`:'';
+ document.getElementById('qseen').innerHTML=raw.trim()?((chips?`<div class="qlab">Recognised</div>${chips}`:'<div class="empty">No findings recognised yet — try terms like “bilateral”, “mutton-fat KP”, “vitritis”, “serous RD”, “age 62”, or tap the findings above.</div>')+unkHtml):'';
  document.getElementById('qalerts').innerHTML=A.map(a=>`<div class="qalert">⚠ ${a}</div>`).join('');
  const max=rows.length?rows[0][1]:1;
  document.getElementById('qout').innerHTML=rows.map(([d,v],i)=>`<div class="qrow">
    <div class="qtop"><span class="qn">${i+1}</span><span class="qdx">${(DXMETA[d]||{}).name||d}</span><span class="bar" style="width:${Math.max(10,(v/max)*90)}px"></span></div>
    <div class="qwhy">Fits: ${[...new Set(why[d])].join(' · ')}</div>
-   ${QTESTS[d]?`<div class="qtest"><b>Next:</b> ${QTESTS[d]}</div>`:''}</div>`).join('');
+   ${against[d]?`<div class="qagainst">Against: ${[...new Set(against[d])].join(' · ')}</div>`:''}
+   ${QTESTS[d]?`<div class="qtest"><b>Next:</b> ${QTESTS[d]}</div>`:''}
+   ${QATLAS[d]?`<button class="qcard" type="button" onclick="qOpenAtlas('${QATLAS[d].replace(/'/g,"\\'")}')">Imaging signature →</button>`:''}</div>`).join('');
  window._quick={raw:raw.trim(),rows};
 }
 let _qT;document.getElementById('qtext').addEventListener('input',()=>{clearTimeout(_qT);_qT=setTimeout(()=>{quickAnalyse();buildSummary();},250);});
+qRenderPicks();
 function quickClear(){document.getElementById('qtext').value='';quickAnalyse();buildSummary();}
 function quickExample(){document.getElementById('qtext').value='62 yo man, bilateral painless blurred vision, dense vitritis with sheets of cells, no CMO, creamy sub-RPE lesions, partial response to steroid, some memory problems';quickAnalyse();buildSummary();}
 
