@@ -210,7 +210,39 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
   h1{font-size:22px}
 }
 body.onquick .mobjump{display:none!important}
-@media print{.tabs,.side,.mobjump,.controls,.sumbtn,.hint{display:none!important}}
+/* tablet: the differential stays beside the questions; finger-sized controls */
+@media(min-width:700px) and (max-width:880px){
+  .layout{flex-direction:row}.main{width:auto}
+  .side{position:sticky;top:66px;flex:0 0 236px;width:auto}
+  .mobjump{display:none}
+  .labgrid{grid-template-columns:1fr}
+}
+@media(min-width:700px){.side{max-height:calc(100vh - 78px);max-height:calc(100dvh - 78px);overflow-y:auto;overscroll-behavior:contain}}
+@media(pointer:coarse){
+  body{overscroll-behavior-y:contain}
+  button,select,summary,.qhead,.th{touch-action:manipulation}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;white-space:nowrap;font-size:15px;padding:11px 14px}
+  .qhead{padding:12px;align-items:center}
+  .qtxt{font-size:16px}.qtxt small{font-size:13.5px}
+  .toggle{gap:8px}
+  .tbtn{min-width:58px;min-height:44px;font-size:15px;padding:8px 16px}
+  .echip,.pbchip,.qpick{min-height:44px;font-size:15px;padding:9px 14px}
+  .fnum,.fsel,.funit,.pbsel{min-height:44px;font-size:16px}
+  .fnum{width:112px}
+  .controls button,.sumbtn{min-height:44px;font-size:15px;padding:9px 16px}
+  .drill li,.drill h4{font-size:15px}
+  .sysnote{font-size:14px}
+  .qtext{font-size:16px}
+}
+/* "continued your workup" strip */
+#resbar{display:none;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 0;padding:9px 12px;border:1px solid var(--rust);border-left:4px solid var(--rust);border-radius:7px;background:#fbf3e4;font-size:14px}
+#resbar.on{display:flex}
+#resbar span{flex:1 1 220px}
+#resbar button{font-family:inherit;font-size:14px;min-height:40px;padding:6px 14px;border-radius:20px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+#resbar button.go{background:var(--ink);color:var(--paper)}
+@media print{.tabs,.side,.mobjump,.controls,.sumbtn,.hint,#resbar{display:none!important}}
 </style>
 </head>
 <body>
@@ -220,6 +252,7 @@ body.onquick .mobjump{display:none!important}
   <div class="sub">Six steps: <b>History</b> (what to ask, with follow-ups) → <b>Review of systems</b> (branching red-flag screen) → <b>Eye signs</b> (what you see at the slit lamp) → <b>Imaging</b> (OCT, FA, ICGA, FAF signatures) → <b>Investigations</b> (what to order, why, and what each test can and cannot do) → <b>Results</b> (plug the numbers in). The differential ranks live across all of them, and <b>Summary</b> writes it up for your notes.</div>
   <div class="src">Grounded in your library — Foster &amp; Vitale <i>Diagnosis &amp; Treatment of Uveitis</i> 2e; Samalia in <i>Uveitis Management: A Clinical Handbook</i> (2023) ch.2; <i>Wills Eye Manual</i> 7e §12.1; <i>Oxford Handbook of Ophthalmology</i> 4e. Decision-support only — your judgement governs.</div>
 </header>
+<div id="resbar"><span id="resmsg"></span></div>
 
 <div class="tabs">
   <button class="tab" data-v="quick">⚡ Quick DDx</button>
@@ -297,7 +330,7 @@ body.onquick .mobjump{display:none!important}
       <div class="legend">Bars = number of your positive findings each diagnosis explains. A prompt, not a probability.</div>
     </div>
     <div class="controls">
-      <button onclick="resetAll()">Reset all</button>
+      <button onclick="askReset(this)">New patient · clear all</button>
       <button onclick="goTab('summary')">View summary</button>
     </div>
   </div>
@@ -1854,6 +1887,7 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
  document.body.classList.toggle('onquick',t.dataset.v==='quick');
  if(t.dataset.v==='summary')buildSummary();
  window.scrollTo(0,0);
+ if(t.scrollIntoView)t.scrollIntoView({inline:'center',block:'nearest'});
 }));
 function goTab(v){const t=[...document.querySelectorAll('.tab')].find(x=>x.dataset.v===v);if(t)t.click();}
 
@@ -2288,6 +2322,62 @@ document.getElementById('footer').innerHTML='Sources: Foster CS &amp; Vitale AT,
 
 renderStrategy();renderInvestGrid();renderPB();renderPBOut();
 renderInterp();recompute();buildSummary();
+
+/* ---- autosave: an unfinished workup survives a reload, a closed tab or the tablet going to sleep.
+   Saved on this device only (no names or numbers that identify anyone are ever entered). ---- */
+const SAVE_KEY='uveitis-workup:v1';
+let _restoring=false,_saveT;
+document.querySelectorAll('.fsel').forEach(s=>{s.dataset.d0=s.value;});
+function snapshot(){const g=s=>[...document.querySelectorAll(s)];
+ return {t:Date.now(),tab:(document.querySelector('.tab.on')||{dataset:{}}).dataset.v,
+  yes:g('.q .tbtn.yes.on').map(b=>b.closest('.q').id),no:g('.q .tbtn.no.on').map(b=>b.closest('.q').id),
+  chips:[...examSel],
+  unit:Object.fromEntries(g('.funit').filter(s=>s.value!=='0').map(s=>[s.dataset.id,s.value])),
+  num:Object.fromEntries(g('.fnum').filter(i=>i.value!=='').map(i=>[i.dataset.id,i.value])),
+  sel:Object.fromEntries(g('.fsel').filter(s=>s.value!==s.dataset.d0).map(s=>[s.dataset.id,s.value])),
+  pb:Object.fromEntries(g('.pbsel').filter(s=>s.value).map(s=>[s.dataset.k,s.value])),
+  pbf:Object.keys(PB.flags).filter(k=>PB.flags[k]),q:document.getElementById('qtext').value};}
+function snapEmpty(s){return !(s.yes.length||s.no.length||s.chips.length||s.pbf.length||s.q.trim()||Object.keys(s.num).length||Object.keys(s.sel).length||Object.keys(s.pb).length);}
+function saveNow(){if(_restoring)return;clearTimeout(_saveT);
+ try{const s=snapshot();if(snapEmpty(s))localStorage.removeItem(SAVE_KEY);else localStorage.setItem(SAVE_KEY,JSON.stringify(s));}catch(e){}}
+function queueSave(){if(_restoring)return;clearTimeout(_saveT);_saveT=setTimeout(saveNow,300);}
+['click','input','change'].forEach(ev=>document.addEventListener(ev,queueSave,true));
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveNow();});
+window.addEventListener('pagehide',saveNow);
+function applySaved(s){_restoring=true;
+ try{
+  const fire=(el,ev)=>el.dispatchEvent(new Event(ev,{bubbles:true}));
+  const one=q=>document.querySelector(q);
+  (s.yes||[]).forEach(id=>{const c=document.getElementById(id);const b=c&&c.querySelector('.tbtn.yes');if(b&&!b.classList.contains('on'))b.click();});
+  (s.no||[]).forEach(id=>{const c=document.getElementById(id);const b=c&&c.querySelector('.tbtn.no');if(b&&!b.classList.contains('on'))b.click();});
+  (s.chips||[]).forEach(id=>{const b=one('.echip[data-id="'+id+'"]');if(b&&!b.classList.contains('on'))b.click();});
+  Object.entries(s.unit||{}).forEach(([id,v])=>{const e=one('.funit[data-id="'+id+'"]');if(e){e.value=v;fire(e,'change');}});
+  Object.entries(s.num||{}).forEach(([id,v])=>{const e=one('.fnum[data-id="'+id+'"]');if(e){e.value=v;fire(e,'input');}});
+  Object.entries(s.sel||{}).forEach(([id,v])=>{const e=one('.fsel[data-id="'+id+'"]');if(e){e.value=v;fire(e,'change');}});
+  Object.entries(s.pb||{}).forEach(([k,v])=>{const e=one('.pbsel[data-k="'+k+'"]');if(e){e.value=v;fire(e,'change');}});
+  (s.pbf||[]).forEach(k=>{const b=one('.pbchip[data-f="'+k+'"]');if(b&&!b.classList.contains('on'))b.click();});
+  if(s.q){document.getElementById('qtext').value=s.q;quickAnalyse();}
+  if(s.tab)goTab(s.tab);
+  buildSummary();
+ }catch(e){}
+ _restoring=false;}
+function resBar(msg,btns){const bar=document.getElementById('resbar');bar.innerHTML='<span></span>';bar.firstChild.textContent=msg;
+ btns.forEach(([label,fn,cls])=>{const b=document.createElement('button');b.type='button';b.textContent=label;if(cls)b.className=cls;
+  b.addEventListener('click',e=>{e.stopPropagation();fn();});bar.appendChild(b);});
+ bar.classList.add('on');}
+function hideResBar(){document.getElementById('resbar').classList.remove('on');}
+function askReset(b){
+ if(b.dataset.sure){clearTimeout(b._t);delete b.dataset.sure;b.textContent=b.dataset.l;resetAll();hideResBar();saveNow();window.scrollTo(0,0);return;}
+ b.dataset.l=b.textContent;b.dataset.sure='1';b.textContent='Tap again to clear';
+ b._t=setTimeout(()=>{if(b.dataset.sure){delete b.dataset.sure;b.textContent=b.dataset.l;}},3500);}
+(function(){let s=null;try{s=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');}catch(e){}
+ if(!s||!s.t)return;
+ const d=new Date(s.t),when=d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+', '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+ const fresh=()=>{try{localStorage.removeItem(SAVE_KEY);}catch(e){}hideResBar();};
+ if(Date.now()-s.t<12*3600*1000){applySaved(s);
+  resBar('Continued the workup you left unfinished ('+when+').',[['Keep going',hideResBar,'go'],['New patient',()=>{resetAll();fresh();goTab('hx');}]]);}
+ else resBar('An unfinished workup from '+when+' is saved on this device.',[['Open it',()=>{applySaved(s);hideResBar();},'go'],['New patient',fresh]]);
+})();
 </script>
 
 <script>
