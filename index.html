@@ -210,6 +210,9 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
   h1{font-size:22px}
 }
 body.onquick .mobjump{display:none!important}
+.about summary{cursor:pointer;font-size:12.5px;color:var(--ink2);font-style:italic}
+@media(min-width:700px){.about summary{display:none}}
+@media(max-width:699px){header.top{padding-bottom:6px}.kicker{display:none}h1{font-size:20px;margin:0 0 2px}body{padding-top:10px}}
 /* tablet: the differential stays beside the questions; finger-sized controls */
 @media(min-width:700px) and (max-width:880px){
   .layout{flex-direction:row}.main{width:auto}
@@ -248,9 +251,11 @@ body.onquick .mobjump{display:none!important}
 <body>
 <header class="top">
   <div class="kicker">Clinic Companion — sit with the patient and work through it</div>
-  <h1>Uveitis — Full Front-of-Patient Workup</h1>
-  <div class="sub">Six steps: <b>History</b> (what to ask, with follow-ups) → <b>Review of systems</b> (branching red-flag screen) → <b>Eye signs</b> (what you see at the slit lamp) → <b>Imaging</b> (OCT, FA, ICGA, FAF signatures) → <b>Investigations</b> (what to order, why, and what each test can and cannot do) → <b>Results</b> (plug the numbers in). The differential ranks live across all of them, and <b>Summary</b> writes it up for your notes.</div>
+  <h1>Uveitis Workup</h1>
+  <details class="about" id="about"><summary>About this tool &amp; sources</summary>
+  <div class="sub">Start with <b>Quick DDx</b> (type or tap the findings), or work through six steps: <b>History</b> (what to ask, with follow-ups) → <b>Review of systems</b> (branching red-flag screen) → <b>Eye signs</b> (what you see at the slit lamp) → <b>Imaging</b> (OCT, FA, ICGA, FAF signatures) → <b>Investigations</b> (what to order, why, and what each test can and cannot do) → <b>Results</b> (plug the numbers in). One differential ranks live across all of them, and <b>Summary</b> writes it up for your notes.</div>
   <div class="src">Grounded in your library — Foster &amp; Vitale <i>Diagnosis &amp; Treatment of Uveitis</i> 2e; Samalia in <i>Uveitis Management: A Clinical Handbook</i> (2023) ch.2; <i>Wills Eye Manual</i> 7e §12.1; <i>Oxford Handbook of Ophthalmology</i> 4e. Decision-support only — your judgement governs.</div>
+  </details>
 </header>
 <div id="resbar"><span id="resmsg"></span></div>
 
@@ -268,13 +273,13 @@ body.onquick .mobjump{display:none!important}
 <div class="layout">
   <div class="main">
     <div id="v-quick" class="view">
-      <div class="hint"><b>Quick differential.</b> Type what the patient has, in your own words — age, laterality, course, signs, imaging, results. Negatives count too (“no vitritis”, “no synechiae”) and clinic shorthand (bilat, PS, AAU, KPs, LBP, 68F, x3). It ranks the differential, shows what fits and what argues against, and suggests next tests. Runs on the phone; nothing is sent or saved. <button class="sumbtn" onclick="quickExample()">Example</button> <button class="sumbtn" onclick="quickClear()">Clear</button></div>
+      <div class="hint"><b>Quick differential.</b> Type what the patient has, in your own words — age, laterality, course, signs, imaging, results. Negatives count too (“no vitritis”, “no synechiae”) and clinic shorthand (bilat, PS, AAU, KPs, LBP, 68F, x3). It ranks the differential, shows what fits and what argues against, and suggests next tests. Anything you tap in the other tabs or enter in Results feeds the same list. Runs on the phone; nothing is sent or saved. <button class="sumbtn" onclick="quickExample()">Example</button> <button class="sumbtn" onclick="quickClear()">Clear</button></div>
       <details class="qpickwrap"><summary>Tap to add findings</summary><div id="qpicks"></div></details>
       <textarea id="qtext" class="qtext" rows="5" placeholder="e.g. 34 yo woman, bilateral, mutton-fat KP, iris nodules, snowballs, candle-wax, cough, erythema nodosum, no back pain"></textarea>
       <div id="qseen" class="qseen"></div>
       <div id="qalerts"></div>
       <div id="qout"></div>
-      <div class="sysnote">Keyword matching for decision support — check the “Recognised” list, and work through the tabs for a full assessment.</div>
+      <div class="sysnote">One differential for the whole tool: specific findings count for more, and rare diagnoses need more evidence. Keyword matching for decision support — check the “Recognised” list.</div>
     </div>
     <div id="v-hx" class="view on"></div>
     <div id="v-ros" class="view"></div>
@@ -327,7 +332,7 @@ body.onquick .mobjump{display:none!important}
       <h3>Working differential</h3>
       <div class="count-note" id="flagnote">Nothing flagged yet.</div>
       <div id="dxlist"><div class="empty">Flag findings in History, ROS, Eye signs or Imaging, or enter results, and the likely diagnoses rank here.</div></div>
-      <div class="legend">Bars = number of your positive findings each diagnosis explains. A prompt, not a probability.</div>
+      <div class="legend">Bars = weight of the findings each diagnosis explains: specific findings count for more, and rare diagnoses need more evidence. A prompt, not a probability.</div>
     </div>
     <div class="controls">
       <button onclick="askReset(this)">New patient · clear all</button>
@@ -1851,32 +1856,58 @@ function renderInterp(){
  </div>`).join('');
 }
 
-/* differential tally: history + ROS flags, plus interpreter status boosts */
-function recompute(){
- const rows=computeScores();
- const list=document.getElementById('dxlist'),note=document.getElementById('flagnote');
- const nf=flagged.size+examSel.size;
- note.textContent=nf?`${flagged.size} history/ROS + ${examSel.size} eye/imaging sign${examSel.size===1?'':'s'} flagged.`:'Nothing flagged yet.';
- if(!rows.length){list.innerHTML='<div class="empty">Flag findings in History, ROS, Eye signs or Imaging, or enter results, and the likely diagnoses rank here.</div>';return;}
- const max=rows[0][1];
- list.innerHTML=rows.map(([d,v])=>`<div class="dxrow"><span class="dxname">${(DXMETA[d]||{}).name||d}</span>
-   <span class="bar" style="width:${Math.max(10,(v/max)*110)}px"></span>
-   <span class="cnt">${v%1?v.toFixed(1):v}</span></div>`).join('');
- const mc=document.getElementById('mobcount');if(mc)mc.textContent=rows.length;
-}
-/* shared scoring: history/ROS flags + eye signs + interpreter, returns sorted [dx,score] */
-function computeScores(){
- const score={};
- flagged.forEach(id=>qDx[id].forEach(d=>score[d]=(score[d]||0)+1));
- examSel.forEach(id=>examMeta[id].pts.forEach(d=>score[d]=(score[d]||0)+1));
+/* ---- one differential for the whole tool ----
+   Everything entered anywhere feeds it: Yes answers (History/ROS), tapped eye and imaging signs,
+   lab results, and the findings typed into Quick DDx.
+   A tapped finding is worth more the fewer diagnoses it points to (specificity); the total is then
+   scaled by how often the diagnosis is seen in a UK uveitis clinic (DXPRIOR, a judgement, not data). */
+const specW=n=>n<=1?3:n===2?2:n===3?1.5:1;
+const DXPRIOR={};
+["TINU","MEWDS","PIC","MFC","APMPPE","serpiginous","sympathetic","GPA","SLE","HIV","candida","P.acnes","Bartonella","toxocara",
+ "AIR","AZOOR","APS","sickle","RP","VKH","Behçet","birdshot"].forEach(d=>DXPRIOR[d]=.85);
+["Lyme","Whipple","leprosy","brucella","leptospirosis","HTLV1","Cogan","polychondritis","Blau","POHS","scleroderma","amyloid"].forEach(d=>DXPRIOR[d]=.6);
+const shortQ=t=>{const d=document.createElement('div');d.innerHTML=String(t);const x=d.textContent.replace(/\s+/g,' ').trim();return x.length>46?x.slice(0,44).trim()+'…':x;};
+function computeEvidence(){
+ const score={},why={},against={},qk=window._quick||{};
+ const add=(d,w,label)=>{score[d]=(score[d]||0)+w;if(label)(why[d]=why[d]||[]).push(label);};
+ // a finding that was typed as well as tapped counts once (the typed one)
+ const typed=t=>(qk.hits||[]).some(re=>re.test(String(t).toLowerCase()));
+ flagged.forEach(id=>{if(typed(qText[id]))return;const w=specW(qDx[id].length),l=shortQ(qText[id]);qDx[id].forEach(d=>add(d,w,l));});
+ examSel.forEach(id=>{const m=examMeta[id];if(typed(m.t))return;const w=specW(m.pts.length);m.pts.forEach(d=>add(d,w,m.t));});
+ Object.entries(qk.score||{}).forEach(([d,v])=>{score[d]=(score[d]||0)+v;});
+ Object.entries(qk.why||{}).forEach(([d,ls])=>{why[d]=(why[d]||[]).concat(ls);});
  interpret().forEach(r=>{
    if(score[r.dx]===undefined && (r.status==='support'||r.status==='live'))score[r.dx]=0;
-   if(r.status==='support')score[r.dx]=(score[r.dx]||0)+1.5;
-   else if(r.status==='live')score[r.dx]=(score[r.dx]||0)+0.5;
-   else if(r.status==='unlikely')score[r.dx]=(score[r.dx]||0)-1;
+   if(r.status==='support')add(r.dx,3,'result supports');
+   else if(r.status==='live')add(r.dx,.5);
+   else if(r.status==='unlikely'){score[r.dx]=(score[r.dx]||0)-2;(against[r.dx]=against[r.dx]||[]).push('result makes it unlikely');}
    else if(r.status==='excluded')score[r.dx]=-99;
  });
- return Object.entries(score).filter(([,v])=>v>-90 && v>0).sort((a,b)=>b[1]-a[1]);
+ // findings that argue against (from the typed text)
+ Object.entries(qk.pen||{}).forEach(([d,ps])=>{if(score[d]>0)ps.forEach(([w,l])=>{score[d]-=w;(against[d]=against[d]||[]).push(l);});});
+ Object.keys(score).forEach(d=>{if(score[d]>0)score[d]*=(DXPRIOR[d]||1);});
+ const rows=Object.entries(score).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+ return {rows,why,against};
+}
+function computeScores(){return computeEvidence().rows;}
+function recompute(){
+ const {rows,why,against}=computeEvidence();
+ const list=document.getElementById('dxlist'),note=document.getElementById('flagnote');
+ const nq=((window._quick||{}).n)||0, nf=flagged.size+examSel.size+nq;
+ note.textContent=nf?`${flagged.size} history/ROS + ${examSel.size} eye/imaging sign${examSel.size===1?'':'s'}${nq?` + ${nq} typed`:''}.`:'Nothing flagged yet.';
+ const max=rows.length?rows[0][1]:1;
+ list.innerHTML=rows.length?rows.map(([d,v])=>`<div class="dxrow"><span class="dxname">${(DXMETA[d]||{}).name||d}</span>
+   <span class="bar" style="width:${Math.max(10,(v/max)*110)}px"></span>
+   <span class="cnt">${Math.round(v*10)/10}</span></div>`).join(''):'<div class="empty">Type findings in Quick DDx, flag them in History, ROS, Eye signs or Imaging, or enter results, and the likely diagnoses rank here.</div>';
+ const mc=document.getElementById('mobcount');if(mc)mc.textContent=rows.length;
+ // the same ranking, with reasons and next tests, on the Quick DDx tab
+ const qo=document.getElementById('qout');
+ if(qo)qo.innerHTML=rows.slice(0,10).map(([d,v],i)=>`<div class="qrow">
+   <div class="qtop"><span class="qn">${i+1}</span><span class="qdx">${(DXMETA[d]||{}).name||d}</span><span class="bar" style="width:${Math.max(10,(v/max)*90)}px"></span></div>
+   ${why[d]?`<div class="qwhy">Fits: ${[...new Set(why[d])].join(' · ')}</div>`:''}
+   ${against[d]?`<div class="qagainst">Against: ${[...new Set(against[d])].join(' · ')}</div>`:''}
+   ${QTESTS[d]?`<div class="qtest"><b>Next:</b> ${QTESTS[d]}</div>`:''}
+   ${QATLAS[d]?`<button class="qcard" type="button" onclick="qOpenAtlas('${QATLAS[d].replace(/'/g,"\\'")}')">Imaging signature →</button>`:''}</div>`).join('');
 }
 
 /* tabs */
@@ -1979,11 +2010,10 @@ function buildSummary(){
    ip.forEach(r=>L.push('  • ['+lbl[r.status]+'] '+((DXMETA[r.dx]||{}).name||r.dx)+' — '+pad(r.line)));}
  // differential
  const qk=window._quick;
- if(qk&&qk.raw){L.push('','FREE-TEXT FINDINGS:','  '+qk.raw);
-   if(qk.rows.length){L.push('QUICK DDx:');qk.rows.slice(0,6).forEach(([d],i)=>L.push('  '+(i+1)+'. '+((DXMETA[d]||{}).name||d)));}}
+ if(qk&&qk.raw)L.push('','FREE-TEXT FINDINGS:','  '+qk.raw);
  const rows=computeScores();
- if(rows.length){L.push('','WORKING DIFFERENTIAL (by findings explained):');
-   rows.forEach(([d,v],i)=>L.push('  '+(i+1)+'. '+((DXMETA[d]||{}).name||d)+'  ('+(v%1?v.toFixed(1):v)+')'));}
+ if(rows.length){L.push('','WORKING DIFFERENTIAL (most likely first):');
+   rows.slice(0,12).forEach(([d],i)=>L.push('  '+(i+1)+'. '+((DXMETA[d]||{}).name||d)));}
  // investigation plan from the panel builder
  const plan=summarisePanel();
  if(plan){L.push('','INVESTIGATION PLAN (targeted panel):');plan.forEach(x=>L.push(x));}
@@ -2245,14 +2275,14 @@ function qNegated(txt,idx){
 }
 function quickAnalyse(){
  const raw=document.getElementById('qtext').value, txt=qExpand(raw);
- const score={},why={},seen=[];
+ const score={},why={},seen=[],hits=[];
  const add=(map,label)=>Object.entries(map).forEach(([d,w])=>{score[d]=(score[d]||0)+w;(why[d]=why[d]||[]).push(label);});
  QRULES.forEach(([re,pos,label,neg])=>{
    const m=new RegExp(re.source,'g'); let hit=null,isNeg=false,r;
    while((r=m.exec(txt))){ if(!qNegated(txt,r.index)){hit=r;isNeg=false;break;} hit=r;isNeg=true; if(m.lastIndex===r.index)m.lastIndex++; }
    if(!hit)return;
    if(isNeg){ if(neg){add(neg,'no '+label);seen.push(['no '+label,1]);} else seen.push(['no '+label,2]); }
-   else {add(pos,label);seen.push([label,0]);}
+   else {add(pos,label);seen.push([label,0]);hits.push(re);}
  });
  // age
  const age=qAge(txt);
@@ -2265,9 +2295,8 @@ function quickAnalyse(){
    seen.unshift([(/\b\d{1,2}\s*(y\/?o|yo|yrs?|years?)\b|\bage\s*\d/.test(txt)?'age ':'age ~')+age,0]);
  }
  // findings that argue against
- const ctx={age,pos:l=>seen.some(([s,n])=>n===0&&s===l),neg:l=>seen.some(([s,n])=>n>0&&s==='no '+l)}, against={};
- QAGAINST.forEach(([test,map,label])=>{if(!test(ctx))return;Object.entries(map).forEach(([d,w])=>{if(score[d]>0){score[d]-=w;(against[d]=against[d]||[]).push(label);}});});
- const rows=Object.entries(score).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,10);
+ const ctx={age,pos:l=>seen.some(([s,n])=>n===0&&s===l),neg:l=>seen.some(([s,n])=>n>0&&s==='no '+l)}, pen={};
+ QAGAINST.forEach(([test,map,label])=>{if(!test(ctx))return;Object.entries(map).forEach(([d,w])=>{(pen[d]=pen[d]||[]).push([w,label]);});});
  // phrases nothing understood, so gaps are visible
  const unk=raw.split(/[,;\n]|\band\b|\bwith\b/i).map(x=>x.trim()).filter(x=>x.length>2).filter(seg=>{const e=qExpand(seg);
    return !QRULES.some(([re])=>re.test(e))&&qAge(e)===null&&!/^(no|not|nil|patient|pt|history of|hx of|on|presents?|presenting|c\/o)\b/.test(e);});
@@ -2285,14 +2314,8 @@ function quickAnalyse(){
  const unkHtml=unk.length?`<div class="qlab">Not recognised</div>${unk.map(u=>`<span class="qchip ign" style="text-decoration:none">${u.replace(/</g,'&lt;')}</span>`).join('')}`:'';
  document.getElementById('qseen').innerHTML=raw.trim()?((chips?`<div class="qlab">Recognised</div>${chips}`:'<div class="empty">No findings recognised yet — try terms like “bilateral”, “mutton-fat KP”, “vitritis”, “serous RD”, “age 62”, or tap the findings above.</div>')+unkHtml):'';
  document.getElementById('qalerts').innerHTML=A.map(a=>`<div class="qalert">⚠ ${a}</div>`).join('');
- const max=rows.length?rows[0][1]:1;
- document.getElementById('qout').innerHTML=rows.map(([d,v],i)=>`<div class="qrow">
-   <div class="qtop"><span class="qn">${i+1}</span><span class="qdx">${(DXMETA[d]||{}).name||d}</span><span class="bar" style="width:${Math.max(10,(v/max)*90)}px"></span></div>
-   <div class="qwhy">Fits: ${[...new Set(why[d])].join(' · ')}</div>
-   ${against[d]?`<div class="qagainst">Against: ${[...new Set(against[d])].join(' · ')}</div>`:''}
-   ${QTESTS[d]?`<div class="qtest"><b>Next:</b> ${QTESTS[d]}</div>`:''}
-   ${QATLAS[d]?`<button class="qcard" type="button" onclick="qOpenAtlas('${QATLAS[d].replace(/'/g,"\\'")}')">Imaging signature →</button>`:''}</div>`).join('');
- window._quick={raw:raw.trim(),rows};
+ window._quick={raw:raw.trim(),score,why,pen,hits,n:seen.filter(([,n])=>n<2).length};
+ recompute();
 }
 let _qT;document.getElementById('qtext').addEventListener('input',()=>{clearTimeout(_qT);_qT=setTimeout(()=>{quickAnalyse();buildSummary();},250);});
 qRenderPicks();
@@ -2323,6 +2346,7 @@ document.getElementById('footer').innerHTML='Sources: Foster CS &amp; Vitale AT,
 renderStrategy();renderInvestGrid();renderPB();renderPBOut();
 renderInterp();recompute();buildSummary();
 
+(function(){const a=document.getElementById('about'),mq=window.matchMedia('(min-width:700px)');const f=()=>{if(mq.matches)a.open=true;};f();mq.addEventListener&&mq.addEventListener('change',f);})();
 /* ---- autosave: an unfinished workup survives a reload, a closed tab or the tablet going to sleep.
    Saved on this device only (no names or numbers that identify anyone are ever entered). ---- */
 const SAVE_KEY='uveitis-workup:v1';
