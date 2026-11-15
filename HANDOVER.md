@@ -11,7 +11,7 @@ For whichever Claude session (or person) continues this work. Last updated 2026-
 - An old copy lives on her laptop at `D:\ebooks\uveitis-tool\`. It is out of date. Always pull from GitHub first.
 
 ## What is built (all on main)
-- Tabs: Quick DDx, History, Review of systems, Eye signs, Imaging, Investigations, Results, Summary.
+- Tabs: Quick DDx, History, Review of systems, Eye signs, Imaging, Investigations, Results, Treatment, SUN criteria, Summary.
 - One weighted differential (`computeEvidence` in `index.html`): typed findings (`QRULES`, `QABBR`, `QAGAINST`), Yes answers, tapped signs (`EYE`, `IMG`), lab interpreter (`interpret`). Weights: `specW`, `DXPRIOR` (judgement, not data).
 - Imaging tab: tappable findings plus per-condition cards (`IMGATLAS`) with "what to look for", signature, pearl, links.
 - Autosave of the current case on the device (`SAVE_KEY`), tablet layout, compact phone header.
@@ -39,7 +39,7 @@ A. **Treatment & monitoring tab**: FIRST VERSION DONE (2026-11-15). `TX` in `ind
    - VERIFIED (2026-11-15) and labels removed: NICE TA460 criteria and stop rule (quoted from nice.org.uk); BSR 2025 csDMARD monitoring (keaf522: week 2, monthly to 3-6 months, then 3-monthly; CNIs fortnightly to stable 6 weeks; Table 5 actions); BSR 2022 pregnancy statements; MHRA Feb 2018 mycophenolate advice for men; tacrolimus (Luis 2021 Moorfields: median 3 mg/day, trough 5-10 ng/mL); CMV (DHHS/EACS); intravitreal antimicrobials (Relhan, Retina 2017 table: ceftazidime 2.25 mg, voriconazole 50-100 micrograms); prednisolone ceiling and flare rule (Jabs 2000). The taper steps are labelled as an example, since no guideline fixes them.
    - Not yet covered: uveitic macular oedema pathway, cataract/glaucoma surgery in uveitis, JIA uveitis pathway, vaccination advice on immunosuppression. Her "Practical from telegram" Notion page has material on pre-phaco management.
 B. **SUN grading**: DONE (2026-11-15). Selects on the Eye signs tab (`SUN`, `SUNKEY`, `sunVal`), saved with the case and written to the Summary.
-C. **SUN 2021 classification criteria** checklists for the main entities (not started).
+C. **SUN 2021 classification criteria**: DONE (2026-11-15). Tab `✓ SUN criteria` (`CRI` findings, `SUNC` 26 entities incl. VKH early and late, `critSel`, `renderCrit`, `cStatus`). Transcribed from the criteria table of each SUN paper (PMC full text, Am J Ophthalmol 2021;228). A finding ticked once counts for every entity; rule nodes all/any/min/not; exclusions with the SUN "unless" exceptions (retinitis co-infection PCR, toxo seronegative, sarcoid vs TB biopsy). Saved with the case (`crit`), cleared by New patient, met entities written to the Summary. Not linked to the weighted differential (deliberately: classification, not diagnosis).
 D. Add references to each Imaging card (PubMed connector was failing to connect; retry).
 E. Optional: her Notion pearls into matching cards; "save several cases on the device".
 

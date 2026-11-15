@@ -1,6 +1,6 @@
 # Uveitis Workup
 
-Front-of-patient uveitis workup tool: History · Review of systems · Eye signs · Imaging · Investigations · Results · Summary.
+Front-of-patient uveitis workup tool: Quick DDx · History · Review of systems · Eye signs · Imaging · Investigations · Results · Treatment · SUN criteria · Summary.
 Plain HTML/CSS/JS in a single `index.html` — no build step, no external requests, no data leaves the device.
 
 Live site: https://iklass-m.github.io/uveitis/ (not indexed by search engines — see `robots.txt`).

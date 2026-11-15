@@ -243,6 +243,24 @@ body.onquick .mobjump{display:none!important}
   .sysnote{font-size:14px}
   .qtext{font-size:16px}
 }
+/* SUN 2021 classification criteria checklists */
+.critmet{margin:8px 0 4px;padding:9px 12px;border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:7px;background:#fff;font-size:14px}
+.crit summary{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.crit.ok{border-color:#3f7a4a;border-left:4px solid #3f7a4a}
+.crit.bad{opacity:.8}
+.crit-b{margin-left:auto;font-size:12px;padding:2px 9px;border-radius:12px;border:1px solid var(--line);color:var(--ink2);background:var(--paper)}
+.crit-b.met{background:#3f7a4a;border-color:#3f7a4a;color:#fff}
+.crit-b.ex{background:var(--rust);border-color:var(--rust);color:#fff}
+.crit-h{font-variant:small-caps;letter-spacing:.05em;color:var(--rust);font-weight:bold;margin:8px 0 2px;font-size:14px}
+.crit-part{border-bottom:1px dotted var(--line);padding:3px 0}
+.crit-g{margin:2px 0 2px 6px;padding-left:9px;border-left:2px solid var(--line)}
+.crit-op{font-size:12.5px;color:var(--ink2);font-style:italic;margin:3px 0 1px}
+.crit-i{display:flex;gap:9px;align-items:flex-start;padding:4px 0;font-size:13.5px;cursor:pointer}
+.crit-i input{margin-top:3px;flex:0 0 auto;width:17px;height:17px;accent-color:var(--ink)}
+.crit-i.neg em{color:var(--rust);font-style:normal;font-size:12px}
+.crit-note{font-size:12.5px;font-style:italic;color:var(--ink2);margin:6px 0}
+.crit-exw{margin-top:7px;padding:6px 9px;border-radius:6px;background:#f6e3dc;color:var(--rust);font-size:13px}
+@media(pointer:coarse){.crit-i{font-size:15.5px;min-height:44px;align-items:center}.crit-i input{width:24px;height:24px;margin-top:0}.crit-b{font-size:13px}}
 /* "continued your workup" strip */
 #resbar{display:none;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 0;padding:9px 12px;border:1px solid var(--rust);border-left:4px solid var(--rust);border-radius:7px;background:#fbf3e4;font-size:14px}
 #resbar.on{display:flex}
@@ -272,6 +290,7 @@ body.onquick .mobjump{display:none!important}
   <button class="tab" data-v="invest">5 · Investigations</button>
   <button class="tab" data-v="labs">6 · Results</button>
   <button class="tab" data-v="tx">7 · Treatment</button>
+  <button class="tab" data-v="crit">✓ SUN criteria</button>
   <button class="tab" data-v="summary">✎ Summary</button>
 </div>
 
@@ -333,6 +352,11 @@ body.onquick .mobjump{display:none!important}
     <div id="v-tx" class="view">
       <div class="hint"><b>Treatment &amp; monitoring.</b> A memory aid for the steroid ladder, steroid-sparing agents and the first treatment of the main infections, drawn from your notes and UK guidance. <b>Check every dose against the BNF and your local protocol before prescribing</b> — each card names its source. Doses were checked against those sources in November 2026.</div>
       <div id="txgrid"></div>
+    </div>
+    <div id="v-crit" class="view">
+      <div class="hint"><b>SUN 2021 classification criteria.</b> Checklists for 26 uveitides from the Standardization of Uveitis Nomenclature Working Group. Tick what you have found; a finding ticked once counts for every condition that uses it. These are <b>classification</b> criteria, built for research and set for high specificity: a patient can have the disease without meeting them. Use them to check a diagnosis, not to make one. <button class="sumbtn" type="button" onclick="clearCrit();buildSummary();saveNow()">Clear ticks</button></div>
+      <div class="critmet" id="critmet"></div>
+      <div id="critgrid"></div>
     </div>
     <div id="v-summary" class="view">
       <div class="hint"><b>Clinical summary.</b> A write-up of everything you've entered — positive history, ROS, eye signs, results with interpretation, the ranked differential and suggested next tests. <button class="sumbtn" onclick="copySummary()">Copy to clipboard</button> <button class="sumbtn" onclick="window.print()">Print / PDF</button></div>
@@ -1946,6 +1970,245 @@ function atlasLinks(a){const e=encodeURIComponent,ext='target="_blank" rel="noop
 document.getElementById('txgrid').innerHTML=TX.map(G=>`<h2 class="sys">${G.group}</h2>${G.note?`<div class="sysnote">${G.note}</div>`:''}`+G.cards.map(c=>`<details class="atlas"><summary><span class="at-dx">${c.t}</span>${c.tag?`<span class="at-tag">${c.tag}</span>`:''}</summary>
  <div class="at-body">${c.rows.map(([m,t])=>`<div class="at-row"><span class="at-m" style="flex-basis:86px">${m}</span><span>${t}</span></div>`).join('')}
  <div class="at-links">Source: ${c.src}</div></div></details>`).join('')).join('');
+/* ============ SUN 2021 CLASSIFICATION CRITERIA ============ */
+/* Transcribed from the criteria tables of the 25 SUN Working Group papers, Am J Ophthalmol 2021;228
+   (overview: Jabs DA et al, Am J Ophthalmol 2021;228:96–105). A finding ticked once counts for every
+   condition that uses it. Rule nodes: id | ['all',...] | ['any',...] | ['min',n,...] | ['not',node]. */
+const CRI={
+ /* anterior chamber & anatomy */
+ ac:"Anterior chamber cells",
+ avit_less:"Anterior vitreous cells absent, or less severe than the anterior chamber inflammation",
+ avit_withac:"If vitreous cells are present, anterior chamber inflammation is present too",
+ tinu_ac:"If vitritis, choroiditis or retinal vascular changes are present, anterior chamber inflammation is present too",
+ no_ret:"No retinitis",
+ no_ret_ch:"No retinitis or choroiditis",
+ unilat:"Unilateral uveitis",
+ bilat:"Bilateral",
+ vit:"Vitreous cells and/or vitreous haze",
+ ac_lt_vit:"Anterior chamber cells absent, or anterior chamber inflammation less than the vitreous",
+ no_occl:"No retinal vascular occlusion in the posterior pole or mid-periphery (peripheral non-perfusion on widefield FA is allowed)",
+ snow:"Vitreous snowballs or pars plana snowbanks",
+ chronic:"Chronic anterior uveitis, or insidious onset with few or no symptoms at first diagnosis",
+ mild_acv:"Absent to mild anterior chamber and vitreous inflammation",
+ min_acv:"Absent to minimal anterior chamber and vitreous inflammation",
+ /* herpetic & iris */
+ sect_atr:"Sectoral iris atrophy",
+ age_le50:"Patient aged 50 or under",
+ age_ge60:"Patient aged 60 or over",
+ hsk:"Herpes simplex keratitis",
+ hz:"Concurrent or recent dermatomal herpes zoster",
+ hetero:"Heterochromia",
+ diff_atr:"Unilateral diffuse iris atrophy",
+ stellate:"Stellate keratic precipitates",
+ no_endo:"No endotheliitis and no nodular, coin-shaped endothelial lesions",
+ /* intraocular PCR */
+ pcr_cmv:"Intraocular (aqueous or vitreous) PCR positive for CMV",
+ pcr_hsv:"Intraocular (aqueous or vitreous) PCR positive for HSV",
+ pcr_vzv:"Intraocular (aqueous or vitreous) PCR positive for VZV",
+ pcr_toxo:"Intraocular (aqueous or vitreous) PCR positive for Toxoplasma gondii",
+ /* systemic */
+ jia:"JIA subtype: oligoarthritis (persistent or extended), RF-negative polyarthritis, or juvenile psoriatic arthritis (not psoriatic spondylitis)",
+ era:"Enthesitis-related arthritis",
+ aau_course:"Acute or recurrent acute course, unilateral or unilateral alternating (or a chronic course that evolved from that pattern)",
+ chronic_au:"Chronic course",
+ spa:"Spondyloarthritis by ASAS criteria (axial or peripheral)",
+ b27:"HLA-B27 positive",
+ renal_bx:"Renal biopsy showing tubulointerstitial nephritis",
+ b2m:"Raised urine β2-microglobulin",
+ ua_cr:"Abnormal urinalysis or raised serum creatinine",
+ ms:"Multiple sclerosis by the revised McDonald criteria",
+ lyme:"Positive Lyme serology, IgG or IgM (ELISA and Western blot)",
+ lymph:"Intraocular lymphoma on diagnostic vitrectomy or biopsy",
+ trep:"Positive treponemal test for syphilis",
+ syph_ser:"Positive treponemal AND non-treponemal test, or two different positive treponemal tests",
+ syph_tx:"Previous adequate treatment for syphilitic uveitis",
+ bhl:"Bilateral hilar adenopathy on chest imaging",
+ sarc_bx:"Tissue biopsy with non-caseating granulomata",
+ gran_oth:"Other granulomatous disease (for example familial juvenile systemic granulomatosis)",
+ tb_conf:"M. tuberculosis confirmed by histology or microbiology (biopsy, stain, culture or PCR)",
+ igra:"Positive interferon-γ release assay (QuantiFERON, T-spot)",
+ tst:"Positive tuberculin skin test (over 10 mm; positive skin test with negative IGRA suggests atypical mycobacteria)",
+ immuno:"Immune compromise: systemic (AIDS, transplant, chemotherapy) or ocular (intraocular steroid or chemotherapy)",
+ multi:"Appearance suggesting more than one infection",
+ bd_isg:"Behçet disease by ISG criteria: recurrent oral ulcers plus 2 of genital ulcers, typical eye lesions, typical skin lesions, positive pathergy",
+ /* posterior segment */
+ placoid:"Paucifocal or multifocal placoid (plaque-like) choroidal lesions",
+ fa_apmppe:"Acute-phase FA: lesions hypofluorescent early and diffusely hyperfluorescent late",
+ bs_spots:"Birdshot spots: multifocal cream or yellow-orange, oval or round choroidal lesions",
+ bs_ac:"Absent to mild anterior chamber cells, with no keratic precipitates and no posterior synechiae",
+ bs_vit:"Absent to moderate vitritis",
+ mfc:"Multifocal choroiditis",
+ a29:"HLA-A29 positive",
+ icg_bs:"ICG: multifocal hypofluorescent spots",
+ mewds_spots:"Multifocal grey-white chorioretinal spots with foveal granularity",
+ fa_wreath:"FA: 'wreath-like' hyperfluorescent lesions",
+ oct_mewds:"OCT: hyperreflective lesions from the RPE into or through the ellipsoid zone into the outer nuclear layer",
+ bilat_sim:"Bilateral, simultaneous onset",
+ mcp_les:"Multifocal choroiditis with oval or round lesions, predominant size over 125 µm",
+ punched:"'Punched-out' atrophic chorioretinal scars",
+ act_vit:"Active lesions with more than minimal vitreous inflammation",
+ periph:"Lesions or scars in the mid-periphery or periphery (with or without the posterior pole)",
+ pic_les:"Multifocal punctate choroidal lesions, predominant size under 250 µm",
+ pole:"Lesions in the posterior pole (with or without the mid-periphery)",
+ serp:"Paucifocal or multifocal choroiditis, ameboid or serpentine shape (need not touch the disc)",
+ fa_serp:"FA: early diffuse hypofluorescence with late hyperfluorescent borders",
+ faf_serp:"FAF: hypoautofluorescent lesions with hyperautofluorescent borders",
+ /* retinitis */
+ nr_periph:"Necrotising retinitis involving the peripheral retina",
+ circ:"Circumferential or confluent retinitis",
+ vsheath:"Retinal vascular sheathing and/or occlusion",
+ morevit:"More than minimal vitritis",
+ cmvr:"Necrotising retinitis with indistinct borders from numerous small (under 50 µm) satellites",
+ wedge:"Wedge-shaped area of retinitis",
+ haem:"Haemorrhagic appearance of the retinitis",
+ granul:"Granular appearance of the retinitis",
+ lowvit:"Absent to mild vitritis",
+ toxo_r:"Focal or paucifocal necrotising retinitis (multifocal or diffuse if immunocompromised)",
+ toxo_igm:"Positive serum IgM against Toxoplasma gondii",
+ toxo_neg:"Serum Toxoplasma IgG and IgM both negative",
+ toxo_scar:"Hyperpigmented and/or atrophic chorioretinal scar",
+ round:"Round or oval retinitis lesions",
+ recur:"Recurrent acute (episodic) course",
+ /* panuveitis */
+ bd_au:"Compatible uveitis: anterior; anterior and intermediate; or posterior/panuveitis with retinal vasculitis and/or focal retinal infiltrates (not choroiditis)",
+ sarc_au:"Compatible uveitis: anterior; intermediate or anterior/intermediate; posterior with choroiditis (paucifocal nodules or multifocal); or panuveitis with choroiditis, retinal vascular sheathing or occlusion",
+ syph_au:"Compatible uveitis: anterior; intermediate or anterior/intermediate; or posterior/panuveitis with placoid RPE inflammation, multifocal retina/RPE inflammation, necrotising retinitis or retinal vasculitis",
+ tb_au:"Compatible uveitis: anterior uveitis with iris nodules; serpiginous-like choroiditis; choroidal nodule (tuberculoma); multifocal choroiditis with active systemic TB; or occlusive retinal vasculitis",
+ srd:"Serous (exudative) retinal detachment",
+ fa_mult:"Multiloculated appearance on FA",
+ oct_sept:"Septae on OCT",
+ pan_ch:"Panuveitis with choroidal involvement (on examination, FA, ICG or OCT/EDI)",
+ headache:"Headache",tinnitus:"Tinnitus",dysacusis:"Dysacusis",meningism:"Meningismus",csf:"CSF pleocytosis",
+ no_trauma:"No penetrating ocular trauma or vitreoretinal surgery before the onset",
+ hx_vkh:"History of early-stage VKH",
+ sunset:"Sunset glow fundus",
+ vkh_uv:"Uveitis: chronic anterior; anterior and intermediate; or panuveitis with multifocal choroiditis (Dalen-Fuchs-like nodules)",
+ vitiligo:"Vitiligo",poliosis:"Poliosis",alopecia:"Alopecia",
+ trauma:"History of unilateral ocular trauma or surgery",
+ noview:"No view of the inciting eye, with detectable inflammation in the sympathising eye",
+ acvit:"Anterior chamber and vitreous inflammation"
+};
+const C_SARC=['any','bhl','sarc_bx'],C_TB=['any','tb_conf','igra','tst'];
+const X_SARC={t:"Evidence of sarcoidosis (bilateral hilar adenopathy, or biopsy with non-caseating granulomata)",r:C_SARC};
+const X_TB={t:"Evidence of TB infection (confirmed, positive IGRA or positive skin test)",r:C_TB};
+/* other-pathogen PCR exclusion for the retinitides, with the SUN co-infection exception */
+const xPCR=(others,own,picture,name)=>({t:"Intraocular PCR positive for "+name+" — unless immune compromise, an appearance of more than one infection, the characteristic picture, and a positive PCR for this organism as well",
+ r:['all',['any',...others],['not',['all',own,'immuno','multi',picture]]]});
+const SUNC=[
+ {g:"Anterior uveitis",n:"Cytomegalovirus anterior uveitis",pm:"33845019",
+  c:['all','ac','avit_withac','no_ret','pcr_cmv'],x:['trep',X_SARC,'pcr_hsv','pcr_vzv']},
+ {g:"Anterior uveitis",n:"Herpes simplex anterior uveitis",pm:"33845009",
+  c:['all','ac','avit_less','no_ret',['any','unilat','pcr_hsv'],['any','pcr_hsv',['all','sect_atr','age_le50'],'hsk']],
+  x:[{t:"Concurrent dermatomal/cutaneous zoster, unless the aqueous PCR is positive for HSV",r:['all','hz',['not','pcr_hsv']]},'trep',X_SARC,'pcr_cmv','pcr_vzv'],
+  note:"Unilateral is not needed if the aqueous PCR is positive for HSV."},
+ {g:"Anterior uveitis",n:"Varicella zoster anterior uveitis",pm:"33845010",
+  c:['all','ac','avit_less','no_ret',['any','unilat','pcr_vzv'],['any','pcr_vzv',['all','sect_atr','age_ge60'],'hz']],
+  x:['trep',X_SARC,'pcr_cmv','pcr_hsv'],note:"Unilateral is not needed if the aqueous PCR is positive for VZV."},
+ {g:"Anterior uveitis",n:"Fuchs uveitis syndrome",pm:"33845007",
+  c:['all','ac','avit_withac',['not','active_ret'],'unilat',['any','hetero',['all','diff_atr','stellate']],'no_endo'],
+  x:['trep',X_SARC,{t:"Aqueous PCR positive for CMV, HSV or VZV",r:['any','pcr_cmv','pcr_hsv','pcr_vzv']}]},
+ {g:"Anterior uveitis",n:"JIA-associated chronic anterior uveitis",pm:"33845021",
+  c:['all','ac','avit_less','chronic','jia'],
+  x:['era','trep',{t:"Sarcoidosis or other granulomatous disease",r:['any','bhl','sarc_bx','gran_oth']},{t:"Aqueous PCR positive for CMV, HSV or VZV",r:['any','pcr_cmv','pcr_hsv','pcr_vzv']}]},
+ {g:"Anterior uveitis",n:"Spondyloarthritis / HLA-B27-associated anterior uveitis",pm:"33845004",
+  c:['all','ac','avit_less',['any',['all','aau_course',['any','spa','b27']],['all','chronic_au','spa','b27']]],
+  x:['trep',X_SARC,{t:"Aqueous PCR positive for CMV, HSV or VZV",r:['any','pcr_cmv','pcr_hsv','pcr_vzv']}],
+  note:"A chronic course that never had the acute recurrent pattern needs both spondyloarthritis and HLA-B27."},
+ {g:"Anterior uveitis",n:"Tubulointerstitial nephritis with uveitis (TINU)",pm:"33845023",
+  c:['all','ac','tinu_ac',['any','renal_bx',['all','b2m','ua_cr']]],x:['trep',X_SARC]},
+ {g:"Intermediate uveitis",n:"Pars planitis",pm:"33845006",
+  c:['all','vit','ac_lt_vit','no_ret_ch','no_occl','snow'],x:['ms','trep',X_SARC,'lyme']},
+ {g:"Intermediate uveitis",n:"Multiple sclerosis-associated intermediate uveitis",pm:"33845022",
+  c:['all','vit','ac_lt_vit','no_ret_ch','ms'],x:['trep',X_SARC,'lyme']},
+ {g:"Intermediate uveitis",n:"Intermediate uveitis, non-pars planitis type",pm:"33839089",
+  c:['all','vit','ac_lt_vit','no_ret',['not','snow']],x:['ms','trep',X_SARC,'lyme','lymph']},
+ {g:"Posterior uveitis (white dot and choroiditis)",n:"APMPPE",pm:"33845024",
+  c:['all','placoid','fa_apmppe'],x:['trep',X_SARC]},
+ {g:"Posterior uveitis (white dot and choroiditis)",n:"Birdshot chorioretinitis",pm:"33845003",
+  c:['any',['all','bs_spots','bilat','bs_ac','bs_vit'],['all','mfc','a29',['any','bs_spots','icg_bs']]],
+  x:['trep',X_SARC,'lymph'],note:"Either the clinical picture (spots in both eyes, quiet anterior segment, at most moderate vitritis), or multifocal choroiditis with HLA-A29 plus spots or the ICG pattern. Look for sarcoidosis with chest imaging at least."},
+ {g:"Posterior uveitis (white dot and choroiditis)",n:"Multiple evanescent white dot syndrome (MEWDS)",pm:"33845025",
+  c:['all','mewds_spots',['any','fa_wreath','oct_mewds'],'mild_acv'],x:['trep',X_SARC,'bilat_sim']},
+ {g:"Posterior uveitis (white dot and choroiditis)",n:"Multifocal choroiditis with panuveitis",pm:"33845016",
+  c:['all','mcp_les',['any','punched','act_vit'],'periph'],
+  x:['trep',X_SARC,{t:"Evidence of TB infection — tested only in TB-endemic regions or TB-exposed people",r:C_TB}]},
+ {g:"Posterior uveitis (white dot and choroiditis)",n:"Punctate inner choroiditis",pm:"33845011",
+  c:['all','pic_les','pole','min_acv'],x:['trep',X_SARC]},
+ {g:"Posterior uveitis (white dot and choroiditis)",n:"Serpiginous choroiditis",pm:"33845013",
+  c:['all','serp',['any','fa_serp','faf_serp'],'min_acv'],x:['trep',X_SARC,X_TB]},
+ {g:"Infectious retinitis",n:"Acute retinal necrosis",pm:"33845012",
+  c:['all','nr_periph',['any','pcr_hsv','pcr_vzv',['all','circ','vsheath',['any','morevit','immuno']]]],
+  x:['trep',xPCR(['pcr_cmv','pcr_toxo'],['any','pcr_hsv','pcr_vzv'],['all','circ','vsheath'],"CMV or Toxoplasma")],
+  note:"The vitritis criterion is not needed if the patient is immunocompromised."},
+ {g:"Infectious retinitis",n:"Cytomegalovirus retinitis",pm:"33845015",
+  c:['all','cmvr','immuno',['any',['all',['any','wedge','haem','granul'],'lowvit'],'pcr_cmv']],
+  x:['trep',xPCR(['pcr_hsv','pcr_vzv','pcr_toxo'],'pcr_cmv',['all',['any','wedge','haem','granul'],'lowvit'],"HSV, VZV or Toxoplasma")]},
+ {g:"Infectious retinitis",n:"Toxoplasmic retinitis",pm:"33845002",
+  c:['all','toxo_r',['any','pcr_toxo','toxo_igm',['all','toxo_scar',['any','round','recur']]]],
+  x:[{t:"Serum Toxoplasma IgG and IgM both negative, unless the intraocular PCR is positive for Toxoplasma",r:['all','toxo_neg',['not','pcr_toxo']]},'trep',
+     xPCR(['pcr_hsv','pcr_vzv','pcr_cmv'],'pcr_toxo',['all','toxo_scar',['any','round','recur']],"HSV, VZV or CMV")],
+  note:"Immunocompromised patients may have multifocal or diffuse retinitis, and 5 or more scars."},
+ {g:"Panuveitis and systemic disease",n:"Behçet disease uveitis",pm:"33845008",
+  c:['all','bd_au','bd_isg'],x:['trep',X_SARC],note:"Posterior uveitis or panuveitis with a choroiditis does not fit Behçet disease."},
+ {g:"Panuveitis and systemic disease",n:"Sarcoidosis-associated uveitis",pm:"33845001",
+  c:['all','sarc_au',C_SARC],
+  x:['trep',{t:"Evidence of TB infection, unless a biopsy confirms sarcoidosis (TB need only be excluded where TB is endemic or the patient was exposed)",r:['all',C_TB,['not','sarc_bx']]}],
+  note:"With latent TB and hilar adenopathy, sarcoid uveitis can be classified only with biopsy confirmation."},
+ {g:"Panuveitis and systemic disease",n:"Syphilitic uveitis",pm:"33845020",
+  c:['all','syph_au','syph_ser'],x:['syph_tx']},
+ {g:"Panuveitis and systemic disease",n:"Tubercular uveitis",pm:"33845014",
+  c:['all','tb_au',C_TB],
+  x:['trep',{t:"Biopsy positive for sarcoidosis, without histological or microbiological confirmation of TB",r:['all','sarc_bx',['not','tb_conf']]},
+     {t:"Hilar adenopathy without histological or microbiological confirmation of TB (when the picture fits sarcoid or TB)",r:['all','bhl',['not','tb_conf']]}],
+  note:"With a picture compatible with both sarcoid and TB, hilar adenopathy and latent TB, classification needs histological or microbiological confirmation."},
+ {g:"Panuveitis and systemic disease",n:"Vogt-Koyanagi-Harada disease, early stage",pm:"33845018",
+  c:['all',['any',['all','srd',['any','fa_mult','oct_sept']],['all','pan_ch',['min',2,'headache','tinnitus','dysacusis','meningism','csf']]],'no_trauma'],
+  x:['trep',X_SARC],note:"The neurological symptoms and the uveitis should start within 4 weeks of each other."},
+ {g:"Panuveitis and systemic disease",n:"Vogt-Koyanagi-Harada disease, late stage",pm:"33845018",
+  c:['all','hx_vkh',['any','sunset',['all','vkh_uv',['any','vitiligo','poliosis','alopecia']]]],x:['trep',X_SARC]},
+ {g:"Panuveitis and systemic disease",n:"Sympathetic ophthalmia",pm:"33845005",
+  c:['all','trauma',['any','bilat','noview'],['any','acvit','pan_ch']],x:['trep',X_SARC]}
+];
+CRI.active_ret="Active retinitis";
+const critSel=new Set();
+function cEv(n){if(typeof n==='string')return critSel.has(n);const [op,...k]=n;
+ if(op==='all')return k.every(cEv);if(op==='any')return k.some(cEv);if(op==='not')return !cEv(k[0]);
+ if(op==='min'){const m=k[0];return k.slice(1).filter(cEv).length>=m;}return false;}
+const xRule=x=>typeof x==='string'?x:x.r, xText=x=>typeof x==='string'?CRI[x]:x.t;
+function cStatus(e){const ex=e.x.filter(x=>cEv(xRule(x)));
+ const met=cEv(e.c);const parts=e.c[0]==='all'?e.c.slice(1):[e.c];
+ return {met:met&&!ex.length,critOK:met,ex,done:parts.filter(cEv).length,of:parts.length};}
+function cLeaves(n,out=[]){if(typeof n==='string'){if(!out.includes(n))out.push(n);}else n.slice(n[0]==='min'?2:1).forEach(k=>cLeaves(k,out));return out;}
+const cBox=(id,neg)=>`<label class="crit-i${neg?' neg':''}"><input type="checkbox" data-i="${id}"${critSel.has(id)?' checked':''}><span>${CRI[id]}${neg?' <em>— must be absent</em>':''}</span></label>`;
+function cNode(n,top){
+ if(typeof n==='string')return cBox(n);
+ const [op,...k]=n;
+ if(op==='not')return typeof k[0]==='string'?cBox(k[0],true):`<div class="crit-g"><div class="crit-op">must NOT all be true:</div>${cNode(k[0])}</div>`;
+ const head=op==='all'?'ALL of':op==='any'?'ANY of':'At least '+k[0]+' of';
+ const kids=op==='min'?k.slice(1):k;
+ if(top&&op==='all')return kids.map(x=>`<div class="crit-part">${cNode(x)}</div>`).join('');
+ return `<div class="crit-g"><div class="crit-op">${head}:</div>${kids.map(x=>cNode(x)).join('')}</div>`;}
+function cBadge(s){return s.met?'<span class="crit-b met">✓ meets criteria</span>':s.ex.length?'<span class="crit-b ex">excluded</span>':`<span class="crit-b">${s.critOK?'criteria met':s.done+' of '+s.of+' parts'}</span>`;}
+function renderCrit(){
+ const box=document.getElementById('critgrid');if(!box)return;
+ const open=new Set([...box.querySelectorAll('details[open]')].map(d=>d.dataset.k));
+ let g='';
+ box.innerHTML=SUNC.map((e,i)=>{const s=cStatus(e);let h='';
+  if(e.g!==g){g=e.g;h+=`<h2 class="sys">${g}</h2>`;}
+  return h+`<details class="atlas crit${s.met?' ok':''}${s.ex.length?' bad':''}" data-k="${i}"${open.has(String(i))?' open':''}><summary><span class="at-dx">${e.n}</span>${cBadge(s)}</summary>
+  <div class="at-body"><div class="crit-h">Criteria</div>${cNode(e.c,true)}
+  ${e.note?`<div class="crit-note">${e.note}</div>`:''}
+  <div class="crit-h">Exclusions — any one rules it out</div>${e.x.map(x=>typeof x==='string'?`<div class="crit-part">${cBox(x)}</div>`:`<div class="crit-part"><div class="crit-op">${x.t}</div>${cLeaves(x.r).map(l=>cBox(l)).join('')}</div>`).join('')}
+  ${s.ex.length?`<div class="crit-exw">Excluded by: ${s.ex.map(xText).join('; ')}</div>`:''}
+  <div class="at-links">Source: SUN Working Group, Am J Ophthalmol 2021 · <a href="https://pubmed.ncbi.nlm.nih.gov/${e.pm}/" target="_blank" rel="noopener noreferrer">PubMed ${e.pm}</a> <span class="at-off">(needs internet)</span></div></div></details>`;}).join('');
+ const met=SUNC.filter(e=>cStatus(e).met).map(e=>e.n);
+ document.getElementById('critmet').innerHTML=met.length?'<b>Meets SUN criteria now:</b> '+met.join(' · '):(critSel.size?'No condition meets its full criteria yet.':'Tick findings in any card; each tick counts for every condition that uses it.');
+ const t=document.querySelector('.tab[data-v="crit"]');if(t)t.textContent='✓ SUN criteria'+(met.length?' ('+met.length+')':'');}
+document.getElementById('critgrid').addEventListener('change',ev=>{const i=ev.target.dataset&&ev.target.dataset.i;if(!i)return;
+ if(ev.target.checked)critSel.add(i);else critSel.delete(i);renderCrit();buildSummary();});
+function clearCrit(){critSel.clear();renderCrit();}
+renderCrit();
+
 document.getElementById('imgatlas').innerHTML=IMGATLAS.map(a=>`<details class="atlas"><summary><span class="at-dx">${a.dx}</span>${a.tag?`<span class="at-tag">${a.tag}</span>`:''}</summary>
  <div class="at-body"><div class="at-look"><b>What to look for</b><ul>${a.look.map(x=>`<li>${x}</li>`).join('')}</ul></div>${a.rows.map(([m,t])=>`<div class="at-row"><span class="at-m">${m}</span><span>${t}</span></div>`).join('')}
  <div class="at-pearl"><b>Pearl:</b> ${a.pearl}</div>${atlasLinks(a)}</div></details>`).join('');
@@ -2159,6 +2422,8 @@ function buildSummary(){
  const eyeS=[...examSel].filter(id=>examMeta[id].src==='eye'),imgS=[...examSel].filter(id=>examMeta[id].src==='img');
  const sunL=SUN.filter(f=>sunVal[f.k]).map(f=>'  • '+f.l.replace(' (1×1 mm beam)','')+': '+sunVal[f.k]);
  if(sunL.length){L.push('','SUN DESCRIPTION & GRADING:');sunL.forEach(x=>L.push(x));}
+ const critM=(typeof SUNC!=='undefined')?SUNC.filter(e=>cStatus(e).met).map(e=>e.n):[];
+ if(critM.length){L.push('','MEETS SUN 2021 CLASSIFICATION CRITERIA:');critM.forEach(n=>L.push('  • '+n));}
  if(eyeS.length){L.push('','EYE SIGNS:');eyeS.forEach(id=>L.push('  • '+examMeta[id].t));}
  if(imgS.length){L.push('','IMAGING:');imgS.forEach(id=>L.push('  • '+examMeta[id].t));}
  // labs entered
@@ -2186,7 +2451,7 @@ function buildSummary(){
  const tset=[];
  flagged.forEach(id=>{const t=qTests[id];if(t)t.forEach(x=>{if(!tset.includes(x))tset.push(x);});});
  if(tset.length){L.push('','SUGGESTED NEXT TESTS:');tset.forEach(t=>L.push('  • '+t));}
- if(posHx.length+posRos.length+examSel.size+labLines.length+sunL.length===0)L.push('','(Nothing entered yet — work through the tabs and this fills in.)');
+ if(posHx.length+posRos.length+examSel.size+labLines.length+sunL.length+critM.length===0)L.push('','(Nothing entered yet — work through the tabs and this fills in.)');
  document.getElementById('summaryout').textContent=L.join('\n');
 }
 function copySummary(){buildSummary();const t=document.getElementById('summaryout').textContent;
@@ -2502,6 +2767,7 @@ function resetAll(){flagged.clear();
  if(document.getElementById('pbout'))renderPBOut();
  examSel.clear();
  document.querySelectorAll('.gsel').forEach(e=>{e.selectedIndex=0;});Object.keys(sunVal).forEach(k=>delete sunVal[k]);
+ if(typeof clearCrit==='function')clearCrit();
  document.querySelectorAll('.echip').forEach(c=>c.classList.remove('on'));
  document.querySelectorAll('.eg-why').forEach(w=>w.innerHTML="");
  renderInterp();recompute();buildSummary();
@@ -2527,8 +2793,9 @@ function snapshot(){const g=s=>[...document.querySelectorAll(s)];
   sel:Object.fromEntries(g('.fsel').filter(s=>s.value!==s.dataset.d0).map(s=>[s.dataset.id,s.value])),
   pb:Object.fromEntries(g('.pbsel').filter(s=>s.value).map(s=>[s.dataset.k,s.value])),
   sun:Object.fromEntries(g('.gsel').filter(s=>s.value).map(s=>[s.dataset.k,s.value])),
+  crit:[...critSel],
   pbf:Object.keys(PB.flags).filter(k=>PB.flags[k]),q:document.getElementById('qtext').value};}
-function snapEmpty(s){return !(s.yes.length||s.no.length||s.chips.length||s.pbf.length||s.q.trim()||Object.keys(s.num).length||Object.keys(s.sel).length||Object.keys(s.pb).length||Object.keys(s.sun||{}).length);}
+function snapEmpty(s){return !(s.yes.length||s.no.length||s.chips.length||s.pbf.length||s.q.trim()||Object.keys(s.num).length||Object.keys(s.sel).length||Object.keys(s.pb).length||Object.keys(s.sun||{}).length||(s.crit||[]).length);}
 function saveNow(){if(_restoring)return;clearTimeout(_saveT);
  try{const s=snapshot();if(snapEmpty(s))localStorage.removeItem(SAVE_KEY);else localStorage.setItem(SAVE_KEY,JSON.stringify(s));}catch(e){}}
 function queueSave(){if(_restoring)return;clearTimeout(_saveT);_saveT=setTimeout(saveNow,300);}
@@ -2548,6 +2815,7 @@ function applySaved(s){_restoring=true;
   Object.entries(s.pb||{}).forEach(([k,v])=>{const e=one('.pbsel[data-k="'+k+'"]');if(e){e.value=v;fire(e,'change');}});
   Object.entries(s.sun||{}).forEach(([k,v])=>{const e=one('.gsel[data-k="'+k+'"]');if(e){e.value=v;fire(e,'change');}});
   (s.pbf||[]).forEach(k=>{const b=one('.pbchip[data-f="'+k+'"]');if(b&&!b.classList.contains('on'))b.click();});
+  if(s.crit){critSel.clear();s.crit.forEach(k=>{if(CRI[k])critSel.add(k);});renderCrit();}
   if(s.q){document.getElementById('qtext').value=s.q;quickAnalyse();}
   if(s.tab)goTab(s.tab);
   buildSummary();
