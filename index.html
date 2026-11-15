@@ -271,6 +271,7 @@ body.onquick .mobjump{display:none!important}
   <button class="tab" data-v="img">4 · Imaging</button>
   <button class="tab" data-v="invest">5 · Investigations</button>
   <button class="tab" data-v="labs">6 · Results</button>
+  <button class="tab" data-v="tx">7 · Treatment</button>
   <button class="tab" data-v="summary">✎ Summary</button>
 </div>
 
@@ -328,6 +329,10 @@ body.onquick .mobjump{display:none!important}
       <div class="hint"><b>How to use:</b> tick off the results you have. The panel below reasons about each diagnosis — <i>supported</i>, <i>still on the table</i>, <i>less likely</i>, or <i>effectively excluded</i> — and tells you <i>why</i>, including the test quirks (e.g. syphilis with a bland CBC and only a raised ESR, or a normal ACE not clearing sarcoid). Leave anything you haven't done as “not done”.</div>
       <div class="labgrid" id="labgrid"></div>
       <div class="interp" id="interp"></div>
+    </div>
+    <div id="v-tx" class="view">
+      <div class="hint"><b>Treatment &amp; monitoring.</b> A memory aid for the steroid ladder, steroid-sparing agents and the first treatment of the main infections, drawn from your notes and UK guidance. <b>Check every dose against the BNF and your local protocol before prescribing</b> — each card names its source and says where it was not re-verified.</div>
+      <div id="txgrid"></div>
     </div>
     <div id="v-summary" class="view">
       <div class="hint"><b>Clinical summary.</b> A write-up of everything you've entered — positive history, ROS, eye signs, results with interpretation, the ranked differential and suggested next tests. <button class="sumbtn" onclick="copySummary()">Copy to clipboard</button> <button class="sumbtn" onclick="window.print()">Print / PDF</button></div>
@@ -882,6 +887,123 @@ const IMGATLAS=[
         ["Fundus","Retinal amyloid angiopathy, haemorrhages, cotton-wool spots."],
         ["OCT","Needle-shaped pre-retinal deposits perpendicular to the retinal surface, especially after vitrectomy (~68% of hATTR eyes in one series)."]],
   pearl:"Ask about peripheral/autonomic neuropathy, cardiomyopathy and family history (TTR mutation). Confirm on vitrectomy with Congo red. Recurs after vitrectomy (RPE makes TTR) and needs IOP follow-up."}
+];
+/* ============ TREATMENT & MONITORING (reference cards) ============ */
+/* Sources: owner's notes (BCSC Section 9; Uveitis Management handbook); NICE TA460; BSR/BHPR DMARD monitoring
+   guideline 2017 (updated 2025 — check); BASHH syphilis 2024; AAO OTA on ARN 2017; VISUAL I/II. Doses are a
+   memory aid only: every prescription is checked against the BNF and local protocol. */
+const TX=[
+ {group:"Before you treat", cards:[
+  {t:"Checks before steroid or immunosuppression", tag:"every patient", rows:[
+    ["Infection","Syphilis serology and a TB test before any systemic steroid or immunosuppressant. Any retinitis: aqueous PCR first, and no steroid without antimicrobial cover."],
+    ["Masquerade","Over 50 with vitritis, or a poor steroid response: think lymphoma before escalating."],
+    ["Sample first","Steroid lowers the yield of biopsy, cytology, ACE and tuberculin testing. If the eye can wait, sample before treating."],
+    ["Baseline","Weight, BP, glucose or HbA1c, FBC, U&amp;E, LFTs. Pregnancy test and contraception plan where relevant."]],
+   src:"Investigations tab; Joye &amp; Gonzales 2020"},
+  {t:"When to add a steroid-sparing agent", tag:"indications", rows:[
+    ["Failure","Inflammation not controlled despite about 1 month of high-dose prednisolone."],
+    ["Dependence","Relapse whenever prednisolone is tapered to a safe long-term dose (aim 7.5 mg daily or less by about 3 months; your notes use 10 mg or less as the trial end-point)."],
+    ["Intolerance","Steroid contraindicated or causing unacceptable adverse effects."],
+    ["From the start","Diseases that do badly on steroid alone: Behçet posterior disease, VKH, sympathetic ophthalmia, birdshot, serpiginous, necrotising scleritis, JIA uveitis."]],
+   src:"Your Notion IMT notes (BCSC); Jabs DA et al, Am J Ophthalmol 2000;130:492–513"}
+ ]},
+ {group:"Corticosteroids", cards:[
+  {t:"Topical, periocular and intravitreal", tag:"local", rows:[
+    ["Topical","Prednisolone acetate 1% or dexamethasone 0.1%, up to hourly for severe anterior uveitis, with a cycloplegic; taper over weeks according to the cells. Check IOP at each visit."],
+    ["Periocular","Triamcinolone 40 mg orbital floor or sub-Tenon, for CMO or unilateral intermediate/posterior disease. Not in infectious uveitis or scleritis with thinning."],
+    ["Implant","Dexamethasone 700 microgram intravitreal implant (Ozurdex). NICE TA460: active posterior-segment non-infectious uveitis with worsening vision and a risk of blindness. Lasts roughly 3–6 months."],
+    ["Watch","IOP rise and cataract with every local route."]],
+   src:"NICE TA460 (2017); Wills Eye Manual; check local injection protocol"},
+  {t:"Systemic steroid", tag:"oral / IV", rows:[
+    ["Oral","Prednisolone 1 mg/kg/day (usual maximum 60–80 mg) until control, then taper: roughly 10 mg per week down to 40 mg, 5 mg per week to 20 mg, 2.5 mg per week to 10 mg, then slowly."],
+    ["IV","Methylprednisolone 500 mg–1 g daily for 3 days for sight-threatening disease (VKH, Behçet, serpiginous at the fovea, optic nerve involvement), then oral."],
+    ["Protect","Bone protection (calcium/vitamin D, bisphosphonate by fracture risk), gastric protection if at risk, BP, glucose and weight at each visit, sick-day rules and steroid card."],
+    ["Pneumocystis","Consider co-trimoxazole prophylaxis with prolonged high-dose steroid plus another immunosuppressant, or with alkylating agents (your notes)."]],
+   src:"Jabs DA et al 2000; your Notion notes; local steroid policy"}
+ ]},
+ {group:"Steroid-sparing agents", note:"UK monitoring for all of these (BSR 2017): FBC, creatinine/eGFR, ALT and albumin every 2 weeks until on a stable dose for 6 weeks, then monthly for 3 months, then at least every 12 weeks. The guideline was updated in 2025 — check the current schedule and your shared-care protocol.", cards:[
+  {t:"Methotrexate", tag:"antimetabolite", rows:[
+    ["Dose","7.5–25 mg ONCE WEEKLY, oral or subcutaneous, with folic acid (UK practice: 5 mg once weekly, on a different day). Takes 6–12 weeks to work."],
+    ["Baseline","FBC, U&amp;E, LFTs, hepatitis B and C (and HIV), chest X-ray. Ask about alcohol."],
+    ["Act on","Liver enzymes over twice normal on two occasions: reduce the dose. Falling white count or platelets, mouth ulcers, breathlessness or dry cough (pneumonitis): stop and review."],
+    ["Avoid","Pregnancy (teratogenic; washout advice varies from 1 to 6 months — agree with rheumatology/obstetrics), breastfeeding, significant renal or liver disease. Trimethoprim and co-trimoxazole are dangerous with methotrexate."]],
+   src:"Your Notion notes; BSR 2017 monitoring guideline; BNF"},
+  {t:"Mycophenolate mofetil", tag:"antimetabolite", rows:[
+    ["Dose","500 mg twice daily, increasing to 1 g twice daily. 3 g daily carries more toxicity."],
+    ["Baseline","FBC, U&amp;E, LFTs, hepatitis B/C, pregnancy test."],
+    ["Act on","GI upset is common (split the dose or switch to mycophenolic acid). Leucopenia: reduce or stop."],
+    ["Avoid","Pregnancy: teratogenic. Two forms of contraception; stop at least 6 weeks before conception. Men: follow current MHRA advice."]],
+   src:"Your Notion notes; MHRA mycophenolate guidance; BNF"},
+  {t:"Azathioprine", tag:"antimetabolite", rows:[
+    ["Dose","1–3 mg/kg/day (commonly 2–2.5 mg/kg). Check TPMT before starting: low activity needs a reduced dose, absent activity means do not use."],
+    ["Interactions","Allopurinol or febuxostat: reduce the azathioprine dose to about a quarter, or avoid."],
+    ["Act on","Liver enzymes over 1.5 times normal: reduce by 25–50 mg/day and recheck in 2 weeks; marked rise: stop. Leucopenia: reduce or stop."],
+    ["Pregnancy","Compatible with pregnancy in standard doses (BSR)."]],
+   src:"Your Notion notes; BSR guidance; BNF"},
+  {t:"Ciclosporin", tag:"calcineurin inhibitor", rows:[
+    ["Dose","2–5 mg/kg/day in two divided doses. Brands are not interchangeable — prescribe by brand."],
+    ["Monitor","BP and creatinine every 2 weeks at first, then monthly. Creatinine up 30% from baseline: reduce the dose; if it stays up, stop."],
+    ["Adverse","Nephrotoxicity, hypertension, gum hypertrophy, hirsutism, tremor. Many drug interactions (macrolides, azoles, grapefruit)."],
+    ["Pregnancy","May be continued in pregnancy at the lowest effective dose (BSR)."]],
+   src:"Your Notion notes; BNF"},
+  {t:"Tacrolimus", tag:"calcineurin inhibitor", rows:[
+    ["Dose","Roughly 0.03–0.08 mg/kg/day in two divided doses, adjusted to trough level. Prescribe by brand."],
+    ["Monitor","BP, creatinine, potassium, glucose and trough levels."],
+    ["Adverse","Nephrotoxicity, hypertension, tremor, diabetes, neurotoxicity."]],
+   src:"Murphy CC et al, Arch Ophthalmol 2005;123:634–41; BNF. Dose not verified in this review — check before use."},
+  {t:"Adalimumab", tag:"anti-TNF", rows:[
+    ["Dose","80 mg subcutaneously, then 40 mg every 2 weeks starting 1 week later. May go to weekly if control is incomplete (your notes)."],
+    ["NICE TA460","Adults with active posterior-segment non-infectious uveitis, inadequate response or intolerance to immunosuppressants, disease in both eyes (or one eye with poor vision in the other) or systemic disease, and worsening vision with a high risk of blindness. Check the full criteria and stopping rules on the NICE page."],
+    ["Before","IGRA and chest X-ray, hepatitis B/C, HIV, varicella status, MRI brain if any demyelination risk (intermediate uveitis). No live vaccines."],
+    ["Avoid","Demyelinating disease, moderate–severe heart failure, active infection, untreated latent TB."]],
+   src:"VISUAL I/II (Jaffe GJ et al, NEJM 2016; Nguyen QD et al, Lancet 2016); NICE TA460; your Notion notes"},
+  {t:"Infliximab", tag:"anti-TNF", rows:[
+    ["Dose","3–5 mg/kg IV at weeks 0, 2 and 6, then every 6–8 weeks (4-weekly in some scleritis). Often given with low-dose methotrexate to reduce antibody formation."],
+    ["Use","Severe Behçet posterior uveitis and other refractory disease: rapid onset."],
+    ["Before / avoid","As for adalimumab. Infusion reactions; drug-induced lupus."]],
+   src:"Your Notion notes; EULAR Behçet recommendations 2018"},
+  {t:"Others (specialist use)", tag:"", rows:[
+    ["Tocilizumab","IL-6 blocker: refractory uveitic macular oedema and JIA uveitis."],
+    ["Rituximab","Two 1 g infusions 2 weeks apart, with IV methylprednisolone 100 mg: refractory scleritis, GPA. Check hepatitis B first."],
+    ["Interferon-α","Behçet uveitis and refractory CMO. Flu-like symptoms, cytopenias, depression."],
+    ["Cyclophosphamide","2 mg/kg/day oral or IV pulses: necrotising scleritis with systemic vasculitis. Keep white count above 3; hydrate; stop for haematuria. Pneumocystis prophylaxis."]],
+   src:"Your Notion notes"}
+ ]},
+ {group:"Infections — first treatment", note:"Start treatment for the infection before, or with, any steroid. Involve microbiology, infectious diseases or GUM.", cards:[
+  {t:"Acute retinal necrosis", tag:"emergency", rows:[
+    ["Induction","Aciclovir 10 mg/kg IV three times daily for 5–14 days, or oral valaciclovir 2 g three times daily where IV is not possible (adjust for renal function)."],
+    ["Intravitreal","Foscarnet 2.4 mg/0.1 mL (or ganciclovir 2 mg/0.1 mL) as an adjunct, repeated as needed. Send aqueous for PCR at the same time."],
+    ["Then","Oral valaciclovir 1 g three times daily for at least 6 weeks to 3 months, to protect the fellow eye."],
+    ["Steroid","Oral prednisolone only after 24–48 hours of antiviral. Watch for retinal detachment."]],
+   src:"AAO Ophthalmic Technology Assessment, Schoenberger SD et al, Ophthalmology 2017;124:382–92. Intravitreal doses from standard practice — confirm with pharmacy."},
+  {t:"Toxoplasma retinochoroiditis", tag:"", rows:[
+    ["Who","Treat lesions threatening the macula or disc, large lesions, marked vitritis, and anyone immunosuppressed. Small peripheral lesions in the immunocompetent can be observed."],
+    ["Options","Co-trimoxazole 960 mg twice daily; or azithromycin 500 mg daily; or pyrimethamine + sulfadiazine + folinic acid. Usually 4–6 weeks."],
+    ["Intravitreal","Clindamycin 1 mg/0.1 mL with dexamethasone 0.4 mg/0.1 mL: an alternative in pregnancy or drug intolerance. Published doses vary — confirm locally."],
+    ["Steroid","Oral prednisolone only with antiparasitic cover, started 1–3 days after it. Never steroid alone, and no periocular depot steroid."]],
+   src:"Soheilian M et al, Ophthalmology 2011;118:134–41; AAO management of ocular toxoplasmosis; Wills Eye Manual"},
+  {t:"CMV retinitis", tag:"immunosuppressed", rows:[
+    ["Induction","Valganciclovir 900 mg twice daily for 21 days, then 900 mg once daily. Monitor FBC (neutropenia)."],
+    ["Intravitreal","Ganciclovir 2 mg/0.1 mL or foscarnet 2.4 mg/0.1 mL for sight-threatening lesions."],
+    ["Also","Treat the immune deficit with the HIV or transplant team. Watch for immune recovery uveitis."]],
+   src:"Standard HIV opportunistic-infection guidance; BNF. Not re-verified in this review."},
+  {t:"Ocular syphilis", tag:"treat as neurosyphilis", rows:[
+    ["First line","Procaine penicillin 1.8–2.4 MU IM daily plus probenecid 500 mg four times daily for 14 days; or benzylpenicillin 1.8–2.4 g IV every 4 hours for 14 days."],
+    ["Alternatives","Ceftriaxone 2 g IM/IV daily 10–14 days; doxycycline 200 mg twice daily 28 days; amoxicillin 2 g three times daily + probenecid 500 mg four times daily 28 days."],
+    ["Steroid cover","Prednisolone 40–60 mg daily for 3 days, starting 24 hours before the antibiotic."],
+    ["Also","HIV test, cranial nerve examination, partner notification through GUM. Restart the course if interrupted for more than 24 hours."]],
+   src:"Kingston M et al, BASHH UK syphilis guidelines 2024, Int J STD AIDS 2024;35:1142–60"},
+  {t:"Tubercular uveitis", tag:"with the TB service", rows:[
+    ["Regimen","Standard therapy through the TB service: rifampicin, isoniazid, pyrazinamide and ethambutol for 2 months, then rifampicin and isoniazid; ocular TB is usually treated for 6–9 months or longer."],
+    ["Eye","Baseline colour vision and acuity before ethambutol. Steroid only alongside antituberculous therapy."],
+    ["Before biologics","Latent TB must be treated before anti-TNF."]],
+   src:"Your Notion notes (BCSC); COTS consensus guidelines (Agrawal R et al, Ophthalmology 2021)"},
+  {t:"Endophthalmitis", tag:"same day", rows:[
+    ["Tap and inject","Vitreous sample, then intravitreal vancomycin 1 mg/0.1 mL and ceftazidime 2 mg/0.1 mL (amikacin 0.4 mg/0.1 mL if penicillin-allergic)."],
+    ["Fungal","Amphotericin B 5–10 micrograms/0.1 mL or voriconazole 100 micrograms/0.1 mL, with systemic antifungal and blood cultures."],
+    ["Vitrectomy","Early vitrectomy if vision is perception of light only (EVS), or no response at 48 hours."]],
+   src:"Endophthalmitis Vitrectomy Study, Arch Ophthalmol 1995; ESCRS endophthalmitis guidelines. Confirm doses with pharmacy."}
+ ]}
 ];
 
 /* ============ INVESTIGATIONS — DEEP DIVE ============ */
@@ -1818,6 +1940,9 @@ renderSignGroups(IMG,document.getElementById('imggrid'),'i','img');
 function atlasLinks(a){const e=encodeURIComponent,ext='target="_blank" rel="noopener noreferrer"';
  const wiki=typeof a.wiki==='string'?'https://eyewiki.org/'+a.wiki:'https://eyewiki.org/index.php?search='+e(a.wiki.q);
  return `<div class="at-links">See examples: <a href="${wiki}" ${ext}>EyeWiki</a> · <a href="https://multimedia.asrs.org/search?q=${e(a.q)}" ${ext}>Retina Image Bank</a> · <a href="https://www.google.com/search?tbm=isch&q=${e(a.q)}" ${ext}>Google Images</a> <span class="at-off">(needs internet)</span></div>`;}
+document.getElementById('txgrid').innerHTML=TX.map(G=>`<h2 class="sys">${G.group}</h2>${G.note?`<div class="sysnote">${G.note}</div>`:''}`+G.cards.map(c=>`<details class="atlas"><summary><span class="at-dx">${c.t}</span>${c.tag?`<span class="at-tag">${c.tag}</span>`:''}</summary>
+ <div class="at-body">${c.rows.map(([m,t])=>`<div class="at-row"><span class="at-m" style="flex-basis:86px">${m}</span><span>${t}</span></div>`).join('')}
+ <div class="at-links">Source: ${c.src}</div></div></details>`).join('')).join('');
 document.getElementById('imgatlas').innerHTML=IMGATLAS.map(a=>`<details class="atlas"><summary><span class="at-dx">${a.dx}</span>${a.tag?`<span class="at-tag">${a.tag}</span>`:''}</summary>
  <div class="at-body"><div class="at-look"><b>What to look for</b><ul>${a.look.map(x=>`<li>${x}</li>`).join('')}</ul></div>${a.rows.map(([m,t])=>`<div class="at-row"><span class="at-m">${m}</span><span>${t}</span></div>`).join('')}
  <div class="at-pearl"><b>Pearl:</b> ${a.pearl}</div>${atlasLinks(a)}</div></details>`).join('');
@@ -1950,7 +2075,7 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');
  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
  document.getElementById('v-'+t.dataset.v).classList.add('on');
- document.body.classList.toggle('onquick',t.dataset.v==='quick');
+ document.body.classList.toggle('onquick',t.dataset.v==='quick'||t.dataset.v==='tx');
  if(t.dataset.v==='summary')buildSummary();
  window.scrollTo(0,0);
  if(t.scrollIntoView)t.scrollIntoView({inline:'center',block:'nearest'});

@@ -35,14 +35,9 @@ Two points are still UNRESOLVED and need the primary source:
 - **Lysozyme in IWOS 2019.** The tool lists lysozyme as an IWOS investigation; the review's list omits it. Check Mochizuki, BJO 2019;103:1418 and correct if needed.
 
 ## Still to build (owner said yes)
-A. **Treatment & monitoring tab** (`7 · Treatment`). Suggested sections, each with a source line and "check BNF / local protocol":
-   - Before treating: exclude infection and masquerade; syphilis/TB screen; sample first if it matters.
-   - Steroid ladder: topical, periocular/intravitreal (Ozurdex; NICE TA460), oral prednisolone (1 mg/kg, max 60–80 mg, taper), IV methylprednisolone. Target ≤7.5 mg/day by 3 months, otherwise add a steroid-sparing agent. Bone, gastric, BP, glucose, IOP, cataract monitoring.
-   - Steroid-sparing agents: methotrexate, mycophenolate, azathioprine (TPMT first), ciclosporin, tacrolimus; adalimumab (NICE TA460 criteria; VISUAL dosing), infliximab. For each: dose, baseline tests, monitoring (BSR 2017 DMARD monitoring guideline), key cautions, pregnancy.
-   - Pre-biologic screen: TB (IGRA + CXR), hepatitis B/C, HIV, VZV status, MRI brain if demyelination risk, vaccines.
-   - Infection regimens: ARN, toxoplasma, CMV, syphilis (BASHH 2024 above), TB (refer TB service), endophthalmitis intravitreal doses.
-   - Her Notion pages "imt / imd combined" and "uveitis" and "Practical from telegram" have her own notes on these. Use them first, then verify.
-   - Every dose must be verified against a primary source before it goes live, and anything unverified must be labelled.
+A. **Treatment & monitoring tab**: FIRST VERSION DONE (2026-11-15). `TX` in `index.html`, 18 cards, tab `7 · Treatment`. Content came from her Notion "imt / imd combined" notes plus UK guidance. Still to do on it:
+   - Verify against primary sources and remove the "not re-verified" labels: tacrolimus dose; CMV regimen; intravitreal doses (foscarnet, ganciclovir, clindamycin, vancomycin, ceftazidime, antifungals); NICE TA460 full criteria and stopping rules (nice.org.uk/guidance/ta460/chapter/1-recommendations); BSR DMARD monitoring 2025 update (the tab quotes the 2017 schedule); the prednisolone taper; MHRA advice on mycophenolate in men.
+   - Not yet covered: uveitic macular oedema pathway, cataract/glaucoma surgery in uveitis, JIA uveitis pathway, vaccination advice on immunosuppression. Her "Practical from telegram" Notion page has material on pre-phaco management.
 B. **SUN grading**: DONE (2026-11-15). Selects on the Eye signs tab (`SUN`, `SUNKEY`, `sunVal`), saved with the case and written to the Summary.
 C. **SUN 2021 classification criteria** checklists for the main entities (not started).
 D. Add references to each Imaging card (PubMed connector was failing to connect; retry).
