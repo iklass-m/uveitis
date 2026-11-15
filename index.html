@@ -350,7 +350,7 @@ body.onquick .mobjump{display:none!important}
       <div class="interp" id="interp"></div>
     </div>
     <div id="v-tx" class="view">
-      <div class="hint"><b>Treatment &amp; monitoring.</b> A memory aid for the steroid ladder, steroid-sparing agents and the first treatment of the main infections, drawn from your notes and UK guidance. <b>Check every dose against the BNF and your local protocol before prescribing</b> — each card names its source. Doses were checked against those sources in November 2026.</div>
+      <div class="hint"><b>Treatment &amp; monitoring.</b> A memory aid for the steroid ladder, steroid-sparing agents, the first treatment of the main infections, macular oedema, surgery, JIA uveitis and vaccination, drawn from your notes, BCSC and UK guidance. <b>Check every dose against the BNF and your local protocol before prescribing</b> — each card names its source. Doses were checked against those sources in November 2026.</div>
       <div id="txgrid"></div>
     </div>
     <div id="v-crit" class="view">
@@ -1030,6 +1030,58 @@ const TX=[
     ["Fungal","Amphotericin B 5–10 micrograms/0.1 mL or voriconazole 50–100 micrograms/0.1 mL, with systemic antifungal and blood cultures."],
     ["Vitrectomy","Early vitrectomy if vision is perception of light only (EVS), or no response at 48 hours."]],
    src:"Endophthalmitis Vitrectomy Study, Arch Ophthalmol 1995; Relhan N et al, Retina 2017;37:811–8 (dose table). Make up with pharmacy or your unit kit."}
+ ]},
+ {group:"Uveitic macular oedema", cards:[
+  {t:"Uveitic macular oedema", tag:"UME", rows:[
+    ["Confirm","OCT: diffuse thickening, cystoid spaces or serous detachment. Add FA: leakage is often wider than OCT shows. Thickening from vitreomacular traction is not UME."],
+    ["First","Control the inflammation. Rule out infection before any local steroid, especially intravitreal. UME is slow to respond and may persist after other signs settle."],
+    ["Local steroid","POINT: at 8 weeks intravitreal triamcinolone and the dexamethasone implant thinned the macula more than periocular triamcinolone (by 39% and 46% vs 23%), with about 5 letters more gain, but more IOP rises."],
+    ["Persistent","MERIT (quiet or minimally active eyes): at 12 weeks the dexamethasone implant beat intravitreal methotrexate and ranibizumab (thickness down 35% vs 11% and 22%); only the implant improved acuity (about 5 letters). IOP rises were commoner with it; rises to 30 mmHg or more were uncommon."],
+    ["Alternatives","Steroid responders: intravitreal methotrexate or anti-VEGF, accepting a smaller effect. Recurrent posterior-segment disease: fluocinolone implant (NICE TA590). Topical difluprednate and oral acetazolamide have been used, with limited evidence. Refractory: systemic escalation, tocilizumab or interferon (see Others)."],
+    ["Advise","Stop smoking: it is linked to more UME, especially in intermediate and panuveitis."]],
+   src:"BCSC Section 9, 2026, ch.16; Thorne JE et al, POINT, Ophthalmology 2019;126:283–95 (doi 10.1016/j.ophtha.2018.08.021); Acharya NR et al, MERIT, Ophthalmology 2023;130:914–23 (doi 10.1016/j.ophtha.2023.04.011); NICE TA590"}
+ ]},
+ {group:"Surgery in uveitis", note:"Strict control of inflammation before and after any operation is the main determinant of outcome.", cards:[
+  {t:"Cataract surgery", tag:"uveitic cataract", rows:[
+    ["Timing","Uveitis well controlled with no flare for at least 3 months. This rests on case series, not trials, so exceptions are made (for example lens-induced inflammation, or no view of a fundus that needs watching)."],
+    ["Cover","Oral prednisolone 0.5–1 mg/kg/day from 3 days before, tapered over the weeks after, and/or intensive topical steroid; sub-Tenon or intravitreal steroid are also used. No comparative trials: surgeons follow experience."],
+    ["Infectious","Toxoplasma or herpetic disease: prophylactic antimicrobial cover around surgery; pre-operative oral steroid is usually not given."],
+    ["In theatre","Clear corneal entry (especially with scleritis). Synechiolysis and pupil stretching or hooks as needed. Meticulous cortical clean-up. Hydrophobic acrylic IOL in the bag; silicone rarely. Periocular or intravitreal steroid at the end; cycloplegic for 1–2 weeks if synechiae were broken."],
+    ["IOL or not","Relative contraindications: rubeosis, extensive membranes, hypotony. Even then an IOL may suit selected, well-controlled eyes. Weak zonules: capsular tension ring, or lensectomy-vitrectomy with a sulcus or scleral-fixated IOL."],
+    ["After","Watch for UME and rebound inflammation. Topical NSAIDs may be added as in other eyes (not studied in uveitis)."],
+    ["JIA","IOL in children is still debated; recent series favour in-the-bag acrylic IOL with primary posterior capsulorrhexis (± anterior vitrectomy), under stringent steroid and immunomodulatory control."]],
+   src:"BCSC Section 9, 2026, ch.16 (Complications of uveitis)"},
+  {t:"Raised IOP and uveitic glaucoma", tag:"", rows:[
+    ["Drops","Prostaglandin analogues generally do not worsen inflammation when the uveitis is treated, but use them with caution in herpetic uveitis (reactivation). Avoid pilocarpine: it breaks down the blood–aqueous barrier and promotes posterior synechiae."],
+    ["Trabeculectomy","Higher failure in uveitis; better with mitomycin C and intensive topical steroid. IOP controlled on 0–1 drugs in up to 90% at 1 year and about 62% at 5 years. Risks: cataract, bleb leak (endophthalmitis), choroidal effusion."],
+    ["Tube","Drainage devices keep working despite recurrent inflammation and control IOP better than trabeculectomy in the long term; most pseudophakic or aphakic uveitic eyes need one. A valved design helps prevent early hypotony. Complications about 10% per patient-year."],
+    ["Other","Deep sclerectomy and viscocanalostomy: good short-term results. MIGS: role unclear, with reports of inflammation from angle devices. Children: goniotomy lowers IOP to 21 or below in up to 75% after 2 operations."],
+    ["Low IOP","Acute low IOP from ciliary shutdown recovers once inflammation is controlled; chronic hypotony from ciliary body damage may not."]],
+   src:"BCSC Section 9, 2026, ch.16; see BCSC Section 10 for uveitic glaucoma"}
+ ]},
+ {group:"Children: JIA-associated uveitis", cards:[
+  {t:"Screening and monitoring", tag:"ACR 2019", rows:[
+    ["Screen","High-risk children with JIA (by subtype, ANA, age at onset and disease duration): every 3 months. UK units use the RCOphth/BSPAR screening schedule."],
+    ["Monitor","Within 1 month of each change in topical steroid; at least every 3 months on stable treatment; within 2 months of changing systemic treatment."],
+    ["SpA / ERA","Teach the warning signs of acute anterior uveitis. A first acute attack: treat with topical steroid first rather than switching systemic treatment."]],
+   src:"Angeles-Han ST et al, ACR/Arthritis Foundation guideline 2019, Arthritis Care Res 2019;71:703–16 (PMC6788287)"},
+  {t:"Treatment ladder", tag:"ACR 2019 · SYCAMORE", rows:[
+    ["Topical","Prednisolone acetate 1% rather than difluprednate. For short-term control, more topical steroid rather than systemic steroid."],
+    ["Add systemic","Still needing 1–2 drops a day: add systemic treatment if not on any; if on it for 3 months or more, change or escalate it."],
+    ["Methotrexate","First systemic agent; subcutaneous preferred to oral."],
+    ["Anti-TNF","Monoclonal antibody (adalimumab, infliximab) rather than etanercept. Severe, sight-threatening disease: methotrexate and a monoclonal anti-TNF together from the start. SYCAMORE: adalimumab with methotrexate, treatment failure 27% vs 60% on placebo (HR 0.25)."],
+    ["Not enough","Raise the anti-TNF dose or frequency first, then switch to another monoclonal anti-TNF. After methotrexate and two monoclonal anti-TNFs: abatacept or tocilizumab, or mycophenolate, leflunomide or ciclosporin."],
+    ["Tapering","Taper topical steroid before systemic treatment. Taper systemic treatment only after at least 2 years of well-controlled uveitis."]],
+   src:"ACR/AF 2019 guideline (as above); Ramanan AV et al, SYCAMORE, N Engl J Med 2017;376:1637–46; see also SHARE recommendations, Constantin T et al, Ann Rheum Dis 2018 (PMC6059050)"}
+ ]},
+ {group:"Vaccination and immunosuppression", cards:[
+  {t:"Vaccines on immunosuppression", tag:"Green Book · BSR 2025", rows:[
+    ["Before","Check vaccination and varicella status before starting. Live vaccines ideally at least 4 weeks before immunosuppression, but do not delay treatment if that would harm the eye."],
+    ["No live vaccines","Within 3 months of prednisolone over 40 mg/day for more than 1 week, or over 20 mg/day for more than 14 days (children under 20 kg: 2 and 1 mg/kg/day); methotrexate over 25 mg/week, azathioprine over 3 mg/kg/day or mercaptopurine over 1.5 mg/kg/day; and within 12 months of biologics, unless a specialist advises otherwise."],
+    ["Low dose","Stable prednisolone up to 20 mg/day, alone or with methotrexate up to 25 mg/week (children up to 15 mg/m²), azathioprine up to 3 mg/kg/day or mercaptopurine up to 1.5 mg/kg/day, is not considered immunosuppressive enough to bar live vaccines."],
+    ["Inactivated","Recommended for all: influenza yearly, pneumococcal, COVID-19. After a flu or COVID-19 vaccine, methotrexate can be held for up to 2 weeks if the uveitis allows (BSR 2025)."],
+    ["Shingles","Shingrix (not live): from September 2025 offered to all severely immunosuppressed adults aged 18 and over; two doses, the second 8 weeks to 6 months after the first."]],
+   src:"UKHSA Green Book ch.6 (Aug 2017) and ch.28a Shingles (Aug 2025); BSR csDMARD guideline 2025, recommendation 10"}
  ]}
 ];
 
