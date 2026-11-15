@@ -43,7 +43,7 @@ A. **Treatment & monitoring tab** (`7 · Treatment`). Suggested sections, each w
    - Infection regimens: ARN, toxoplasma, CMV, syphilis (BASHH 2024 above), TB (refer TB service), endophthalmitis intravitreal doses.
    - Her Notion pages "imt / imd combined" and "uveitis" and "Practical from telegram" have her own notes on these. Use them first, then verify.
    - Every dose must be verified against a primary source before it goes live, and anything unverified must be labelled.
-B. **SUN grading**: AC cells, flare, vitreous haze (NEI/Nussenblatt) as selects on the Eye signs tab, plus SUN onset/duration/course and activity terms. Feed into the Summary. Source: Jabs et al, Am J Ophthalmol 2005;140:509.
+B. **SUN grading**: DONE (2026-11-15). Selects on the Eye signs tab (`SUN`, `SUNKEY`, `sunVal`), saved with the case and written to the Summary.
 C. **SUN 2021 classification criteria** checklists for the main entities (not started).
 D. Add references to each Imaging card (PubMed connector was failing to connect; retry).
 E. Optional: her Notion pearls into matching cards; "save several cases on the device".

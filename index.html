@@ -175,6 +175,10 @@ h2.sys{font-variant:small-caps;letter-spacing:.06em;font-size:19px;color:var(--i
 .pbrow{display:flex;flex-wrap:wrap;gap:12px;margin:7px 0}
 .pbrow .fld{min-width:150px;flex:1 1 150px}
 .pbflags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.sungrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px 12px;padding:9px 12px}
+.gsel{font-family:inherit;font-size:13px;padding:5px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);width:100%}
+.sunkey{margin:0 12px 10px}.sunkey summary{cursor:pointer;font-size:12.5px;color:var(--ink2);font-style:italic}
+.sunkey .at-row{font-size:13px}
 .pbsel{font-family:inherit;font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);width:100%}
 .pbsel:focus{outline:2px solid var(--rust);outline-offset:1px}
 .pbchip{font-family:inherit;font-size:12.5px;border:1px solid var(--ink2);background:transparent;color:var(--ink);
@@ -232,7 +236,7 @@ body.onquick .mobjump{display:none!important}
   .toggle{gap:8px}
   .tbtn{min-width:58px;min-height:44px;font-size:15px;padding:8px 16px}
   .echip,.pbchip,.qpick{min-height:44px;font-size:15px;padding:9px 14px}
-  .fnum,.fsel,.funit,.pbsel{min-height:44px;font-size:16px}
+  .fnum,.fsel,.funit,.pbsel,.gsel{min-height:44px;font-size:16px}
   .fnum{width:112px}
   .controls button,.sumbtn{min-height:44px;font-size:15px;padding:9px 16px}
   .drill li,.drill h4{font-size:15px}
@@ -285,6 +289,12 @@ body.onquick .mobjump{display:none!important}
     <div id="v-ros" class="view"></div>
     <div id="v-exam" class="view">
       <div class="hint"><b>What you see at the slit lamp.</b> Tap the findings present. Each one is a discriminating sign — the panel updates the differential and, where a sign is near-specific (mutton-fat KP, sectoral iris atrophy, mobile hypopyon), tells you what it points to and why. Work anterior → posterior.</div>
+      <div class="examgrp" id="sunbox">
+        <div class="eg-h">Grading &amp; description (SUN)</div>
+        <div class="eg-note">Record these the same way every visit — a two-step change is what counts as better or worse. They go into the Summary.</div>
+        <div class="sungrid" id="sungrid"></div>
+        <details class="sunkey"><summary>What the grades and terms mean</summary><div id="sunkey"></div></details>
+      </div>
       <div id="examgrid"></div>
     </div>
     <div id="v-img" class="view">
@@ -1763,6 +1773,31 @@ function renderQ(container,data,prefix){
 renderQ(document.getElementById('v-hx'),HX,'h');
 renderQ(document.getElementById('v-ros'),ROS,'r');
 
+/* ---- SUN grading (Jabs DA et al, SUN Working Group, Am J Ophthalmol 2005;140:509–16; haze: Nussenblatt RB et al, Ophthalmology 1985;92:467–71) ---- */
+const SUN=[
+ {k:"loc",l:"Anatomical location",o:["anterior","intermediate","posterior","panuveitis"]},
+ {k:"onset",l:"Onset",o:["sudden","insidious"]},
+ {k:"dur",l:"Duration",o:["limited (≤3 months)","persistent (>3 months)"]},
+ {k:"course",l:"Course",o:["acute","recurrent","chronic"]},
+ {k:"cells",l:"AC cells (1×1 mm beam)",o:["0 (<1 cell)","0.5+ (1–5)","1+ (6–15)","2+ (16–25)","3+ (26–50)","4+ (>50)"]},
+ {k:"flare",l:"AC flare",o:["0 (none)","1+ (faint)","2+ (moderate, iris and lens clear)","3+ (marked, iris and lens hazy)","4+ (intense, fibrin)"]},
+ {k:"haze",l:"Vitreous haze",o:["0 (clear)","0.5+ (trace)","1+ (mild blurring of disc and vessels)","2+ (moderate blurring, vessels still seen)","3+ (disc seen, borders blurred, no vessels)","4+ (disc obscured)"]},
+ {k:"act",l:"Activity vs last visit",o:["first visit","inactive (grade 0 cells)","improved (2-step fall, or to 0)","worsening (2-step rise, or 3+ to 4+)","no change"]}
+];
+const SUNKEY=[
+ ["Onset","Sudden or insidious."],
+ ["Duration","Limited = 3 months or less. Persistent = more than 3 months."],
+ ["Course","<b>Acute</b>: sudden onset and limited duration. <b>Recurrent</b>: repeated episodes separated by at least 3 months of inactivity off treatment. <b>Chronic</b>: persistent uveitis that relapses within 3 months of stopping treatment."],
+ ["AC cells","Counted in a 1 mm × 1 mm slit beam at full intensity: 0 = under 1; 0.5+ = 1–5; 1+ = 6–15; 2+ = 16–25; 3+ = 26–50; 4+ = over 50."],
+ ["AC flare","0 none; 1+ faint; 2+ moderate (iris and lens details clear); 3+ marked (iris and lens details hazy); 4+ intense (fibrin or plastic aqueous)."],
+ ["Vitreous haze","NEI scale, judged by how clearly the disc and vessels are seen: 0 clear; 0.5+ trace; 1+ mild blurring; 2+ moderate blurring, vessels still visible; 3+ disc visible but borders blurred, vessels not seen; 4+ disc obscured."],
+ ["Activity","<b>Inactive</b>: grade 0 cells. <b>Worsening</b>: a two-step increase, or from 3+ to 4+. <b>Improved</b>: a two-step decrease, or down to grade 0. <b>Remission</b>: inactive for at least 3 months after stopping all treatment."],
+ ["Source","Jabs DA, Nussenblatt RB, Rosenbaum JT; SUN Working Group. Am J Ophthalmol 2005;140:509–16. Vitreous haze: Nussenblatt RB et al, Ophthalmology 1985;92:467–71."]
+];
+const sunVal={};
+document.getElementById('sungrid').innerHTML=SUN.map(f=>`<div class="fld"><label>${f.l}</label><select class="gsel" data-k="${f.k}"><option value="">—</option>${f.o.map(o=>`<option>${o}</option>`).join('')}</select></div>`).join('');
+document.getElementById('sunkey').innerHTML=SUNKEY.map(([a,b])=>`<div class="at-row"><span class="at-m" style="flex-basis:78px">${a}</span><span>${b}</span></div>`).join('');
+document.querySelectorAll('.gsel').forEach(e=>e.addEventListener('change',()=>{sunVal[e.dataset.k]=e.value;buildSummary();}));
 /* ---- EYE SIGNS render ---- */
 const examSel=new Set();          // "gi_si" selected signs
 const examMeta={};                // id -> {pts, why, t}
@@ -1994,6 +2029,8 @@ function buildSummary(){
  if(posRos.length){L.push('','REVIEW OF SYSTEMS — positive:');posRos.forEach(t=>L.push('  • '+pad(t)));}
  // eye signs
  const eyeS=[...examSel].filter(id=>examMeta[id].src==='eye'),imgS=[...examSel].filter(id=>examMeta[id].src==='img');
+ const sunL=SUN.filter(f=>sunVal[f.k]).map(f=>'  • '+f.l.replace(' (1×1 mm beam)','')+': '+sunVal[f.k]);
+ if(sunL.length){L.push('','SUN DESCRIPTION & GRADING:');sunL.forEach(x=>L.push(x));}
  if(eyeS.length){L.push('','EYE SIGNS:');eyeS.forEach(id=>L.push('  • '+examMeta[id].t));}
  if(imgS.length){L.push('','IMAGING:');imgS.forEach(id=>L.push('  • '+examMeta[id].t));}
  // labs entered
@@ -2021,7 +2058,7 @@ function buildSummary(){
  const tset=[];
  flagged.forEach(id=>{const t=qTests[id];if(t)t.forEach(x=>{if(!tset.includes(x))tset.push(x);});});
  if(tset.length){L.push('','SUGGESTED NEXT TESTS:');tset.forEach(t=>L.push('  • '+t));}
- if(posHx.length+posRos.length+examSel.size+labLines.length===0)L.push('','(Nothing entered yet — work through the tabs and this fills in.)');
+ if(posHx.length+posRos.length+examSel.size+labLines.length+sunL.length===0)L.push('','(Nothing entered yet — work through the tabs and this fills in.)');
  document.getElementById('summaryout').textContent=L.join('\n');
 }
 function copySummary(){buildSummary();const t=document.getElementById('summaryout').textContent;
@@ -2336,6 +2373,7 @@ function resetAll(){flagged.clear();
  document.querySelectorAll('.pbchip').forEach(x=>x.classList.remove('on'));
  if(document.getElementById('pbout'))renderPBOut();
  examSel.clear();
+ document.querySelectorAll('.gsel').forEach(e=>{e.selectedIndex=0;});Object.keys(sunVal).forEach(k=>delete sunVal[k]);
  document.querySelectorAll('.echip').forEach(c=>c.classList.remove('on'));
  document.querySelectorAll('.eg-why').forEach(w=>w.innerHTML="");
  renderInterp();recompute();buildSummary();
@@ -2360,8 +2398,9 @@ function snapshot(){const g=s=>[...document.querySelectorAll(s)];
   num:Object.fromEntries(g('.fnum').filter(i=>i.value!=='').map(i=>[i.dataset.id,i.value])),
   sel:Object.fromEntries(g('.fsel').filter(s=>s.value!==s.dataset.d0).map(s=>[s.dataset.id,s.value])),
   pb:Object.fromEntries(g('.pbsel').filter(s=>s.value).map(s=>[s.dataset.k,s.value])),
+  sun:Object.fromEntries(g('.gsel').filter(s=>s.value).map(s=>[s.dataset.k,s.value])),
   pbf:Object.keys(PB.flags).filter(k=>PB.flags[k]),q:document.getElementById('qtext').value};}
-function snapEmpty(s){return !(s.yes.length||s.no.length||s.chips.length||s.pbf.length||s.q.trim()||Object.keys(s.num).length||Object.keys(s.sel).length||Object.keys(s.pb).length);}
+function snapEmpty(s){return !(s.yes.length||s.no.length||s.chips.length||s.pbf.length||s.q.trim()||Object.keys(s.num).length||Object.keys(s.sel).length||Object.keys(s.pb).length||Object.keys(s.sun||{}).length);}
 function saveNow(){if(_restoring)return;clearTimeout(_saveT);
  try{const s=snapshot();if(snapEmpty(s))localStorage.removeItem(SAVE_KEY);else localStorage.setItem(SAVE_KEY,JSON.stringify(s));}catch(e){}}
 function queueSave(){if(_restoring)return;clearTimeout(_saveT);_saveT=setTimeout(saveNow,300);}
@@ -2379,6 +2418,7 @@ function applySaved(s){_restoring=true;
   Object.entries(s.num||{}).forEach(([id,v])=>{const e=one('.fnum[data-id="'+id+'"]');if(e){e.value=v;fire(e,'input');}});
   Object.entries(s.sel||{}).forEach(([id,v])=>{const e=one('.fsel[data-id="'+id+'"]');if(e){e.value=v;fire(e,'change');}});
   Object.entries(s.pb||{}).forEach(([k,v])=>{const e=one('.pbsel[data-k="'+k+'"]');if(e){e.value=v;fire(e,'change');}});
+  Object.entries(s.sun||{}).forEach(([k,v])=>{const e=one('.gsel[data-k="'+k+'"]');if(e){e.value=v;fire(e,'change');}});
   (s.pbf||[]).forEach(k=>{const b=one('.pbchip[data-f="'+k+'"]');if(b&&!b.classList.contains('on'))b.click();});
   if(s.q){document.getElementById('qtext').value=s.q;quickAnalyse();}
   if(s.tab)goTab(s.tab);
