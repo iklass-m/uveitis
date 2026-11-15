@@ -254,7 +254,7 @@ body.onquick .mobjump{display:none!important}
   <h1>Uveitis Workup</h1>
   <details class="about" id="about"><summary>About this tool &amp; sources</summary>
   <div class="sub">Start with <b>Quick DDx</b> (type or tap the findings), or work through six steps: <b>History</b> (what to ask, with follow-ups) → <b>Review of systems</b> (branching red-flag screen) → <b>Eye signs</b> (what you see at the slit lamp) → <b>Imaging</b> (OCT, FA, ICGA, FAF signatures) → <b>Investigations</b> (what to order, why, and what each test can and cannot do) → <b>Results</b> (plug the numbers in). One differential ranks live across all of them, and <b>Summary</b> writes it up for your notes.</div>
-  <div class="src">Grounded in your library — Foster &amp; Vitale <i>Diagnosis &amp; Treatment of Uveitis</i> 2e; Samalia in <i>Uveitis Management: A Clinical Handbook</i> (2023) ch.2; <i>Wills Eye Manual</i> 7e §12.1; <i>Oxford Handbook of Ophthalmology</i> 4e. Decision-support only — your judgement governs.</div>
+  <div class="src">Grounded in your library — Foster &amp; Vitale <i>Diagnosis &amp; Treatment of Uveitis</i> 2e; Samalia in <i>Uveitis Management: A Clinical Handbook</i> (2023) ch.2; <i>Wills Eye Manual</i> 7e §12.1; <i>Oxford Handbook of Ophthalmology</i> 4e. Reviewed Nov 2026 against revised IWOS 2019, CDC 2021 and BASHH syphilis guidance, and BSR 2022 prescribing-in-pregnancy guidance. Decision-support only — your judgement governs.</div>
   </details>
 </header>
 <div id="resbar"><span id="resmsg"></span></div>
@@ -359,7 +359,7 @@ const HX=[
     exam:["Node survey","Brief cognitive screen","Skin survey for melanoma"],
     eye:["Vitreous cells 'out of proportion' to the eye's quietness, subretinal/sub-RPE creamy deposits → primary vitreoretinal lymphoma","Birdshot: cream oval lesions, HLA-A29","Metastasis / paraneoplastic retinopathy also live at this age"],
     dx:["lymphoma","birdshot","AIR"], tests:["MRI brain with gadolinium","Diagnostic vitrectomy: cytology, flow, IL-10:IL-6, MYD88 L265P","ERG if AIR suspected"]},
-   {q:"Relevant ethnicity, birthplace, residence or travel?", fu:["Where were you born, and where have you lived — not just holidays?","Asian / Middle-Eastern ancestry along the old Silk Road → Behçet","Pigmented ethnicities (Asian, Hispanic, Native American, African) → VKH; African-American and Northern European → sarcoid","Time in TB-endemic countries (India, sub-Saharan Africa, SE Asia), or a household TB contact?","Brazil / West Africa → aggressive toxoplasma strains; Ohio–Mississippi valley → histoplasmosis; endemic Lyme (NE USA, forested Europe)","Japan/Korea → sarcoid is the leading uveitis cause; India → TB is."],
+   {q:"Relevant ethnicity, birthplace, residence or travel?", fu:["Where were you born, and where have you lived — not just holidays?","Asian / Middle-Eastern ancestry along the old Silk Road → Behçet","Pigmented ethnicities (Asian, Hispanic, Native American, African) → VKH; African-American and Northern European → sarcoid","Time in TB-endemic countries (India, sub-Saharan Africa, SE Asia), or a household TB contact?","Brazil / West Africa → aggressive toxoplasma strains; Ohio–Mississippi valley → histoplasmosis; endemic Lyme (NE USA, forested Europe)","Japan → sarcoid is the leading identifiable uveitis cause; India → TB is."],
     exam:["BCG scar","General nutrition"],
     eye:["Directs which infective and HLA groups to weight — and which tests will actually have a usable predictive value"],
     dx:["Behçet","VKH","sarcoid","TB","Lyme","toxoplasma","POHS"], tests:["IGRA ± TST if endemic exposure","Targeted serology only where exposure fits"]},
@@ -399,7 +399,7 @@ const HX=[
     eye:["Insidious: intermediate uveitis, birdshot, vitreoretinal lymphoma, Fuchs, JIA"], dx:["pars planitis","birdshot","lymphoma","Fuchs","JIA"], tests:["HLA-A29 if cream lesions","Consider diagnostic vitrectomy if &gt;60 and steroid-resistant"]},
    {q:"Duration ≥3 months (chronic by SUN), or relapse within 3 months of stopping treatment?", fu:["Total duration of this episode?","Does it relapse the moment you drop below a threshold dose?","Chronicity itself pushes toward JIA, Fuchs, sarcoid, TB, lymphoma and away from simple HLA-B27 AAU"],
     eye:["Band keratopathy, cataract, glaucoma and CMO are the fingerprints of chronicity"], dx:["JIA","Fuchs","sarcoid","TB","lymphoma","pars planitis"], tests:["Full aetiological work-up is more justified in chronic than in a first, typical, unilateral AAU"]},
-   {q:"Simultaneously bilateral?", fu:["Both eyes at once (not sequential)?","Bilaterality is one of the seven IWOS intraocular signs of ocular sarcoidosis"],
+   {q:"Simultaneously bilateral?", fu:["Both eyes at once (not sequential)?","Bilaterality is one of the IWOS intraocular signs of ocular sarcoidosis"],
     eye:["Simultaneous bilateral: TINU, JIA, VKH, birdshot, sarcoid, APMPPE, syphilis, drug-induced"], dx:["TINU","JIA","VKH","birdshot","sarcoid","syphilis","drug"], tests:["Bilateral disease raises the yield of systemic work-up substantially"]},
    {q:"Recurrent — same eye or alternating?", fu:["How many episodes, how far apart?","Same eye every time (herpetic, Fuchs, toxoplasma) or alternating (HLA-B27)?","Is each episode identical, or evolving?"],
     eye:["Recurrent AAU → HLA-B27; recurrent same-eye + ↑IOP + iris atrophy → herpetic; recurrent beside an old scar → toxoplasma"], dx:["HLA-B27","HSV","VZV","Behçet","toxoplasma","Fuchs"], tests:["HLA-B27","Aqueous PCR if herpetic features and diagnosis matters"]}
@@ -587,7 +587,7 @@ const ROS=[
  {sys:"Gastrointestinal", note:"Chronic diarrhoea + uveitis = IBD until proven otherwise; ask specifically about blood, mucus, nocturnal symptoms and weight.", items:[
    {q:"Chronic or recurrent diarrhoea, or blood/mucus in the stool?", fu:["How long? Weight loss? Nocturnal diarrhoea (organic, not functional)?","Urgency, tenesmus, or waking to open the bowels?","Mouth ulcers, joint pain, erythema nodosum with it?","Any perianal pain, fissure, fistula or abscess? (Crohn's)"], exam:["Abdominal tenderness/masses","Perianal inspection","Weight and BMI"], eye:["Anterior uveitis (HLA-B27-linked), episcleritis, scleritis; uveitis in IBD is more often bilateral, chronic and posterior than in isolated AS"], dx:["IBD","Behçet","HLA-B27","Whipple"], tests:["Faecal calprotectin","FBC, ferritin, CRP","Ileocolonoscopy with biopsy","HLA-B27"]},
    {q:"Abdominal pain, bloating, or fatty/floating stools with weight loss?", fu:["Malabsorption picture — steatorrhoea, nutritional deficiency?","Middle-aged man with arthralgia, weight loss, diarrhoea and neurological signs? → Whipple's disease","Any coeliac symptoms or family history?"], exam:["Abdominal examination","Neurological screen (oculomasticatory myorhythmia is pathognomonic for Whipple's)","Nodes"], eye:["Whipple's: chronic vitritis, retinal haemorrhages, uveitis unresponsive to steroid, with CNS involvement"], dx:["Whipple","IBD","lymphoma"], tests:["Coeliac serology","Duodenal biopsy with PAS staining and Tropheryma whipplei PCR","Vitreous PCR for T. whipplei if suspected"]},
-   {q:"Jaundice, known liver disease, or abnormal liver tests?", fu:["Hepatitis B or C? (matters both as a cause of vasculitis/cryoglobulinaemia and before immunosuppression)","Alcohol intake?","Hepatic granulomas are common in sarcoid and often silent"], exam:["Jaundice, hepatomegaly, stigmata of chronic liver disease"], eye:["Hepatitis C with cryoglobulinaemia can give retinal vasculitis; interferon treatment causes retinopathy"], dx:["sarcoid","TB","syphilis"], tests:["LFTs — raised ALP/GGT is one of the IWOS supportive investigations for sarcoid","Hepatitis B and C serology BEFORE any immunosuppression"]}
+   {q:"Jaundice, known liver disease, or abnormal liver tests?", fu:["Hepatitis B or C? (matters both as a cause of vasculitis/cryoglobulinaemia and before immunosuppression)","Alcohol intake?","Hepatic granulomas are common in sarcoid and often silent"], exam:["Jaundice, hepatomegaly, stigmata of chronic liver disease"], eye:["Hepatitis C with cryoglobulinaemia can give retinal vasculitis; interferon treatment causes retinopathy"], dx:["sarcoid","TB","syphilis"], tests:["LFTs — raised ALP/GGT suggests hepatic granulomas (a supportive investigation in the 2009 IWOS criteria, dropped in the 2019 revision)","Hepatitis B and C serology BEFORE any immunosuppression"]}
  ]},
  {sys:"Genitourinary & renal", note:"Haematuria/nephritis → GPA, TINU, SLE; dysuria/discharge → reactive arthritis and STIs. Urinalysis is cheap and repeatedly under-ordered.", items:[
    {q:"Blood in the urine, frothy urine, or known kidney problems?", fu:["Recent sinus or respiratory disease, nasal crusting? (GPA)","Young patient with recent systemic illness, fatigue, weight loss and bilateral anterior uveitis? (TINU)","Rash, joint pains, hair loss? (lupus nephritis)","Any renal stones, or symptoms of high calcium? (sarcoid)"], exam:["Blood pressure","Bedside urinalysis — do it yourself","Sinus and respiratory examination","Peripheral oedema"], eye:["Bilateral sudden anterior uveitis in a young person (TINU); scleritis, PUK, orbital mass or retinal vasculitis (GPA)"], dx:["TINU","GPA","SLE","TB","syphilis","sarcoid"], tests:["Urinalysis + microscopy for casts","URINE β2-MICROGLOBULIN + serum creatinine — combined elevation has ~100% PPV for TINU","ANCA (PR3/MPO), ANA/dsDNA, C3/C4","Serum and 24-h urinary calcium"]},
@@ -610,12 +610,12 @@ const ROS=[
    {q:"Chronic sinus problems, nasal crusting, or recurrent nosebleeds?", fu:["With haemoptysis or haematuria? (GPA)","Any nasal septal perforation? (GPA — but also cocaine use, which mimics it including ANCA positivity)","Loss of smell?"], exam:["Nasal mucosa — crusting, saddle deformity, septal perforation","Chest, urinalysis"], eye:["Orbital mass, scleritis, PUK, nasolacrimal obstruction, retinal vasculitis (GPA)"], dx:["GPA","syphilis","sarcoid","TB"], tests:["c-ANCA / PR3 (and MPO)","CT sinuses and chest","Urinalysis and renal function","ENT biopsy — often low yield but diagnostic when positive"]}
  ]},
  {sys:"Neurological", note:"Neuro symptoms with intermediate or posterior uveitis raise MS, neurosarcoid, neuro-Behçet, syphilis and CNS lymphoma — and change both imaging and drug choice (anti-TNF is contraindicated in demyelination).", items:[
-   {q:"Numbness, tingling, weakness or loss of balance?", fu:["Ever had transient painful monocular visual loss with pain on eye movement? (optic neuritis)","Symptoms separated in time AND place?","Heat sensitivity (Uhthoff), electric shock down the spine on neck flexion (Lhermitte)?","Bladder urgency or incontinence?"], exam:["Cranial nerves, power, sensation, reflexes, gait","RAPD, colour vision (red desaturation)","Fundoscopy for periphlebitis"], eye:["Intermediate uveitis / pars planitis with peripheral periphlebitis — up to ~10% of intermediate uveitis patients develop MS"], dx:["MS","sarcoid","Behçet","syphilis","HIV","lymphoma","Lyme"], tests:["MRI brain ± spine with gadolinium — NOT routine for all intermediate uveitis, but indicated if neuro symptoms, and MANDATORY before starting anti-TNF","Neurology referral; consider LP for oligoclonal bands","Treponemal serology"]},
+   {q:"Numbness, tingling, weakness or loss of balance?", fu:["Ever had transient painful monocular visual loss with pain on eye movement? (optic neuritis)","Symptoms separated in time AND place?","Heat sensitivity (Uhthoff), electric shock down the spine on neck flexion (Lhermitte)?","Bladder urgency or incontinence?"], exam:["Cranial nerves, power, sensation, reflexes, gait","RAPD, colour vision (red desaturation)","Fundoscopy for periphlebitis"], eye:["Intermediate uveitis / pars planitis with peripheral periphlebitis — roughly 10–20% of intermediate uveitis patients have or develop MS in tertiary series"], dx:["MS","sarcoid","Behçet","syphilis","HIV","lymphoma","Lyme"], tests:["MRI brain ± spine with gadolinium — NOT routine for all intermediate uveitis, but indicated if neuro symptoms, and MANDATORY before starting anti-TNF","Neurology referral; consider LP for oligoclonal bands","Treponemal serology"]},
    {q:"Facial weakness, double vision, or any cranial nerve problem?", fu:["Facial nerve palsy — bilateral or recurrent? (neurosarcoid, Lyme, HIV)","Facial palsy + parotid swelling + uveitis + fever = Heerfordt syndrome (uveoparotid fever, sarcoid)","Double vision — which direction, and is it worse at the end of the day?"], exam:["Full cranial nerve examination","Parotid glands","Skin"], eye:["Sarcoid is the classic cause of a uveitis-plus-cranial-neuropathy picture"], dx:["sarcoid","Lyme","TB","syphilis","lymphoma","GPA"], tests:["Serum ACE, lysozyme, calcium","MRI brain with gadolinium (leptomeningeal enhancement in neurosarcoid)","LP: protein, cells, oligoclonal bands, cytology, VDRL","Lyme serology if endemic exposure"]},
    {q:"Severe headaches, seizures, confusion or personality change?", fu:["Neck stiffness, photophobia, hearing change? (VKH, meningitis)","Fever, immunosuppression? (infective, including cryptococcus, TB meningitis)","Older patient with vitritis and cognitive change? — CNS lymphoma","Behçet with brainstem symptoms → neuro-Behçet"], exam:["Meningism","Fundoscopy for papilloedema BEFORE lumbar puncture","Cognitive screen"], eye:["Panuveitis with disc oedema and serous RD (VKH); vitritis with subretinal infiltrates (PVRL)"], dx:["lymphoma","VKH","sarcoid","Behçet","SLE","TB","syphilis"], tests:["MRI brain with gadolinium FIRST","LP: cytology, flow cytometry, oligoclonal bands, VDRL, opening pressure","Serum ACE, treponemal serology"]}
  ]},
  {sys:"Endocrine & metabolic", note:"Small system, two real traps: hypercalcaemia in sarcoid, and diabetes/thyroid disease as both mimic and comorbidity.", items:[
-   {q:"Excessive thirst, passing lots of urine, constipation, or kidney stones?", fu:["These are the symptoms of hypercalcaemia — present in ~10% of sarcoid, from granulomas making 1,25-dihydroxyvitamin D","Any vitamin D supplements? (they can precipitate hypercalcaemia in sarcoid)","Bone pain, low mood, abdominal pain?"], exam:["Hydration, blood pressure"], eye:["Chronic hypercalcaemia → band keratopathy, which also arises from chronic uveitis itself"], dx:["sarcoid","lymphoma","TB"], tests:["Serum calcium (corrected) and 24-hour urinary calcium — both are IWOS supportive investigations","Vitamin D and PTH","Renal function"]},
+   {q:"Excessive thirst, passing lots of urine, constipation, or kidney stones?", fu:["These are the symptoms of hypercalcaemia — present in ~10% of sarcoid, from granulomas making 1,25-dihydroxyvitamin D","Any vitamin D supplements? (they can precipitate hypercalcaemia in sarcoid)","Bone pain, low mood, abdominal pain?"], exam:["Hydration, blood pressure"], eye:["Chronic hypercalcaemia → band keratopathy, which also arises from chronic uveitis itself"], dx:["sarcoid","lymphoma","TB"], tests:["Serum calcium (corrected) and 24-hour urinary calcium — they support systemic sarcoid, though neither is on the IWOS list of investigations","Vitamin D and PTH","Renal function"]},
    {q:"Thyroid problems, or unexplained weight/heat/cold intolerance?", fu:["Graves' disease → thyroid eye disease, which is not uveitis but is often confused with orbital inflammation","HTLV-1 uveitis is associated with hyperthyroidism","Any neck swelling or eye bulging?"], exam:["Thyroid palpation, tremor, pulse","Lid retraction, proptosis, restricted ductions"], eye:["Thyroid eye disease: lid retraction, proptosis, restrictive myopathy — a masquerade for orbital/scleral inflammation"], dx:["HTLV1","sarcoid"], tests:["TFTs, TSH-receptor antibodies","Orbital imaging if proptosis"]}
  ]},
  {sys:"Haematological", note:"From the patient questionnaire — bruising, bleeding and transfusion history that a standard ROS misses.", items:[
@@ -629,7 +629,7 @@ const ROS=[
    {q:"BCG vaccinated, or previous TB skin testing?", fu:["A BCG scar means a TST may be falsely positive — an IGRA is unaffected","Was a previous TST positive, and did anything follow from it?","Note the paradox: a NEGATIVE TST in a BCG-vaccinated or previously TST-positive patient indicates cutaneous anergy, which SUPPORTS sarcoidosis under the IWOS criteria"], exam:["Look for the BCG scar over the deltoid"], eye:["Interpretation only — no ocular sign"], dx:["TB","sarcoid"], tests:["IGRA first-line in low-prevalence settings; in ocular TB specifically consider adding a TST, as it may be more sensitive than IGRA","Document BCG status alongside any TST result"]}
  ]},
  {sys:"Obstetric & treatment-planning", note:"Not in the classic ROS but essential before you choose immunosuppression — from the questionnaire's pregnancy items.", items:[
-   {q:"Currently pregnant, breastfeeding, or planning pregnancy?", fu:["Last menstrual period, and a pregnancy test if there is any doubt","Planning conception in the next 6–12 months? Is the partner planning conception (methotrexate affects men too)?","On, or likely to need, methotrexate, mycophenolate, cyclophosphamide or thalidomide (all teratogenic)?","Uveitis often improves in pregnancy and flares postpartum — plan for that"],
+   {q:"Currently pregnant, breastfeeding, or planning pregnancy?", fu:["Last menstrual period, and a pregnancy test if there is any doubt","Planning conception in the next 6–12 months? Is a male patient planning to father a child? (BSR guidance: paternal low-dose methotrexate, up to 25 mg weekly, is compatible with conception — it need not be stopped)","On, or likely to need, methotrexate, mycophenolate, cyclophosphamide or thalidomide (all teratogenic)?","Maternal methotrexate must stop at least 3 months before conception (BSR)","Uveitis often improves in pregnancy and flares postpartum — plan for that"],
     exam:["N/A — this is a planning decision"],
     eye:["Does not change the ocular picture, but governs safe treatment: avoid methotrexate, mycophenolate, cyclophosphamide; steroid, azathioprine, ciclosporin and some anti-TNF agents are comparatively safer"],
     dx:[], tests:["Pregnancy test before any teratogenic immunosuppression","Contraception counselling and washout planning","MDT with rheumatology and obstetrics"]}
@@ -948,15 +948,15 @@ const INVEST=[
   {t:"IWOS criteria — how the diagnosis is actually assembled", tag:"core",
    what:"Seven intraocular signs suggestive of ocular sarcoidosis: (1) mutton-fat KP and/or iris nodules (Koeppe at the pupil margin, Busacca in the stroma); (2) trabecular meshwork nodules and/or tent-shaped peripheral anterior synechiae; (3) snowballs / string-of-pearls vitreous opacities; (4) multiple peripheral chorioretinal lesions, active or atrophic; (5) nodular and/or segmental periphlebitis (± candle-wax drippings) and/or macroaneurysm in an inflamed eye; (6) optic disc nodule/granuloma and/or solitary choroidal nodule; (7) bilaterality.",
    when:"Whenever granulomatous uveitis is being classified.",
-   perf:"Diagnostic tiers: <b>definite</b> = biopsy-supported with a compatible uveitis; <b>presumed</b> = no biopsy but bilateral hilar lymphadenopathy with a compatible uveitis; <b>probable</b> = no biopsy, no hilar nodes, but three suggestive intraocular signs plus two positive investigations; <b>possible</b> = negative biopsy but four intraocular signs plus two investigations.",
+   perf:"Revised (2019) tiers: <b>definite</b> = biopsy-supported with a compatible uveitis; <b>presumed</b> = no biopsy, but bilateral hilar lymphadenopathy with two intraocular signs; <b>probable</b> = no biopsy and no hilar nodes, but three intraocular signs plus two supportive systemic investigations. The 2009 “possible” tier was dropped. The 2019 revision also added <b>lymphopenia</b> as a supportive investigation and removed abnormal liver enzymes.",
    pitfall:"All tiers require that other causes — above all <b>tuberculous uveitis</b> — have been excluded first. Anterior granulomatous signs are erased quickly by topical steroid, so look for them <i>before</i> treating.",
-   cite:"Herbort CP et al, Ocul Immunol Inflamm 2009;17:160–9 (IWOS), revised 2017/2019; Takase H, ch.11 in Yu HG (ed), <i>Inflammatory and Infectious Ocular Disorders</i> 2020", dx:["sarcoid"]},
+   cite:"Mochizuki M et al, revised IWOS criteria, BJO 2019;103:1418–22; Herbort CP et al, Ocul Immunol Inflamm 2009;17:160–9; Takase H, ch.11 in Yu HG (ed), <i>Inflammatory and Infectious Ocular Disorders</i> 2020", dx:["sarcoid"]},
   {t:"Serum ACE", tag:"targeted",
    what:"Angiotensin-converting enzyme is actively secreted by the non-caseating granulomas of sarcoid, so the level tracks granuloma burden.",
    when:"Suspected ocular sarcoidosis. A supportive IWOS investigation.",
    perf:"At the standard 68 IU/L cut-off, specificity ~89% but sensitivity only ~46%. More than twice the upper limit of normal is more convincing. Reference range roughly 8–52 IU/L.",
    pitfall:"<b>Falsely low on ACE inhibitors and on systemic steroid.</b> Falsely raised in TB, diabetes, hyperthyroidism, silicosis and other granulomatous lung disease. Children and some ethnic groups run higher. A normal ACE misses over half of sarcoid uveitis — it does not clear the diagnosis.",
-   cite:"Groen-Hakan F et al, BJO 2021 (PMC8479750); Joye &amp; Gonzales 2020 pp.156–157", dx:["sarcoid"]},
+   cite:"Cotte P et al, BJO 2021;105:1399–404 (PMC8479750); Joye &amp; Gonzales 2020 pp.156–157", dx:["sarcoid"]},
   {t:"Serum lysozyme", tag:"targeted",
    what:"A second granuloma-derived enzyme, secreted alongside ACE.",
    when:"With ACE — elevation of either one counts as a supportive investigation under IWOS.",
@@ -966,14 +966,14 @@ const INVEST=[
   {t:"Soluble IL-2 receptor (sIL-2R)", tag:"targeted",
    what:"Shed from activated T lymphocytes; reflects T-cell activation in granulomatous disease.",
    when:"When ACE is normal but sarcoid remains clinically likely — this is where it earns its keep.",
-   perf:"<b>Outperforms ACE</b> for sarcoid-associated uveitis: sensitivity ~88–98% versus ~46% for ACE, with comparable specificity.",
+   perf:"<b>More sensitive than ACE, but less specific</b> for sarcoid-associated uveitis. In 249 uveitis patients a cut-off of 4000 pg/mL gave sensitivity 81% and specificity 64%; with a chest X-ray, 92% and 58% (ACE plus chest X-ray: 70% and 79%). An earlier, smaller series reported 98% and 94%. The authors' own verdict is “slightly better than ACE”.",
    pitfall:"Not universally available; also elevated in lymphoma and other lymphoproliferative disease — which matters, since lymphoma is the very masquerade you may be trying to exclude.",
-   cite:"Groen-Hakan/Rothova, Am J Ophthalmol 2017 (PMC6583850)", dx:["sarcoid","lymphoma"]},
+   cite:"Groen-Hakan F et al, JAMA Ophthalmol 2017;135:1352–8 (PMC6583850); Gundlach E et al, PLoS One 2016 (PMC4723126)", dx:["sarcoid","lymphoma"]},
   {t:"Serum and 24-hour urinary calcium; liver enzymes", tag:"targeted",
    what:"Sarcoid granulomas convert 25-OH vitamin D to active 1,25-dihydroxyvitamin D, causing hypercalciuria and hypercalcaemia. Hepatic granulomas raise ALP/GGT.",
-   when:"Part of the supportive-investigation set under IWOS.",
+   when:"When sarcoid is suspected. They support systemic sarcoidosis but are not on the IWOS list of investigations (which is hilar nodes, negative tuberculin/IGRA, ACE, lysozyme, BAL CD4/CD8, PET/gallium, lymphopenia and parenchymal lung change).",
    perf:"Hypercalcaemia occurs in around 10% of sarcoid; hypercalciuria is commoner still and is the more sensitive of the two.",
-   pitfall:"Vitamin D supplementation can precipitate hypercalcaemia in sarcoid. Abnormal liver enzymes are non-specific but count toward the IWOS supportive tests.",
+   pitfall:"Vitamin D supplementation can precipitate hypercalcaemia in sarcoid. Abnormal liver enzymes are non-specific; they counted as a supportive test in the 2009 IWOS criteria but were removed in the 2019 revision.",
    cite:"Herbort/IWOS 2009; Mochizuki M et al, revised IWOS criteria 2019", dx:["sarcoid"]},
   {t:"Tissue biopsy for sarcoid", tag:"targeted",
    what:"Histological demonstration of non-caseating epithelioid granuloma. This — not any blood test — is the gold standard.",
@@ -1118,7 +1118,7 @@ const INVEST=[
    when:"Almost always — cheap, and the differential carries specific signals.",
    perf:"<b>Lymphopenia &lt;1.0 ×10⁹/L is ~96.7% specific for sarcoid-associated uveitis</b> (though only ~15% sensitive); combined with a raised ACE, specificity approaches 99% with PPV ~74%. Eosinophilia points to parasites or EGPA. Leucopenia and thrombocytopenia support SLE.",
    pitfall:"ESR is age- and sex-dependent (rough upper limit ≈ age/2, +5 for women). A high ESR with a disproportionately normal CRP suggests SLE. <b>Syphilitic uveitis characteristically has bland routine bloods</b> — a normal FBC with only a mildly raised ESR argues nothing against it.",
-   cite:"Groen-Hakan F et al, BJO 2021 (PMC8479750); Wills 7e §12.1", dx:["sarcoid","SLE","toxocara","syphilis"]},
+   cite:"Cotte P et al, BJO 2021;105:1399–404 (PMC8479750); Wills 7e §12.1", dx:["sarcoid","SLE","toxocara","syphilis"]},
   {t:"Faecal calprotectin and ileocolonoscopy", tag:"selective",
    what:"Non-invasive marker of intestinal inflammation; endoscopy with biopsy for definitive diagnosis.",
    when:"Chronic diarrhoea, blood or mucus per rectum, nocturnal symptoms, weight loss, or erythema nodosum with anterior uveitis.",
@@ -1188,15 +1188,15 @@ const INVEST=[
   {t:"MRI brain (± spine) with gadolinium", tag:"targeted",
    what:"Contrast-enhanced neuro-imaging.",
    when:"Three clear indications: (1) intermediate or anterior uveitis with neurological symptoms suggestive of MS; (2) <b>before starting anti-TNF therapy</b>, to exclude demyelination — anti-TNF can precipitate or worsen MS in the predisposed; (3) suspected primary vitreoretinal lymphoma, where CNS involvement changes the treatment regimen.",
-   perf:"Up to about <b>10% of intermediate uveitis patients go on to develop MS</b>. Behçet and VKH have characteristic white-matter and brainstem patterns.",
+   perf:"Roughly <b>10–20% of intermediate uveitis patients have or go on to develop MS</b> in tertiary-centre series (16% of pars planitis patients in one cohort). Behçet and VKH have characteristic white-matter and brainstem patterns.",
    pitfall:"<b>Do not use MRI as a routine screening tool in intermediate uveitis</b> — it is low yield in the initial work-up and low specificity, and incidental white-matter changes cause considerable harm through misdiagnosis.",
    cite:"Joye &amp; Gonzales 2020 pp.145–146; Petrushkin H, Kidd D, Pavesio C, BJO 2015;99:1591–3", dx:["MS","lymphoma","Behçet","VKH","sarcoid"]},
   {t:"Lumbar puncture", tag:"selective",
    what:"CSF for cell count, protein, glucose, oligoclonal bands, VDRL, cytology and flow cytometry, and opening pressure.",
-   when:"Suspected CNS lymphoma; ocular syphilis (a baseline CSF-VDRL before treatment); genuinely uncertain VKH; neuro-Behçet or neurosarcoid with neurological signs.",
-   perf:"CSF abnormalities are present in as many as <b>72% of patients with ocular syphilis</b>, which is precisely why ocular syphilis is managed as neurosyphilis (10–14 days of IV penicillin) regardless of neurological symptoms. CSF-VDRL provides the baseline against which treatment response is judged. Oligoclonal bands occur in MS, SLE, neurosarcoid and neuro-Behçet.",
+   when:"Suspected CNS lymphoma; ocular syphilis with cranial nerve dysfunction or other neurological signs, or with eye symptoms but no findings on examination; genuinely uncertain VKH; neuro-Behçet or neurosarcoid with neurological signs.",
+   perf:"CSF abnormalities are reported in a large share of patients with ocular syphilis (up to 72% in some series, though it can be normal in a substantial minority), which is why ocular syphilis is <b>treated as neurosyphilis whatever the CSF shows</b>. Because the result does not change treatment, CDC (2021) no longer requires an LP when the eye findings are confirmed, serology is reactive and there are no cranial nerve or other neurological signs. UK neurosyphilis regimen (BASHH): procaine penicillin 1.8–2.4 MU IM daily with probenecid 500 mg four times daily for 14 days, or benzylpenicillin 1.8–2.4 g IV every 4 hours for 14 days, with prednisolone 40–60 mg daily for 3 days starting 24 hours before — confirm doses against the current BASHH guideline and manage jointly with GUM. Oligoclonal bands occur in MS, SLE, neurosarcoid and neuro-Behçet.",
    pitfall:"Pleocytosis is non-specific, so <b>routine LP is not recommended for diagnosing uveitis</b>. In VKH, FFA findings often make the diagnosis without it. Always image before an LP if there is any possibility of raised intracranial pressure.",
-   cite:"Joye &amp; Gonzales 2020 pp.151, 158; CDC STI treatment guidelines", dx:["syphilis","lymphoma","VKH","MS","sarcoid","Behçet"]},
+   cite:"Joye &amp; Gonzales 2020 pp.151, 158; CDC STI Treatment Guidelines 2021 (MMWR 70(4)); BASHH UK syphilis guidelines 2015 and 2024", dx:["syphilis","lymphoma","VKH","MS","sarcoid","Behçet"]},
   {t:"Sacroiliac joint imaging", tag:"targeted",
    what:"Plain radiographs, or MRI with STIR sequences for early disease.",
    when:"Inflammatory back pain with HLA-B27-pattern anterior uveitis.",
@@ -1251,7 +1251,7 @@ function buildPanel(){
 
  if(PB.loc==="anterior"){
    if(PB.gran==="granulomatous"){
-     add(should,"Serum ACE + lysozyme + calcium","Granulomatous anterior uveitis puts sarcoid and TB at the front; these are the IWOS supportive investigations.");
+     add(should,"Serum ACE + lysozyme + calcium","Granulomatous anterior uveitis puts sarcoid and TB at the front; ACE and lysozyme are IWOS supportive investigations, and calcium screens for systemic disease.");
      add(consider,"Chest CT if the CXR is normal","More sensitive and specific than plain film, especially in women over 50.");
    }
    if(PB.course==="recurrent"||PB.course==="chronic"||F.back){
@@ -1272,7 +1272,7 @@ function buildPanel(){
    add(should,"Serum ACE + lysozyme","Sarcoid is a leading identifiable cause of intermediate uveitis.");
    add(consider,"Lyme serology ONLY with endemic exposure + systemic features","Ordered indiscriminately its PPV is poor and false positives are common.");
    add(consider,"HTLV-1 serology if from an endemic region","Caribbean, Japan, West Africa — causes intermediate uveitis with vitreous opacities.");
-   if(F.neuro||F.antitnf) add(must,"MRI brain ± spine with gadolinium",F.antitnf?"Mandatory before anti-TNF — the drug can precipitate or worsen demyelination.":"Neurological symptoms with intermediate uveitis: up to ~10% develop MS.");
+   if(F.neuro||F.antitnf) add(must,"MRI brain ± spine with gadolinium",F.antitnf?"Mandatory before anti-TNF — the drug can precipitate or worsen demyelination.":"Neurological symptoms with intermediate uveitis: roughly 10–20% have or develop MS in tertiary series.");
    else avoid.push({t:"Routine MRI brain for intermediate uveitis","why":"Not recommended as a screening tool — low yield and low specificity. Reserve it for neurological symptoms, or before anti-TNF (Petrushkin, BJO 2015)."});
  }
  if(PB.loc==="posterior"||PB.loc==="pan"){
@@ -1400,11 +1400,11 @@ function interpret(){
    if(lymph<1.0){
      push("sarcoid","support",`Lymphopenia (${lymph} ×10⁹/L) — a specific pointer to sarcoid.`,
        "Peripheral lymphopenia reflects sequestration of lymphocytes into granulomata. At &lt;1.0 ×10⁹/L its specificity for sarcoid-associated uveitis is ~96.7% (though sensitivity only ~15%); combined with a raised ACE, specificity rises to ~99% and PPV ~74%. Differential for lymphopenia also includes SLE, HIV, viral infection and lymphoma.",
-       "Groen-Hakan et al, BJO 2021 (PMC8479750); Sweiss et al, PLoS One 2010");
+       "Cotte P et al, BJO 2021;105:1399–404 (PMC8479750); Sweiss et al, PLoS One 2010");
    } else if(lymph<1.74){
      push("sarcoid","live",`Borderline-low lymphocytes (${lymph} ×10⁹/L).`,
        "Below the ROC-optimised cut-off of 1.74 ×10⁹/L (Se ~64%, Sp ~65% for sarcoid uveitis) but above the highly specific &lt;1.0 threshold. Weakly supportive — weigh with ACE/sIL-2R and imaging.",
-       "Groen-Hakan et al, BJO 2021 (PMC8479750)");
+       "Cotte P et al, BJO 2021;105:1399–404 (PMC8479750)");
    }
  }
  if(eos!==null && eos>0.5){
@@ -1455,18 +1455,18 @@ function interpret(){
        "An ACE more than twice the upper limit is more convincing (the marker tracks granuloma burden). Still correlate with imaging and sIL-2R.","Foster 2e; Handbook ch.2");
    } else if(ace>68){
      push("sarcoid","support",`ACE elevated (${ace} IU/L, above the 68 IU/L cut-off).`,
-       "At the standard 68 IU/L cut-off, specificity for sarcoid uveitis is ~89% but sensitivity only ~46% — a raised value supports, it does not confirm. Beware false positives in TB, diabetes and other granulomatous disease.","Groen-Hakan 2021; Foster 2e");
+       "At the standard 68 IU/L cut-off, specificity for sarcoid uveitis is ~89% but sensitivity only ~46% — a raised value supports, it does not confirm. Beware false positives in TB, diabetes and other granulomatous disease.","Cotte et al, BJO 2021; Foster 2e");
    } else if(ace>52){
      push("sarcoid","live",`ACE borderline (${ace} IU/L).`,
-       "Between the reference top (~52) and the diagnostic cut-off (68). Non-committal — lean on sIL-2R (more sensitive) and imaging.","Groen-Hakan 2021");
+       "Between the reference top (~52) and the diagnostic cut-off (68). Non-committal — add sIL-2R (more sensitive, less specific) and imaging.","Cotte et al, BJO 2021");
    } else {
      push("sarcoid","unlikely",`ACE normal (${ace} IU/L) — lowers but does not exclude.`,
-       "Normal ACE has a good negative predictive value (~89%) yet misses over half of sarcoid uveitis (Se ~46%); steroids and ACE-inhibitors suppress it, and children/some ethnicities run higher. If the eye is granulomatous, keep sarcoid live and get sIL-2R ± CT chest.","Groen-Hakan 2021; Foster 2e");
+       "Normal ACE has a good negative predictive value (~89%) yet misses over half of sarcoid uveitis (Se ~46%); steroids and ACE-inhibitors suppress it, and children/some ethnicities run higher. If the eye is granulomatous, keep sarcoid live and get sIL-2R ± CT chest.","Cotte et al, BJO 2021; Foster 2e");
    }
  }
  if(sil2r==="elevated"){
-   push("sarcoid","support","Soluble IL-2R elevated — a stronger sarcoid signal than ACE.",
-     "sIL-2R outperforms ACE for sarcoid-associated uveitis (Se ~88–98% vs ~46% for ACE, comparable specificity). An elevated sIL-2R argues for sarcoid more convincingly than ACE or CXR.","Groen-Hakan/Rothova, Am J Ophthalmol 2017 (PMC6583850)");
+   push("sarcoid","support","Soluble IL-2R elevated — sensitive for sarcoid, but not specific.",
+     "sIL-2R is more sensitive than ACE for sarcoid-associated uveitis (81% at 4000 pg/mL; 92% with a chest X-ray) but less specific (64%). It also rises in lymphoma, TB and other T-cell activation — so an elevated value supports sarcoid without confirming it.","Groen-Hakan F et al, JAMA Ophthalmol 2017 (PMC6583850); Gundlach E et al, PLoS One 2016");
  } else if(sil2r==="normal" && ace!==null && ace<=52){
    push("sarcoid","unlikely","Normal ACE and normal sIL-2R together.",
      "Both markers normal makes systemic sarcoid less likely, but neither excludes ocular sarcoid — tissue is still the gold standard if suspicion is high.","PMC6583850");
@@ -1487,16 +1487,16 @@ function interpret(){
  } else if(trep==="reactive"){
    if(rprT!==null && rprT>=16){
      push("syphilis","support",`Reactive treponemal test with a high RPR titre (1:${rprT}).`,
-       "A non-treponemal titre ≥1:16 indicates active infection (secondary syphilis territory). With ocular involvement this is ocular syphilis → manage as neurosyphilis (IV penicillin) and send CSF-VDRL.","CDC STI guidelines; Wills 7e §12.1");
+       "A non-treponemal titre ≥1:16 indicates active infection (secondary syphilis territory). With ocular involvement this is ocular syphilis → manage as neurosyphilis with GUM (UK: procaine penicillin IM + probenecid, or IV benzylpenicillin, 14 days). An LP is needed only if there are cranial nerve or other neurological signs.","CDC STI guidelines 2021; BASHH; Wills 7e §12.1");
    } else if(rprT!==null && rprT>0){
      push("syphilis","support",`Reactive treponemal test, low RPR titre (1:${rprT}).`,
-       "A low titre still fits active ocular syphilis (may be early/late/partially treated). Do NOT down-rank on titre alone — ocular = neurosyphilis; treat and send CSF-VDRL.","CDC STI guidelines");
+       "A low titre still fits active ocular syphilis (may be early/late/partially treated). Do NOT down-rank on titre alone — ocular = neurosyphilis; treat as such. An LP is needed only if there are cranial nerve or other neurological signs.","CDC STI guidelines 2021");
    } else if(rprT===0){
      push("syphilis","live","Reactive treponemal test but non-reactive RPR — still on the table.",
        "A non-reactive RPR does NOT exclude ocular syphilis: it can be serofast/late, or prozone (falsely negative at high titre — ask the lab to dilute). Treponemal-reactive + a compatible eye warrants treatment as neurosyphilis.","Wills 7e §12.1 (RPR may be falsely negative); CDC");
    } else {
      push("syphilis","live","Treponemal-reactive — confirm activity with an RPR titre.",
-       "Confirms exposure ever; send a quantitative RPR/VDRL to gauge activity and a CSF-VDRL given ocular involvement.","Wills 7e §12.1");
+       "Confirms exposure ever; send a quantitative RPR/VDRL to gauge activity. If it is ocular syphilis, treat as neurosyphilis; an LP is needed only with cranial nerve or other neurological signs.","Wills 7e §12.1; CDC 2021");
    }
  } else {
    // treponemal not tested — prompt only when a work-up is actually underway, and as a NOTE that never feeds the differential
@@ -1558,8 +1558,8 @@ function interpret(){
 
  /* ---------- TOXOPLASMOSIS ---------- */
  if(g("toxo")==="negative"){
-   push("toxoplasma","excluded","Toxoplasma IgG negative — very unlikely.",
-     "In the immunocompetent, negative IgG makes ocular toxoplasmosis very unlikely, as reactivation needs prior exposure.","Foster 2e Table 6.14");
+   push("toxoplasma","unlikely","Toxoplasma IgG negative — very unlikely.",
+     "In the immunocompetent, negative IgG makes ocular toxoplasmosis very unlikely, as reactivation needs prior exposure. In immunosuppressed patients serology can be falsely negative — go to aqueous PCR if the fundus looks typical.","Foster 2e Table 6.14");
  } else if(g("toxo")==="IgG+ IgM-"){
    push("toxoplasma","live","IgG+ / IgM− — confirms only past exposure.",
      "A positive IgG merely shows prior infection (high background seroprevalence). Supports the diagnosis ONLY alongside a typical focal retinochoroiditis by a pigmented scar.","Foster 2e");
@@ -1617,12 +1617,12 @@ function interpret(){
  const ca=n("ca");
  if(ca!==null && ca>2.60){
    push("sarcoid","support",`Hypercalcaemia (corrected calcium ${ca} mmol/L).`,
-     "Sarcoid granulomas convert 25-OH vitamin D to active 1,25-dihydroxyvitamin D, causing hypercalciuria and, in around 10% of patients, frank hypercalcaemia. It is a supportive IWOS investigation. Also consider malignancy (including lymphoma), TB and hyperparathyroidism \u2014 and ask about vitamin D supplements, which can precipitate it in sarcoid.",
+     "Sarcoid granulomas convert 25-OH vitamin D to active 1,25-dihydroxyvitamin D, causing hypercalciuria and, in around 10% of patients, frank hypercalcaemia. It supports systemic sarcoidosis (it is not on the IWOS list). Also consider malignancy (including lymphoma), TB and hyperparathyroidism \u2014 and ask about vitamin D supplements, which can precipitate it in sarcoid.",
      "Herbort/IWOS 2009; Mochizuki M et al, revised IWOS 2019");
  }
  if(g("ucal")==="elevated"){
    push("sarcoid","support","Raised 24-hour urinary calcium.",
-     "Hypercalciuria is commoner and more sensitive than frank hypercalcaemia in sarcoid, and counts as a supportive IWOS investigation. Worth measuring when the serum calcium is normal but sarcoid is still in play.",
+     "Hypercalciuria is commoner and more sensitive than frank hypercalcaemia in sarcoid; it supports systemic sarcoidosis, though it is not on the IWOS list. Worth measuring when the serum calcium is normal but sarcoid is still in play.",
      "Herbort/IWOS 2009");
  }
 
