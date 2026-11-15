@@ -30,13 +30,13 @@ Playwright and Chromium are preinstalled in Claude cloud sessions. Also check `d
 ## Review corrections (applied 2026-11-15)
 The external review of PR #7 has been applied: MS figure (1–5% overall), methotrexate wording for men and women, sIL-2R context, cranial nerve examination and LP conditions in ocular syphilis, BASHH 2024 regimens.
 
-Two points are still UNRESOLVED and need the primary source:
-- **Methotrexate washout for women.** The tool now says "most guidelines 3 months, some at least 1 month, licences up to 6". Read BSR 2022 (doi 10.1093/rheumatology/keac551) and state what BSR itself says.
-- **Lysozyme in IWOS 2019.** The tool lists lysozyme as an IWOS investigation; the review's list omits it. Check Mochizuki, BJO 2019;103:1418 and correct if needed.
+Both previously unresolved points are now settled (2026-11-15, second pass):
+- **Methotrexate washout for women.** BSR 2022 itself: stop at least 1 month before planned conception, switch to a pregnancy-compatible drug, folic acid 5 mg daily to 12 weeks if exposed in that month. The tool says this and notes the licence says longer.
+- **Lysozyme in IWOS 2019.** Confirmed: elevated serum lysozyme is item 4 of the 8 systemic investigations in Mochizuki, BJO 2019;103:1418 (table reproduced in PMC10507006). No change needed.
 
 ## Still to build (owner said yes)
 A. **Treatment & monitoring tab**: FIRST VERSION DONE (2026-11-15). `TX` in `index.html`, 18 cards, tab `7 · Treatment`. Content came from her Notion "imt / imd combined" notes plus UK guidance. Still to do on it:
-   - Verify against primary sources and remove the "not re-verified" labels: tacrolimus dose; CMV regimen; intravitreal doses (foscarnet, ganciclovir, clindamycin, vancomycin, ceftazidime, antifungals); NICE TA460 full criteria and stopping rules (nice.org.uk/guidance/ta460/chapter/1-recommendations); BSR DMARD monitoring 2025 update (the tab quotes the 2017 schedule); the prednisolone taper; MHRA advice on mycophenolate in men.
+   - VERIFIED (2026-11-15) and labels removed: NICE TA460 criteria and stop rule (quoted from nice.org.uk); BSR 2025 csDMARD monitoring (keaf522: week 2, monthly to 3-6 months, then 3-monthly; CNIs fortnightly to stable 6 weeks; Table 5 actions); BSR 2022 pregnancy statements; MHRA Feb 2018 mycophenolate advice for men; tacrolimus (Luis 2021 Moorfields: median 3 mg/day, trough 5-10 ng/mL); CMV (DHHS/EACS); intravitreal antimicrobials (Relhan, Retina 2017 table: ceftazidime 2.25 mg, voriconazole 50-100 micrograms); prednisolone ceiling and flare rule (Jabs 2000). The taper steps are labelled as an example, since no guideline fixes them.
    - Not yet covered: uveitic macular oedema pathway, cataract/glaucoma surgery in uveitis, JIA uveitis pathway, vaccination advice on immunosuppression. Her "Practical from telegram" Notion page has material on pre-phaco management.
 B. **SUN grading**: DONE (2026-11-15). Selects on the Eye signs tab (`SUN`, `SUNKEY`, `sunVal`), saved with the case and written to the Summary.
 C. **SUN 2021 classification criteria** checklists for the main entities (not started).

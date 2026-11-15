@@ -331,7 +331,7 @@ body.onquick .mobjump{display:none!important}
       <div class="interp" id="interp"></div>
     </div>
     <div id="v-tx" class="view">
-      <div class="hint"><b>Treatment &amp; monitoring.</b> A memory aid for the steroid ladder, steroid-sparing agents and the first treatment of the main infections, drawn from your notes and UK guidance. <b>Check every dose against the BNF and your local protocol before prescribing</b> — each card names its source and says where it was not re-verified.</div>
+      <div class="hint"><b>Treatment &amp; monitoring.</b> A memory aid for the steroid ladder, steroid-sparing agents and the first treatment of the main infections, drawn from your notes and UK guidance. <b>Check every dose against the BNF and your local protocol before prescribing</b> — each card names its source. Doses were checked against those sources in November 2026.</div>
       <div id="txgrid"></div>
     </div>
     <div id="v-summary" class="view">
@@ -644,7 +644,7 @@ const ROS=[
    {q:"BCG vaccinated, or previous TB skin testing?", fu:["A BCG scar means a TST may be falsely positive — an IGRA is unaffected","Was a previous TST positive, and did anything follow from it?","Note the paradox: a NEGATIVE TST in a BCG-vaccinated or previously TST-positive patient indicates cutaneous anergy, which SUPPORTS sarcoidosis under the IWOS criteria"], exam:["Look for the BCG scar over the deltoid"], eye:["Interpretation only — no ocular sign"], dx:["TB","sarcoid"], tests:["IGRA first-line in low-prevalence settings; in ocular TB specifically consider adding a TST, as it may be more sensitive than IGRA","Document BCG status alongside any TST result"]}
  ]},
  {sys:"Obstetric & treatment-planning", note:"Not in the classic ROS but essential before you choose immunosuppression — from the questionnaire's pregnancy items.", items:[
-   {q:"Currently pregnant, breastfeeding, or planning pregnancy?", fu:["Last menstrual period, and a pregnancy test if there is any doubt","Planning conception in the next 6–12 months? Is a male patient planning to father a child? (BSR: paternal low-dose methotrexate, under 25 mg weekly, is compatible with conception, and ACR 2020 conditionally agrees — but the product licence and dermatology guidance still advise waiting 3 months after stopping, so say that guidance differs)","On, or likely to need, methotrexate, mycophenolate, cyclophosphamide or thalidomide (all teratogenic)?","Maternal methotrexate must stop before conception: most guidelines say 3 months, some say at least 1 month, and product licences say up to 6 — agree the washout with rheumatology and obstetrics","Uveitis often improves in pregnancy and flares postpartum — plan for that"],
+   {q:"Currently pregnant, breastfeeding, or planning pregnancy?", fu:["Last menstrual period, and a pregnancy test if there is any doubt","Planning conception in the next 6–12 months? Is a male patient planning to father a child? (BSR 2022: paternal low-dose methotrexate, up to 25 mg weekly, is compatible with conception, and ACR 2020 conditionally agrees — but the product licence and dermatology guidance still advise waiting 3 months after stopping, so say that guidance differs)","On, or likely to need, methotrexate, mycophenolate, cyclophosphamide or thalidomide (all teratogenic)?","Maternal methotrexate must stop before conception: BSR 2022 says at least 1 month before trying, switching to a pregnancy-compatible drug, with folic acid 5 mg daily continued to 12 weeks if it was taken within that month. Older guidance and the product licence say 3–6 months, so agree the plan with rheumatology and obstetrics","Uveitis often improves in pregnancy and flares postpartum — plan for that"],
     exam:["N/A — this is a planning decision"],
     eye:["Does not change the ocular picture, but governs safe treatment: avoid methotrexate, mycophenolate, cyclophosphamide; steroid, azathioprine, ciclosporin and some anti-TNF agents are comparatively safer"],
     dx:[], tests:["Pregnancy test before any teratogenic immunosuppression","Contraception counselling and washout planning","MDT with rheumatology and obstetrics"]}
@@ -911,49 +911,52 @@ const TX=[
   {t:"Topical, periocular and intravitreal", tag:"local", rows:[
     ["Topical","Prednisolone acetate 1% or dexamethasone 0.1%, up to hourly for severe anterior uveitis, with a cycloplegic; taper over weeks according to the cells. Check IOP at each visit."],
     ["Periocular","Triamcinolone 40 mg orbital floor or sub-Tenon, for CMO or unilateral intermediate/posterior disease. Not in infectious uveitis or scleritis with thinning."],
-    ["Implant","Dexamethasone 700 microgram intravitreal implant (Ozurdex). NICE TA460: active posterior-segment non-infectious uveitis with worsening vision and a risk of blindness. Lasts roughly 3–6 months."],
+    ["Implant","Dexamethasone 700 microgram intravitreal implant (Ozurdex). NICE TA460: adults with non-infectious posterior-segment uveitis, only if there is active inflammation and worsening vision with a risk of blindness. Lasts roughly 3–6 months."],
     ["Watch","IOP rise and cataract with every local route."]],
    src:"NICE TA460 (2017); Wills Eye Manual; check local injection protocol"},
   {t:"Systemic steroid", tag:"oral / IV", rows:[
-    ["Oral","Prednisolone 1 mg/kg/day (usual maximum 60–80 mg) until control, then taper: roughly 10 mg per week down to 40 mg, 5 mg per week to 20 mg, 2.5 mg per week to 10 mg, then slowly."],
+    ["Oral","Prednisolone up to 1 mg/kg/day, usually no more than 60 mg (Jabs 2000), until control. Add a steroid-sparing agent if there is no response to 60 mg within a few weeks."],
+    ["Taper","No guideline sets a fixed schedule. A common example: 10 mg every 1–2 weeks down to 40 mg, 5 mg every 1–2 weeks to 20 mg, 2.5 mg every 1–2 weeks to 10 mg, then 1–2.5 mg every 2–4 weeks; slower while a steroid-sparing agent is still taking effect. Flare at 10 mg or more: double the dose at which it flared and consider adding an immunosuppressant (Jabs 2000)."],
     ["IV","Methylprednisolone 500 mg–1 g daily for 3 days for sight-threatening disease (VKH, Behçet, serpiginous at the fovea, optic nerve involvement), then oral."],
     ["Protect","Bone protection (calcium/vitamin D, bisphosphonate by fracture risk), gastric protection if at risk, BP, glucose and weight at each visit, sick-day rules and steroid card."],
     ["Pneumocystis","Consider co-trimoxazole prophylaxis with prolonged high-dose steroid plus another immunosuppressant, or with alkylating agents (your notes)."]],
-   src:"Jabs DA et al 2000; your Notion notes; local steroid policy"}
+   src:"Jabs DA et al, Am J Ophthalmol 2000;130:492–513 (dose ceiling, flare rule); the taper steps are an example, not a guideline; your Notion notes"}
  ]},
- {group:"Steroid-sparing agents", note:"UK monitoring for all of these (BSR 2017): FBC, creatinine/eGFR, ALT and albumin every 2 weeks until on a stable dose for 6 weeks, then monthly for 3 months, then at least every 12 weeks. The guideline was updated in 2025 — check the current schedule and your shared-care protocol.", cards:[
+ {group:"Steroid-sparing agents", note:"UK blood monitoring (BSR 2025, which replaced 2017): FBC, U&amp;E/creatinine, ALT and/or AST, and albumin at week 2, then monthly for the first 3–6 months, then every 3 months; the interval can be lengthened after an individual risk review, and risk is reviewed at least yearly. Ciclosporin and tacrolimus: every 2 weeks until on a stable dose for 6 weeks, then monthly for 3 months (tacrolimus stays monthly long term). After any dose increase, one extra check at week 2. Methotrexate with leflunomide: monthly long term. Follow your shared-care protocol.", cards:[
   {t:"Methotrexate", tag:"antimetabolite", rows:[
-    ["Dose","7.5–25 mg ONCE WEEKLY, oral or subcutaneous, with folic acid (UK practice: 5 mg once weekly, on a different day). Takes 6–12 weeks to work."],
+    ["Dose","7.5–25 mg ONCE WEEKLY on an agreed day, oral or subcutaneous, with folic acid at least 5 mg once weekly, not on the methotrexate day (BSR 2025). Takes 6–12 weeks to work."],
     ["Baseline","FBC, U&amp;E, LFTs, hepatitis B and C (and HIV), chest X-ray. Ask about alcohol."],
-    ["Act on","Liver enzymes over twice normal on two occasions: reduce the dose. Falling white count or platelets, mouth ulcers, breathlessness or dry cough (pneumonitis): stop and review."],
-    ["Avoid","Pregnancy (teratogenic; washout advice varies from 1 to 6 months — agree with rheumatology/obstetrics), breastfeeding, significant renal or liver disease. Trimethoprim and co-trimoxazole are dangerous with methotrexate."]],
-   src:"Your Notion notes; BSR 2017 monitoring guideline; BNF"},
+    ["Act on","BSR 2025, same for all these drugs: ALT/AST over twice normal, neutrophils under 1.6, or platelets below normal. Big change from last time: pause the drug and contact rheumatology. Small change: look for another cause and repeat in 2 weeks; if it persists, discuss a dose reduction. Raised eosinophils on methotrexate: stop it and look for pneumonitis. Mouth ulcers, breathlessness or dry cough: stop and review."],
+    ["Avoid","Pregnancy: stop at least 1 month before trying to conceive and switch to a pregnancy-compatible drug (BSR 2022; the licence says longer, so agree with rheumatology and obstetrics). Men on up to 25 mg weekly need not stop (BSR 2022). Also avoid in breastfeeding and significant renal or liver disease. Trimethoprim and co-trimoxazole are dangerous with methotrexate."]],
+   src:"Your Notion notes; BSR csDMARD guideline 2025 (Rheumatology 2026;65:keaf522); BSR pregnancy guideline 2022 (doi 10.1093/rheumatology/keac551); BNF"},
   {t:"Mycophenolate mofetil", tag:"antimetabolite", rows:[
     ["Dose","500 mg twice daily, increasing to 1 g twice daily. 3 g daily carries more toxicity."],
     ["Baseline","FBC, U&amp;E, LFTs, hepatitis B/C, pregnancy test."],
     ["Act on","GI upset is common (split the dose or switch to mycophenolic acid). Leucopenia: reduce or stop."],
-    ["Avoid","Pregnancy: teratogenic. Two forms of contraception; stop at least 6 weeks before conception. Men: follow current MHRA advice."]],
-   src:"Your Notion notes; MHRA mycophenolate guidance; BNF"},
+    ["Avoid","Women: teratogenic. At least one reliable form of contraception (two preferred) before, during and for 6 weeks after treatment; switch at least 6 weeks before trying to conceive (MHRA 2018; BSR 2022). Men: the patient or his female partner should use reliable contraception during treatment and for at least 90 days after stopping (MHRA 2018), although BSR 2022 judges paternal exposure compatible with pregnancy."]],
+   src:"Your Notion notes; MHRA Drug Safety Update Feb 2018; BSR pregnancy guideline 2022; BNF"},
   {t:"Azathioprine", tag:"antimetabolite", rows:[
     ["Dose","1–3 mg/kg/day (commonly 2–2.5 mg/kg). Check TPMT before starting: low activity needs a reduced dose, absent activity means do not use."],
     ["Interactions","Allopurinol or febuxostat: reduce the azathioprine dose to about a quarter, or avoid."],
     ["Act on","Liver enzymes over 1.5 times normal: reduce by 25–50 mg/day and recheck in 2 weeks; marked rise: stop. Leucopenia: reduce or stop."],
-    ["Pregnancy","Compatible with pregnancy in standard doses (BSR)."]],
+    ["Pregnancy","Compatible throughout pregnancy and breastfeeding, and in fathers (BSR 2022)."]],
    src:"Your Notion notes; BSR guidance; BNF"},
   {t:"Ciclosporin", tag:"calcineurin inhibitor", rows:[
     ["Dose","2–5 mg/kg/day in two divided doses. Brands are not interchangeable — prescribe by brand."],
     ["Monitor","BP and creatinine every 2 weeks at first, then monthly. Creatinine up 30% from baseline: reduce the dose; if it stays up, stop."],
     ["Adverse","Nephrotoxicity, hypertension, gum hypertrophy, hirsutism, tremor. Many drug interactions (macrolides, azoles, grapefruit)."],
-    ["Pregnancy","May be continued in pregnancy at the lowest effective dose (BSR)."]],
+    ["Pregnancy","Compatible throughout pregnancy, with monitoring of BP, renal function, glucose and drug levels (BSR 2022)."]],
    src:"Your Notion notes; BNF"},
   {t:"Tacrolimus", tag:"calcineurin inhibitor", rows:[
-    ["Dose","Roughly 0.03–0.08 mg/kg/day in two divided doses, adjusted to trough level. Prescribe by brand."],
+    ["Dose","Usually 2–4 mg a day in two divided doses (Moorfields series: median 3 mg, range 1–8 mg), adjusted to a trough level of 5–10 ng/mL; control was better with troughs of 5 or more. Prescribe by brand."],
     ["Monitor","BP, creatinine, potassium, glucose and trough levels."],
-    ["Adverse","Nephrotoxicity, hypertension, tremor, diabetes, neurotoxicity."]],
-   src:"Murphy CC et al, Arch Ophthalmol 2005;123:634–41; BNF. Dose not verified in this review — check before use."},
+    ["Adverse","Nephrotoxicity, hypertension, tremor, diabetes, neurotoxicity. Fewer adverse effects than ciclosporin for similar efficacy (Murphy 2005)."],
+    ["Pregnancy","Compatible throughout pregnancy, with monitoring of BP, renal function, glucose and drug levels (BSR 2022)."]],
+   src:"Luis J et al, Ocul Immunol Inflamm 2021 (Moorfields; doi 10.1080/09273948.2021.1930063); Murphy CC et al, Arch Ophthalmol 2005;123:634–41; BSR 2025 monitoring"},
   {t:"Adalimumab", tag:"anti-TNF", rows:[
     ["Dose","80 mg subcutaneously, then 40 mg every 2 weeks starting 1 week later. May go to weekly if control is incomplete (your notes)."],
-    ["NICE TA460","Adults with active posterior-segment non-infectious uveitis, inadequate response or intolerance to immunosuppressants, disease in both eyes (or one eye with poor vision in the other) or systemic disease, and worsening vision with a high risk of blindness. Check the full criteria and stopping rules on the NICE page."],
+    ["NICE TA460","Adults with non-infectious posterior-segment uveitis and an inadequate response to steroid, only if ALL of: active inflammation; inadequate response or intolerance to immunosuppressants; systemic disease or both eyes affected (or one eye, if the other sees poorly); worsening vision with a high risk of blindness (for example, like that of macular oedema)."],
+    ["NICE stop rule","Stop if ANY of: new active chorioretinal or retinal vascular inflammatory lesions; a 2-step rise in vitreous haze or AC cells; best corrected acuity worse by 3 lines or 15 letters or more."],
     ["Before","IGRA and chest X-ray, hepatitis B/C, HIV, varicella status, MRI brain if any demyelination risk (intermediate uveitis). No live vaccines."],
     ["Avoid","Demyelinating disease, moderate–severe heart failure, active infection, untreated latent TB."]],
    src:"VISUAL I/II (Jaffe GJ et al, NEJM 2016; Nguyen QD et al, Lancet 2016); NICE TA460; your Notion notes"},
@@ -975,7 +978,7 @@ const TX=[
     ["Intravitreal","Foscarnet 2.4 mg/0.1 mL (or ganciclovir 2 mg/0.1 mL) as an adjunct, repeated as needed. Send aqueous for PCR at the same time."],
     ["Then","Oral valaciclovir 1 g three times daily for at least 6 weeks to 3 months, to protect the fellow eye."],
     ["Steroid","Oral prednisolone only after 24–48 hours of antiviral. Watch for retinal detachment."]],
-   src:"AAO Ophthalmic Technology Assessment, Schoenberger SD et al, Ophthalmology 2017;124:382–92. Intravitreal doses from standard practice — confirm with pharmacy."},
+   src:"Schoenberger SD et al, AAO report, Ophthalmology 2017;124:382–92 (doi 10.1016/j.ophtha.2016.11.007): oral valaciclovir gives aciclovir levels like IV, and adding intravitreal foscarnet may work better than systemic treatment alone. The intravitreal doses are the ones in common use; make them up with pharmacy."},
   {t:"Toxoplasma retinochoroiditis", tag:"", rows:[
     ["Who","Treat lesions threatening the macula or disc, large lesions, marked vitritis, and anyone immunosuppressed. Small peripheral lesions in the immunocompetent can be observed."],
     ["Options","Co-trimoxazole 960 mg twice daily; or azithromycin 500 mg daily; or pyrimethamine + sulfadiazine + folinic acid. Usually 4–6 weeks."],
@@ -983,10 +986,10 @@ const TX=[
     ["Steroid","Oral prednisolone only with antiparasitic cover, started 1–3 days after it. Never steroid alone, and no periocular depot steroid."]],
    src:"Soheilian M et al, Ophthalmology 2011;118:134–41; AAO management of ocular toxoplasmosis; Wills Eye Manual"},
   {t:"CMV retinitis", tag:"immunosuppressed", rows:[
-    ["Induction","Valganciclovir 900 mg twice daily for 21 days, then 900 mg once daily. Monitor FBC (neutropenia)."],
-    ["Intravitreal","Ganciclovir 2 mg/0.1 mL or foscarnet 2.4 mg/0.1 mL for sight-threatening lesions."],
+    ["Induction","Valganciclovir 900 mg twice daily with food for 14–21 days, then 900 mg once daily as maintenance (adjust for renal function). Alternatives: IV ganciclovir 5 mg/kg twice daily, or IV foscarnet. Monitor FBC (neutropenia); with foscarnet, renal function and electrolytes."],
+    ["Intravitreal","Ganciclovir 2 mg/0.1 mL (some use up to 4 mg) or foscarnet 2.4 mg/0.1 mL, 1–4 doses over 7–10 days, together with systemic treatment, for lesions near the macula or disc."],
     ["Also","Treat the immune deficit with the HIV or transplant team. Watch for immune recovery uveitis."]],
-   src:"Standard HIV opportunistic-infection guidance; BNF. Not re-verified in this review."},
+   src:"US HIV opportunistic-infection guidelines (clinicalinfo.hiv.gov) and EACS guidelines; BNF. Systemic treatment alongside injections lowers the risk to the other eye and of systemic CMV."},
   {t:"Ocular syphilis", tag:"treat as neurosyphilis", rows:[
     ["First line","Procaine penicillin 1.8–2.4 MU IM daily plus probenecid 500 mg four times daily for 14 days; or benzylpenicillin 1.8–2.4 g IV every 4 hours for 14 days."],
     ["Alternatives","Ceftriaxone 2 g IM/IV daily 10–14 days; doxycycline 200 mg twice daily 28 days; amoxicillin 2 g three times daily + probenecid 500 mg four times daily 28 days."],
@@ -999,10 +1002,10 @@ const TX=[
     ["Before biologics","Latent TB must be treated before anti-TNF."]],
    src:"Your Notion notes (BCSC); COTS consensus guidelines (Agrawal R et al, Ophthalmology 2021)"},
   {t:"Endophthalmitis", tag:"same day", rows:[
-    ["Tap and inject","Vitreous sample, then intravitreal vancomycin 1 mg/0.1 mL and ceftazidime 2 mg/0.1 mL (amikacin 0.4 mg/0.1 mL if penicillin-allergic)."],
-    ["Fungal","Amphotericin B 5–10 micrograms/0.1 mL or voriconazole 100 micrograms/0.1 mL, with systemic antifungal and blood cultures."],
+    ["Tap and inject","Vitreous sample, then intravitreal vancomycin 1 mg/0.1 mL and ceftazidime 2.25 mg/0.1 mL (some UK kits make 2 mg/0.1 mL). Amikacin 0.4 mg/0.1 mL if ceftazidime cannot be used; it carries a risk of macular infarction."],
+    ["Fungal","Amphotericin B 5–10 micrograms/0.1 mL or voriconazole 50–100 micrograms/0.1 mL, with systemic antifungal and blood cultures."],
     ["Vitrectomy","Early vitrectomy if vision is perception of light only (EVS), or no response at 48 hours."]],
-   src:"Endophthalmitis Vitrectomy Study, Arch Ophthalmol 1995; ESCRS endophthalmitis guidelines. Confirm doses with pharmacy."}
+   src:"Endophthalmitis Vitrectomy Study, Arch Ophthalmol 1995; Relhan N et al, Retina 2017;37:811–8 (dose table). Make up with pharmacy or your unit kit."}
  ]}
 ];
 
