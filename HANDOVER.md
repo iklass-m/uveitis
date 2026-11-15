@@ -27,16 +27,12 @@ node tests/unified.js /tmp                             # typed+tapped, restore, 
 ```
 Playwright and Chromium are preinstalled in Claude cloud sessions. Also check `document.documentElement.scrollWidth` equals the viewport at 375 px on any new tab.
 
-## In progress when this was written
-An external review of PR #7 was pasted by the owner. Apply these to `index.html`:
-1. **MS in intermediate uveitis**: currently "roughly 10–20%" (3 places: ROS neuro item, MRI monograph, panel builder). Change to "about 1–5% overall; higher (up to ~16–20%) in long-term pars planitis cohorts at referral centres". Sources: Maghsoudlou et al, JAMA 2025;334:419; Abraham et al, Neurol Neuroimmunol Neuroinflamm 2021.
-2. **Methotrexate, men**: reword to "paternal low-dose methotrexate (<25 mg/week) is compatible with conception (BSR; ACR 2020 conditionally agrees)". Add that the product licence and AAD-NPF still advise waiting 3 months, so guidance disagrees.
-3. **Methotrexate, women**: UNRESOLVED. The tool says stop 3 months before (and attributes it to BSR). The review says BSR is one of two guidelines giving "at least 1 month". A web search here found only the 3-month figure in secondary summaries. Safe wording until someone reads the BSR 2022 text (doi 10.1093/rheumatology/keac551): "stop before conception: most guidelines say 3 months, some say at least 1 month; follow rheumatology/obstetric advice".
-4. **sIL-2R**: add that Groen-Hakan 2017 used a ≥4000 pg/mL cut-off in confirmed sarcoid (AUC 0.76 vs 0.65 for ACE, P=.06), Gundlach 2016 used a lower cut-off and included probable/possible cases, and sIL-2R is also raised in HLA-B27 and VZV uveitis.
-5. **Ocular syphilis LP**: add that a cranial nerve examination is required; cranial nerve dysfunction means CSF is needed; CSF "may help" when there are symptoms but no findings. BASHH 2024 agrees CSF is rarely useful in ophthalmic syphilis.
-6. **BASHH 2024 doses** (replace "2015" wording; Kingston et al, Int J STD AIDS 2024;35:1142): first line procaine penicillin 1.8–2.4 MU IM daily + probenecid 500 mg QDS 14 days, or benzylpenicillin 1.8–2.4 g IV 4-hourly 14 days. Alternatives: ceftriaxone 2 g IM/IV 10–14 days; doxycycline 200 mg BD 28 days; amoxicillin 2 g TDS + probenecid 500 mg QDS 28 days. Prednisolone 40–60 mg daily for 3 days starting 24 h before. Restart the course if interrupted >24 h. Probenecid: avoid with sulfa allergy.
-7. **IWOS list**: the review confirms calcium is not an IWOS investigation and says sIL-2R is explicitly excluded. Its list omits lysozyme; the tool says lysozyme is on the list. UNRESOLVED: check Mochizuki, BJO 2019;103:1418 and correct the tool if lysozyme is not listed.
-8. Negative toxoplasma IgG: already down-ranks rather than excludes. Keep, and keep the immunocompetent/immunosuppressed distinction.
+## Review corrections (applied 2026-11-15)
+The external review of PR #7 has been applied: MS figure (1–5% overall), methotrexate wording for men and women, sIL-2R context, cranial nerve examination and LP conditions in ocular syphilis, BASHH 2024 regimens.
+
+Two points are still UNRESOLVED and need the primary source:
+- **Methotrexate washout for women.** The tool now says "most guidelines 3 months, some at least 1 month, licences up to 6". Read BSR 2022 (doi 10.1093/rheumatology/keac551) and state what BSR itself says.
+- **Lysozyme in IWOS 2019.** The tool lists lysozyme as an IWOS investigation; the review's list omits it. Check Mochizuki, BJO 2019;103:1418 and correct if needed.
 
 ## Still to build (owner said yes)
 A. **Treatment & monitoring tab** (`7 · Treatment`). Suggested sections, each with a source line and "check BNF / local protocol":
