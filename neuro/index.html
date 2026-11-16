@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f172a">
+<title>Neuro-Ophth Triage</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NeuroOphth">
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#0f172a;--muted:#5b6b82;--line:#dfe5ee;--accent:#2563eb;--accent-soft:#e0eaff;
+--l4:#b91c1c;--l4s:#fde2e2;--l3:#c2410c;--l3s:#ffedd5;--l2:#a16207;--l2s:#fef3c7;--l1:#15803d;--l1s:#dcfce7;--l0:#475569;--l0s:#eef2f7}
+@media(prefers-color-scheme:dark){:root{--bg:#0b1120;--card:#131c2e;--ink:#e5e9f0;--muted:#94a3b8;--line:#22304a;--accent:#60a5fa;--accent-soft:#1c3157;
+--l4:#fca5a5;--l4s:#3d1414;--l3:#fdba74;--l3s:#3b200c;--l2:#fde047;--l2s:#332a07;--l1:#86efac;--l1s:#0f2e1b;--l0:#cbd5e1;--l0s:#1b2638}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:10px;max-width:1100px;margin:auto;padding:8px 14px}
+.top h1{font-size:16px;margin:0;flex:1}
+nav{display:flex;max-width:1100px;margin:auto;overflow-x:auto;padding:0 6px}
+nav a{padding:9px 14px;color:var(--muted);text-decoration:none;font-weight:600;border-bottom:3px solid transparent;white-space:nowrap}
+nav a.on{color:var(--accent);border-bottom-color:var(--accent)}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+main{max-width:1100px;margin:auto;padding:14px}
+.page{display:none}.page.on{display:block}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:14px;align-items:start}
+.side{position:sticky;top:96px;max-height:calc(100vh - 110px);overflow:auto}
+@media(max-width:860px){.cols{grid-template-columns:1fr}.side{position:static;max-height:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.card h2{font-size:15px;margin:0 0 4px;display:flex;gap:8px;align-items:center}
+.step{background:var(--accent);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-grid;place-items:center;font-size:12px;flex:none}
+.sub{color:var(--muted);font-size:13px;margin:0 0 10px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:8px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px;cursor:pointer}
+.opt:hover{border-color:var(--accent)}
+.opt input{margin-top:4px;width:17px;height:17px;accent-color:var(--accent);flex:none}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.redsel{border-color:var(--l4);background:var(--l4s)}
+.opt .t{font-weight:600}
+.opt .s{display:block;color:var(--muted);font-size:13px}
+.opt .rf{color:var(--l4);font-size:11px;font-weight:700;margin-left:6px}
+.detail{margin:4px 0 0;font-size:13.5px}
+.detail ul{margin:4px 0;padding-left:18px}
+.detail b{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+a.g{color:var(--accent);text-decoration:underline dotted;cursor:help}
+.res{border-radius:10px;padding:10px 12px;margin-bottom:8px;border-left:5px solid}
+.res h3{margin:0 0 2px;font-size:14.5px}
+.res .why{font-size:12.5px;opacity:.85;margin-bottom:4px}
+.res ul{margin:4px 0 0;padding-left:18px;font-size:13.5px}
+.lv4{background:var(--l4s);border-color:var(--l4)}.lv4 h3{color:var(--l4)}
+.lv3{background:var(--l3s);border-color:var(--l3)}.lv3 h3{color:var(--l3)}
+.lv2{background:var(--l2s);border-color:var(--l2)}.lv2 h3{color:var(--l2)}
+.lv1{background:var(--l1s);border-color:var(--l1)}.lv1 h3{color:var(--l1)}
+.lv0{background:var(--l0s);border-color:var(--l0)}.lv0 h3{color:var(--l0)}
+.dispo{font-weight:800;font-size:13px;letter-spacing:.04em;border-radius:8px;padding:8px 10px;margin-bottom:10px;text-align:center}
+.loc{font-size:13.5px;background:var(--bg);border-radius:8px;padding:8px 10px;margin-bottom:10px}
+.meas{display:grid;grid-template-columns:auto 1fr 1fr;gap:6px 10px;align-items:center;max-width:420px}
+.meas input{width:100%;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.meas .h{font-weight:600;color:var(--muted);font-size:13px}
+select{font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);max-width:100%}
+.drow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+th{color:var(--muted)}
+details{margin-bottom:12px}
+details>summary{cursor:pointer;font-weight:700;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;list-style:none}
+details>summary::before{content:"▸ ";color:var(--accent)}
+details[open]>summary::before{content:"▾ "}
+details[open]>summary{border-radius:12px 12px 0 0}
+details .in{background:var(--card);border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;padding:12px 14px;overflow-x:auto}
+.homegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.tile{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.tile:hover{border-color:var(--accent)}
+.tile h3{margin:0 0 4px}
+.tile p{margin:0;color:var(--muted);font-size:13.5px}
+.gsearch{width:100%;font:inherit;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);margin-bottom:10px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{border-radius:999px;padding:4px 12px;font-size:13px}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.gterm{padding:10px 0;border-bottom:1px solid var(--line)}
+.gterm h4{margin:0;font-size:15px}
+.gterm .cat{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.gterm p{margin:4px 0 0;font-size:14px}
+.modal{position:fixed;inset:0;background:#0008;display:none;place-items:center;z-index:50;padding:16px}
+.modal.on{display:grid}
+.modal .box{background:var(--card);border-radius:14px;max-width:520px;width:100%;padding:16px;max-height:80vh;overflow:auto}
+.modal h4{margin:0 0 6px;font-size:16px}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.disc{color:var(--muted);font-size:12px;text-align:center;padding:8px 0 30px}
+.small{font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><h1>Neuro-Ophth Triage <span class="small">· photopsia · pupils · glossary</span></h1></div>
+  <nav id="nav">
+    <a href="#home">Home</a><a href="#photopsia">Flashes</a><a href="#pupil">Anisocoria</a><a href="#glossary">Glossary</a>
+  </nav>
+</header>
+<main>
+
+<!-- HOME -->
+<section class="page" id="p-home">
+  <div class="homegrid">
+    <a class="tile" href="#photopsia"><h3>⚡ Flashes (photopsia)</h3><p>Follow the 4 steps: which eye, what it looks like, red flags, exam findings. You get a disposition and next steps, with the reason for each.</p></a>
+    <a class="tile" href="#pupil"><h3>◐ Anisocoria</h3><p>Enter pupil sizes in light and dark to see which pupil is abnormal. Covers Horner, third nerve, Adie and pharmacological pupils, the drop tests (agents and %) and imaging (UK practice).</p></a>
+    <a class="tile" href="#glossary"><h3>📖 Glossary</h3><p>Plain definitions: phosphene, visual snow, scintillating scotoma, palinopsia, dilation lag, light–near dissociation and more.</p></a>
+  </div>
+  <div class="card" style="margin-top:12px"><h2>How to use it</h2>
+    <p class="sub" style="margin:0">Underlined terms open a definition. The result panel updates as you answer, and each recommendation lists the finding that triggered it. The rules follow common UK practice (NICE CKS, NICE NG128, BSR GCA guideline and standard neuro-ophthalmology teaching). They do not replace local protocols, senior advice or radiology discussion.</p></div>
+</section>
+
+<!-- PHOTOPSIA -->
+<section class="page" id="p-photopsia">
+ <div class="cols">
+  <div>
+   <div class="card"><h2><span class="step">1</span>Which eye? The cover test</h2>
+    <p class="sub">Ask: "Next time it happens, cover one eye, then the other. Does it disappear with one eye covered?"</p>
+    <div id="ph-lat"></div></div>
+   <div class="card"><h2><span class="step">2</span>What exactly do they see?</h2>
+    <p class="sub">Ask: "Describe exactly what you see. Shape, colour, how long it lasts, whether it moves or spreads." Pick the closest match; the description of each opens when selected.</p>
+    <div id="ph-pat"></div></div>
+   <div class="card"><h2><span class="step">3</span>Associated symptoms and red flags</h2>
+    <div id="ph-sx"></div></div>
+   <div class="card"><h2><span class="step">4</span>Examination findings</h2>
+    <p class="sub">Minimum exam: VA, RAPD, colour, confrontation fields, IOP, <a class="g" data-t="Shafer's sign">anterior vitreous</a>, dilated exam of both eyes with 360° indentation, OCT macula.</p>
+    <div id="ph-ex"></div></div>
+  </div>
+  <div class="side"><div class="card"><h2>Result</h2><div id="ph-out"></div>
+    <div class="btnrow"><button class="primary" data-copy="ph">Copy summary</button><button data-reset="ph">New patient</button></div></div></div>
+ </div>
+</section>
+
+<!-- PUPIL -->
+<section class="page" id="p-pupil">
+ <div class="cols">
+  <div>
+   <div class="card"><h2><span class="step">1</span>Red flags first</h2>
+    <p class="sub">Any tick here overrides everything below.</p><div id="pu-rf"></div></div>
+   <div class="card"><h2><span class="step">2</span>Measure in light and dark</h2>
+    <p class="sub">Use a pupil gauge or ruler with the patient fixating a distance target. Bright: room lights on plus a torch from below. Dark: lights off, dim side illumination, read at about 5 s. Phone photos are useful.</p>
+    <div class="meas">
+      <span></span><span class="h">Right (mm)</span><span class="h">Left (mm)</span>
+      <span class="h">Bright light</span><input type="number" step="0.5" min="1" max="10" id="rL"><input type="number" step="0.5" min="1" max="10" id="lL">
+      <span class="h">Dark</span><input type="number" step="0.5" min="1" max="10" id="rD"><input type="number" step="0.5" min="1" max="10" id="lD">
+    </div>
+    <p class="small">Rule used: anisocoria at least 0.5 mm greater in the dark means the small pupil is abnormal (it fails to dilate). At least 0.5 mm greater in light means the large pupil is abnormal (it fails to constrict). An <a class="g" data-t="RAPD">RAPD</a> never causes anisocoria.</p>
+   </div>
+   <div class="card"><h2><span class="step">3</span>Associated signs</h2>
+    <div class="grid2"><div><p class="sub"><b>Small-pupil side</b></p><div id="pu-small"></div></div>
+    <div><p class="sub"><b>Large-pupil side</b></p><div id="pu-large"></div></div></div></div>
+   <div class="card"><h2><span class="step">4</span>Drop test results (if done)</h2>
+    <p class="sub">See the drop table below for agent, %, timing and interpretation.</p><div id="pu-drops"></div></div>
+   <details><summary>Pharmacological testing: agents, %, timing, interpretation</summary><div class="in" id="drop-table"></div></details>
+   <details><summary>Imaging protocols (UK practice)</summary><div class="in" id="img-table"></div></details>
+   <details><summary>Light–near dissociation causes</summary><div class="in" id="lnd-table"></div></details>
+  </div>
+  <div class="side"><div class="card"><h2>Result</h2><div id="pu-out"></div>
+    <div class="btnrow"><button class="primary" data-copy="pu">Copy summary</button><button data-reset="pu">New patient</button></div></div></div>
+ </div>
+</section>
+
+<!-- GLOSSARY -->
+<section class="page" id="p-glossary">
+  <input class="gsearch" id="gq" placeholder="Search terms, e.g. phosphene, visual snow, dilation lag…">
+  <div class="chips" id="gcats"></div>
+  <div class="card" id="glist"></div>
+</section>
+
+<p class="disc">Educational aid for clinicians. Not a substitute for examination, senior review or local protocols. Data stays on this device.</p>
+</main>
+<div class="modal" id="modal"><div class="box"><h4 id="mt"></h4><div id="md"></div><p style="text-align:right;margin:10px 0 0"><button id="mclose">Close</button></p></div></div>
+
+<script>
+/* ================= GLOSSARY ================= */
+const G = [
+// Visual phenomena
+["Photopsia","Visual phenomena","Seeing flashes of light when no light is there. It is a <i>symptom</i>, not a diagnosis. The source can be the retina (traction, inflammation, dystrophy), the optic nerve (demyelination) or the visual cortex (migraine, seizure, ischaemia)."],
+["Phosphene","Visual phenomena","A sensation of light produced by something <i>other than light</i> stimulating the visual system: mechanical (rubbing or pressing the eye, vitreous pulling on the retina), electrical, magnetic, or a demyelinated nerve firing. Traction photopsia in PVD is a mechanical phosphene. Try it: close your eye and press gently on the lid; the coloured patterns are pressure phosphenes."],
+["Movement phosphenes","Visual phenomena","Brief flashes when the eye moves, typical of optic neuritis. Demyelinated optic nerve axons are mechanosensitive, so they fire when the nerve is stretched. Usually comes with pain on eye movement. Some patients also see flashes with sudden loud sounds (sound-induced phosphenes)."],
+["Moore's lightning streaks","Visual phenomena","Brief vertical streaks of light in the temporal field on eye movement, in older people. Chronic and stable over months to years. Benign, but only once a full dilated exam has excluded a tear."],
+["Scintillating scotoma","Visual phenomena","The classic migraine aura. A small flickering spot near fixation expands over 5–20 min into a C-shaped arc with a shimmering zigzag edge, leaving a blind patch (scotoma) inside. It drifts to the periphery and resolves within 60 min. Homonymous: seen in the same half-field with either eye. Caused by cortical spreading depression moving across the occipital cortex at about 3 mm/min."],
+["Fortification spectrum","Visual phenomena","The zigzag, castle-wall-like edge of a migraine aura (also called teichopsia). Usually black-and-white or silvery and flickering at about 10 Hz."],
+["Positive vs negative phenomena","Visual phenomena","Positive: something added (light, lines, shapes). Usually irritative: migraine, seizure, retinal traction. Negative: something missing (a scotoma, a black or grey area, a curtain). Usually loss of function: ischaemia (TIA), detachment, optic neuropathy. A purely negative, sudden-onset, non-spreading homonymous episode suggests TIA more than migraine."],
+["Scotoma","Visual phenomena","An area of reduced (relative) or absent (absolute) vision within the visual field. A positive scotoma is noticed by the patient as a dark or shimmering patch. A negative scotoma is found only on testing."],
+["Visual snow","Visual phenomena","Visual snow syndrome: continuous tiny flickering dots across the <i>entire</i> visual field of <i>both</i> eyes, like a badly tuned TV, for more than 3 months. Plus at least 2 of: palinopsia, enhanced entoptic phenomena, photophobia, nyctalopia (ICHD-3 appendix criteria). The eye exam is normal. A cortical processing disorder, often with migraine and tinnitus. Exclude retinal disease (AZOOR, CAR/MAR) and drugs (HPPD) first."],
+["Palinopsia","Visual phenomena","Seeing an image persist or recur after the object has gone. Includes prolonged afterimages and trailing (a moving object leaves a trail). Seen in visual snow, with drugs (e.g. clomiphene, hallucinogens) and with occipital or parietal lesions."],
+["Entoptic phenomena","Visual phenomena","Seeing structures inside your own eye. Includes floaters (muscae volitantes), the blue-field phenomenon, the Purkinje tree (shadows of your own retinal vessels) and Haidinger's brushes. Normal, though more noticeable in visual snow."],
+["Blue-field entoptic phenomenon","Visual phenomena","Also called Scheerer's phenomenon. Tiny bright dots darting along curved paths when looking at a bright blue sky. These are white blood cells moving through the macular capillaries. Normal."],
+["Elementary vs complex hallucinations","Visual phenomena","Elementary (simple): unformed flashes, dots, lines or colours (photopsia, seizure, migraine). Complex: formed objects, faces, people, scenes (Charles Bonnet syndrome, Lewy body dementia, delirium, peduncular hallucinosis, psychiatric illness)."],
+["Charles Bonnet syndrome","Visual phenomena","Complex visual hallucinations in someone with significant visual loss, with insight preserved: they know the images are not real. Release hallucinations: the deprived visual cortex fires spontaneously. Common in AMD and glaucoma. Reassurance is the main treatment (UK support: Esme's Umbrella)."],
+["Peduncular hallucinosis","Visual phenomena","Vivid formed hallucinations, often at dusk, from a midbrain or thalamic lesion (usually vascular)."],
+["Occipital seizure hallucinations","Visual phenomena","Brief (seconds up to 2–3 min) multicoloured circular spots or blobs in one hemifield, which may move across. They can happen many times a day. Compare migraine: slower (minutes), black-and-white, linear zigzags."],
+["Metamorphopsia","Visual phenomena","Distortion: straight lines look wavy. Macular disease: ERM, CNV, CSCR, VMT, macula-off RD. Test with an Amsler grid. Micropsia means objects look smaller; macropsia means larger."],
+["Nyctalopia","Visual phenomena","Night blindness: poor vision in dim light. Rod dysfunction (retinitis pigmentosa, vitamin A deficiency, CAR, AZOOR) or high myopia. A supporting feature of visual snow."],
+["Photophobia","Visual phenomena","Light causing discomfort or pain. Anterior uveitis, keratitis, migraine, meningism, visual snow."],
+["Dyschromatopsia","Visual phenomena","Abnormal colour vision. Red desaturation in one eye is a sensitive sign of optic neuropathy. Cyanopsia (blue tint): PDE5 inhibitors, after cataract surgery. Xanthopsia (yellow tint): digoxin."],
+["Positive dysphotopsia","Visual phenomena","After cataract surgery: arcs, streaks, starbursts or glare from <i>real</i> light reflecting off the IOL edge, so not true photopsia. Negative dysphotopsia is a dark temporal crescent."],
+["Uhthoff's phenomenon","Visual phenomena","Temporary worsening of vision with heat or exercise (hot bath, running) in demyelinating optic neuropathy."],
+["Transient visual obscurations","Visual phenomena","Seconds-long greying or blackout of vision, often with posture change, in papilloedema (e.g. IIH). Not photopsia, but patients may describe it as 'flickering'."],
+["Amaurosis fugax","Visual phenomena","Transient monocular visual loss, classically a curtain lasting minutes, from embolism (carotid or cardiac) or GCA. Treat as a TIA."],
+["HPPD","Visual phenomena","Hallucinogen persisting perception disorder: visual snow-like static, trails, halos and afterimages persisting long after LSD or other hallucinogen use."],
+// Vitreoretinal
+["PVD","Vitreoretinal","Posterior vitreous detachment: the vitreous gel separates from the retina, usually aged 50–70 (earlier in myopes and after cataract surgery or trauma). Causes flashes (traction) and floaters. About 1 in 7 acute symptomatic PVDs have a retinal tear."],
+["Weiss ring","Vitreoretinal","A ring-shaped floater: the vitreous detached from its attachment around the optic disc. Confirms a PVD is complete at the disc."],
+["Shafer's sign","Vitreoretinal","Tobacco dust: pigment granules (RPE cells) in the anterior vitreous, seen at the slit lamp just behind the lens with a narrow beam. Strongly associated with a retinal break. Look for it in every flashes and floaters patient."],
+["Horseshoe tear","Vitreoretinal","A U-shaped retinal tear with a flap still pulled by the vitreous. High risk of RD. A symptomatic horseshoe tear needs laser or cryotherapy within about 24 h."],
+["Operculated hole","Vitreoretinal","A round hole whose torn-off lid (operculum) floats free in the vitreous. Traction is released, so the RD risk is lower."],
+["Lattice degeneration","Vitreoretinal","Thin peripheral retina with white criss-cross lines and pigment, with firm vitreous attachment at its edges. A risk factor for tears and holes."],
+["Rhegmatogenous RD","Vitreoretinal","Detachment caused by a break, which lets fluid pass under the retina. Convex, corrugated, mobile, often with a field 'curtain'. Macula-on is a surgical emergency."],
+["Retinoschisis","Vitreoretinal","Splitting within the retinal layers. Smooth, dome-shaped and immobile, usually inferotemporal, with an absolute field defect. Can mimic RD."],
+["Lincoff's rules","Vitreoretinal","Locating the primary break from the RD shape. Superotemporal or superonasal RD: break within 1½ clock hours of the higher border. Total or superior RD crossing 12 o'clock: break at 12 or within a triangle 1½ clock hours either side. Inferior RD: the higher side shows the side of the break. Inferior bullous RD: superior break."],
+["Schwartz syndrome","Vitreoretinal","RD with raised IOP and AC 'cells' (actually photoreceptor outer segments). Do not label it uveitis without a dilated exam."],
+["VMT","Vitreoretinal","Vitreomacular traction: an incomplete PVD still attached at the fovea, pulling it. Distortion and blur; diagnose with OCT."],
+// Retina/uveitis
+["MEWDS","Retina & uveitis","Multiple evanescent white dot syndrome: young, often myopic women, sometimes after a viral illness. Unilateral shimmering photopsia, enlarged blind spot, faint grey-white dots, ellipsoid zone loss on OCT. Usually resolves in weeks."],
+["AZOOR","Retina & uveitis","Acute zonal occult outer retinopathy: photopsia (shimmering) and a field defect, often contiguous with the blind spot, with an initially normal-looking fundus. OCT shows ellipsoid zone loss; FAF shows a trizonal pattern; ERG is abnormal."],
+["CAR / MAR","Retina & uveitis","Cancer-associated retinopathy (classically small-cell lung cancer; anti-recoverin) and melanoma-associated retinopathy (bipolar cells). Photopsia, shimmering, nyctalopia and progressive vision loss in both eyes with a near-normal fundus. ERG is markedly abnormal."],
+["Ellipsoid zone","Retina & uveitis","The OCT band corresponding to photoreceptor inner segments. Its loss shows outer retinal dysfunction (MEWDS, AZOOR, CAR, RP)."],
+// Pupils
+["Anisocoria","Pupils","A difference in pupil size between the eyes. Key question: is the big one or the small one abnormal? Compare the difference in bright light and in the dark."],
+["Physiological anisocoria","Pupils","Present in about 20% of people at some time. Usually 1 mm or less, a similar difference in light and dark (may be slightly larger in dark), brisk reactions, no ptosis, no dilation lag. Old photos help. Apraclonidine shows no reversal."],
+["Horner syndrome","Pupils","Oculosympathetic palsy: miosis, mild ptosis (1–2 mm), reverse ptosis, dilation lag, ± facial anhidrosis. Three-neuron pathway: 1st order (hypothalamus to ciliospinal centre C8–T2: brainstem stroke, cord), 2nd order (cord to superior cervical ganglion over the lung apex: Pancoast tumour, neck surgery, trauma), 3rd order (ganglion along the internal carotid to the eye: carotid dissection, cavernous sinus). A painful acute Horner is carotid dissection until proven otherwise."],
+["Dilation lag","Pupils","In Horner's, the affected pupil dilates slowly when the lights go off. Anisocoria is greater at 4–5 s than at 15 s of darkness. Check by switching lights off and looking at (or photographing) both pupils at 5 s and 15 s."],
+["Reverse ptosis","Pupils","Also called upside-down ptosis: the lower lid sits higher on the Horner side (loss of the sympathetic inferior tarsal muscle). This makes the palpebral aperture narrower and the eye look 'sunken'."],
+["Anhidrosis","Pupils","Reduced sweating. Whole half of the face: 1st- or 2nd-order Horner. Forehead only or none: 3rd-order (the sweat fibres follow the external carotid)."],
+["Iris heterochromia","Pupils","A lighter iris on the Horner side means congenital or very early-onset Horner's (sympathetic input is needed for melanocyte pigmentation in infancy)."],
+["Denervation supersensitivity","Pupils","After losing its nerve supply, a muscle upregulates receptors and over-responds to weak agonists. This is the basis of apraclonidine reversal in Horner's (α1) and dilute pilocarpine constriction in Adie's (muscarinic). It takes days to weeks to develop, so tests can be falsely negative early."],
+["Adie's tonic pupil","Pupils","Damage to the ciliary ganglion or postganglionic parasympathetic fibres. Often a young woman with a large pupil, poor or absent light response, better near response (light–near dissociation), slow tonic redilation, segmental iris palsy with vermiform movements, and supersensitivity to pilocarpine 0.1%. Over years the pupil becomes smaller."],
+["Holmes–Adie syndrome","Pupils","Adie's tonic pupil plus reduced or absent deep tendon reflexes."],
+["Light–near dissociation","Pupils","The pupil constricts better to a near target than to light. Causes: Adie's, Argyll Robertson pupil, dorsal midbrain (Parinaud) syndrome, aberrant third nerve regeneration, diabetes, severe bilateral optic neuropathy."],
+["Argyll Robertson pupil","Pupils","Small, irregular, bilateral pupils with light–near dissociation and poor dilation. Classically neurosyphilis (lesion near the Edinger–Westphal nucleus). Do treponemal serology and consider an LP."],
+["Vermiform movements","Pupils","Worm-like segmental contractions of the iris sphincter seen at the slit lamp in Adie's pupil (sectoral palsy, with only some segments still working)."],
+["RAPD","Pupils","Relative afferent pupillary defect: on the swinging-light test, the affected eye's pupils dilate when the light swings to it. Shows asymmetric optic nerve or extensive retinal disease. It does not cause anisocoria, because the efferent supply is intact and both pupils stay equal."],
+["Third nerve palsy","Pupils","Ptosis, a 'down and out' eye (limited elevation, depression, adduction) and, if the pupil is involved, a large poorly reactive pupil. Pupillomotor fibres run superficially, so a compressive lesion (PComm aneurysm) usually involves the pupil. Microvascular ischaemia usually spares it."],
+["Pupil-sparing third nerve palsy","Pupils","Only reassuring when the palsy is complete (total ptosis and ophthalmoplegia) with a perfectly normal pupil, in a vasculopathic patient over 50. A partial palsy with a spared pupil still needs imaging. Many UK units image all."],
+["Aberrant regeneration","Pupils","After a third nerve injury, misdirected regrowth: the lid elevates on adduction or downgaze, or the pupil constricts on eye movement. Points to compression or trauma, never microvascular disease, so image."],
+["Hutchinson pupil","Pupils","A unilateral fixed dilated pupil in a drowsy patient: uncal herniation compressing the third nerve. Neurosurgical emergency."],
+["Pharmacological mydriasis","Pupils","A large pupil from anticholinergics (atropine, cyclopentolate, scopolamine patch, ipratropium nebuliser, plants such as angel's trumpet or jimsonweed) or adrenergics (phenylephrine, cocaine). Usually very large (over 7–8 mm) and unreactive, with normal lids and motility. An anticholinergic pupil fails to constrict to pilocarpine 1%."],
+["Benign episodic unilateral mydriasis","Pupils","Episodes of one dilated pupil lasting minutes to hours, often with migraine-type headache. Normal between episodes. A diagnosis of exclusion."],
+["Tadpole pupil","Pupils","Brief episodic peaking of the pupil in one direction (segmental dilator spasm), often with Horner's. Benign."],
+];
+const gIndex = {}; G.forEach(([t,c,d])=>gIndex[t.toLowerCase()]={t,c,d});
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+// [[Term]] or [[Term|label]] -> glossary link
+const rich = s=>s.replace(/\[\[(.+?)(?:\|(.+?))?\]\]/g,(m,t,l)=>`<a class="g" data-t="${esc(t)}">${l||t}</a>`);
+
+/* ================= PHOTOPSIA DATA ================= */
+const LAT=[
+ {id:"mono",t:"Monocular: disappears when the affected eye is covered",s:"Source is in front of the chiasm: retina, vitreous or optic nerve"},
+ {id:"bino",t:"Binocular / homonymous: still there whichever eye is covered",s:"Source is behind the chiasm (cortex), or systemic or drug-related"},
+ {id:"unsure",t:"Not sure / never tested",s:"Common. Patients blame the eye on the side of a homonymous field defect"},
+];
+const PAT=[
+ {id:"traction",t:"Brief flashes or lightning arcs",says:"“A camera flash at the side”, “a lightning streak when I move my eye”, “worse in the dark”",
+  what:"[[Photopsia|Traction photopsia]]: a mechanical [[Phosphene|phosphene]]. Vitreous pulling on the peripheral retina makes the photoreceptors fire, so the brain 'sees' light.",
+  f:["Each flash lasts a second or less; white or grey; usually temporal periphery","Triggered by eye movement; noticed more in dim light","Monocular; often with new floaters"],
+  ddx:"Acute [[PVD]] · retinal tear · [[Rhegmatogenous RD|RD]] · [[VMT]] · [[Moore's lightning streaks]]"},
+ {id:"scint",t:"Spreading zigzag / shimmering arc",says:"“A shimmering zigzag that grew and drifted to the side”, “like looking through water”, “a blind patch with sparkly edges”",
+  what:"[[Scintillating scotoma]] with a [[Fortification spectrum|fortification spectrum]]: migraine aura from cortical spreading depression.",
+  f:["Starts small near fixation and expands over 5–20 min","Flickering zigzag edge with a blind area behind it","Lasts under 60 min; homonymous; headache may follow or be absent"],
+  ddx:"Migraine aura · occipital TIA (sudden, non-spreading, [[Positive vs negative phenomena|negative]], first episode over 50) · occipital AVM or lesion (always the same side)"},
+ {id:"seizure",t:"Coloured circles or spots",says:"“Bright multicoloured balls on one side”, “blobs that move across”",
+  what:"[[Occipital seizure hallucinations|Elementary hallucinations of an occipital seizure]].",
+  f:["Seconds up to 2–3 min; can be many times a day","Coloured and circular (migraine is usually black-and-white and linear)","One hemifield; may be followed by headache or loss of awareness"],
+  ddx:"Occipital epilepsy · occipital tumour, AVM or stroke · migraine"},
+ {id:"shimmer",t:"Persistent flicker or shimmer in one area",says:"“A patch that shimmers like heat haze”, “constant sparkles over a blurry patch”",
+  what:"Retinal photopsia from dysfunctional photoreceptors (outer retinal disease). Often overlies a [[Scotoma|scotoma]].",
+  f:["Continuous or most of the day, for days to weeks","Often monocular, matching a field defect (e.g. enlarged blind spot)","May have [[Nyctalopia|nyctalopia]] or reduced vision"],
+  ddx:"[[MEWDS]] · [[AZOOR]] · other white dot syndromes · [[CAR / MAR|CAR/MAR]] · retinitis pigmentosa · posterior uveitis"},
+ {id:"snow",t:"Whole-field static (TV snow)",says:"“Like a badly tuned TV over everything”, “tiny dots everywhere, both eyes, all the time”",
+  what:"[[Visual snow|Visual snow syndrome]]: a cortical processing disorder. A diagnosis of exclusion.",
+  f:["Continuous dots across the whole field, both eyes, for more than 3 months","Plus at least 2 of: [[Palinopsia|palinopsia]], [[Entoptic phenomena|enhanced entoptic phenomena]], photophobia, nyctalopia","Normal exam; often migraine and tinnitus"],
+  ddx:"Visual snow syndrome · [[HPPD]] · retinal disease (AZOOR, CAR/MAR; asymmetric, abnormal fields or ERG) · drug effect"},
+ {id:"movement",t:"Flashes only on eye movement, with pain",says:"“Flashes when I look sideways, and it hurts to move the eye”",
+  what:"[[Movement phosphenes]]: demyelinated optic nerve axons fire when the nerve is stretched.",
+  f:["Brief flashes on (usually horizontal) eye movement","Pain on eye movement; dim or washed-out colour; [[RAPD]]","May have sound-induced phosphenes and [[Uhthoff's phenomenon]]"],
+  ddx:"Optic neuritis (MS, MOGAD, NMOSD) · other optic neuropathy"},
+ {id:"formed",t:"Formed images (faces, people, patterns)",says:"“I see little people, flowers or brick walls, but I know they're not real”",
+  what:"[[Elementary vs complex hallucinations|Complex visual hallucinations]]. With visual loss and insight, usually [[Charles Bonnet syndrome]].",
+  f:["Vivid, silent, often patterned (grids, brickwork) or figures","Insight preserved","Significant visual loss (AMD, glaucoma, hemianopia)"],
+  ddx:"Charles Bonnet · Lewy body dementia, Parkinson's drugs, delirium · [[Peduncular hallucinosis|peduncular hallucinosis]] · psychiatric"},
+ {id:"iol",t:"Arcs or streaks of light after cataract surgery",says:"“A crescent of light at the edge near a lamp”, “streaks from headlights”",
+  what:"[[Positive dysphotopsia]]: real light reflected by the IOL edge, so not true photopsia.",
+  f:["Provoked by a light source, especially at night","Not triggered by eye movement in the dark"],
+  ddx:"Positive dysphotopsia, but still exclude PVD and tear (cataract surgery raises RD risk)"},
+ {id:"drug",t:"Altered or enhanced brightness after a new drug",says:"“Things glow or look brighter”, “flicker”, “tinted vision”",
+  what:"Drug-induced visual phenomena.",
+  f:["Voriconazole: transient altered or enhanced light perception (very common, reversible)","Ivabradine: 'luminous phenomena', brief brightness in part of the field","Digoxin: yellow vision, flicker or snow (check the level); PDE5 inhibitors: blue tinge","Clomiphene: flicker or [[Palinopsia|palinopsia]] (stop it)"],
+  ddx:"Drug toxicity · hallucinogens / [[HPPD]]"},
+];
+const PSX=[
+ {id:"curtain",l:"Curtain, shadow or veil",red:1},
+ {id:"shower",l:"Sudden shower of floaters (soot, flies, red smoke)",red:1},
+ {id:"va",l:"New reduction in visual acuity",red:1},
+ {id:"neuro",l:"Focal neurology: weakness, numbness, speech, vertigo, ataxia",red:1},
+ {id:"gca",l:"Age 50 or over with new headache, jaw claudication, scalp tenderness or PMR",red:1},
+ {id:"aura50",l:"First-ever aura at 50 or over, aura without headache, or atypical (sudden, non-spreading, always the same side)"},
+ {id:"ring",l:"New single floater (ring or cobweb)",s:"[[Weiss ring]]"},
+ {id:"riskrd",l:"RD risk: high myopia, previous RD or tear, cataract surgery or YAG, trauma, Stickler family history"},
+ {id:"pain",l:"Pain on eye movement or reduced colour vision"},
+ {id:"redeye",l:"Red, painful or photophobic eye"},
+ {id:"nyct",l:"Night blindness, or a fixed patch of missing vision"},
+ {id:"cancer",l:"Known cancer, weight loss or heavy smoker"},
+ {id:"vloss",l:"Known significant visual loss (AMD, glaucoma, hemianopia)"},
+ {id:"insightlost",l:"Believes the images are real, confused, or cognitive decline"},
+];
+const PEX=[
+ {id:"rd",l:"Retinal detachment",red:1},
+ {id:"tear",l:"Retinal tear or hole",red:1},
+ {id:"shafer",l:"[[Shafer's sign]] (tobacco dust)",red:1},
+ {id:"vh",l:"Vitreous haemorrhage",red:1},
+ {id:"noview",l:"No fundal view (media opacity or dense VH)",red:1},
+ {id:"pvdonly",l:"PVD only: no break after 360° indentation in both eyes"},
+ {id:"rapd",l:"[[RAPD]] or [[Dyschromatopsia|red desaturation]]"},
+ {id:"disc",l:"Swollen optic disc"},
+ {id:"homon",l:"Homonymous field defect",red:1},
+ {id:"cells",l:"AC or vitreous cells"},
+ {id:"whitedots",l:"White dots, or [[Ellipsoid zone|ellipsoid zone]] loss on OCT"},
+ {id:"blindspot",l:"Enlarged blind spot or field defect matching the shimmer"},
+ {id:"normal",l:"Entire exam normal (including dilated 360° and OCT)"},
+];
+
+/* ================= PUPIL DATA ================= */
+const PRF=[
+ {id:"third",l:"Large pupil plus ptosis, diplopia or limited eye movements",lvl:4,h:"Possible compressive third nerve palsy (PComm aneurysm)",d:["EMERGENCY: same-day non-contrast CT + CT angiography (circle of Willis) via ED or on-call neurosurgery/neuroradiology","CTA negative but suspicion high: discuss MRI/MRA ± catheter angiography (DSA)","Age 50 or over: ESR/CRP for GCA"]},
+ {id:"painhorner",l:"Small pupil / ptosis with new neck, face or head pain, or recent neck trauma or manipulation",lvl:4,h:"Possible carotid artery dissection (painful Horner)",d:["EMERGENCY: same-day CTA head and neck (aortic arch to vertex), or MRI brain + MRA neck with fat-saturated axial T1 (shows intramural haematoma)","Refer to the stroke team: antithrombotic treatment per stroke protocol","Do not delay imaging to do drop tests (they can be falsely negative early)"]},
+ {id:"gcs",l:"Drowsy, confused or reduced GCS; or sudden severe ('thunderclap') headache",lvl:4,h:"Possible [[Hutchinson pupil|uncal herniation]] or subarachnoid haemorrhage",d:["999 / ED resus: urgent CT head ± CTA; neurosurgery"]},
+ {id:"brainstem",l:"Vertigo, ataxia, dysphagia, hoarseness, facial or crossed sensory loss",lvl:4,h:"Possible lateral medullary (Wallenberg) or other brainstem stroke: central Horner",d:["Stroke pathway now (999 if within thrombolysis or thrombectomy window); urgent MRI with DWI"]},
+ {id:"aac",l:"Red, painful eye, haloes, nausea; mid-dilated poorly reactive pupil",lvl:4,h:"Possible acute angle closure",d:["Measure IOP and do gonioscopy now; treat per local AACG protocol"]},
+ {id:"child",l:"Child with a new or acquired Horner (no birth trauma history)",lvl:3,h:"Exclude neuroblastoma",d:["Paediatric referral: MRI brain, neck, chest (± abdomen) with contrast and urine catecholamines (VMA/HVA)","Avoid apraclonidine in infants (CNS depression); use cocaine if a drop test is needed"]},
+ {id:"gcasx",l:"Age 50 or over with headache, jaw claudication, scalp tenderness or PMR",lvl:4,h:"Possible giant cell arteritis (can cause third nerve or other cranial nerve palsy)",d:["Same-day ESR, CRP, FBC; start steroids if suspected (BSR 2020); fast-track GCA pathway"]},
+];
+const PSM=[
+ {id:"ptosis",l:"Mild ptosis (1–2 mm) on the small-pupil side"},
+ {id:"reverse",l:"[[Reverse ptosis]] (lower lid higher)"},
+ {id:"lag",l:"[[Dilation lag]] (more anisocoria at 5 s than 15 s)"},
+ {id:"anhid",l:"Facial [[Anhidrosis|anhidrosis]] (whole side)"},
+ {id:"hetero",l:"Lighter iris on the small side ([[Iris heterochromia|heterochromia]])"},
+ {id:"oldphoto",l:"Anisocoria visible in old photos (long-standing)"},
+ {id:"miotic",l:"Exposure to miotics (pilocarpine, opioids, organophosphates)"},
+];
+const PLG=[
+ {id:"lnd",l:"[[Light–near dissociation]] (near response better than light)"},
+ {id:"vermi",l:"Sectoral palsy or [[Vermiform movements|vermiform movements]] at the slit lamp"},
+ {id:"tonic",l:"Slow, tonic redilation after near effort"},
+ {id:"reflex",l:"Reduced deep tendon reflexes"},
+ {id:"iris",l:"Iris damage: sphincter tears, synechiae, atrophy, previous surgery or trauma"},
+ {id:"anticho",l:"Possible anticholinergic exposure: scopolamine patch, ipratropium nebuliser, dilating drops, plants (angel's trumpet, jimsonweed)"},
+ {id:"blanch",l:"Blanched conjunctiva or lid retraction (adrenergic agent: phenylephrine, cocaine)"},
+ {id:"episodic",l:"Episodic (minutes to hours), with headache, normal in between"},
+];
+const PDR=[
+ {id:"apra",l:"Apraclonidine 0.5% (or 1%)",o:[["","Not done"],["pos","Reversal: small pupil dilates (± ptosis improves)"],["neg","No reversal"]]},
+ {id:"coc",l:"Cocaine 4% or 10%",o:[["","Not done"],["pos","Post-test anisocoria ≥0.8 mm (small pupil fails to dilate)"],["neg","Both dilate equally"]]},
+ {id:"hyd",l:"Hydroxyamphetamine 1%",o:[["","Not done"],["post","Small pupil fails to dilate (3rd-order)"],["pre","Small pupil dilates (1st/2nd-order)"]]},
+ {id:"p01",l:"Pilocarpine 0.1% (dilute)",o:[["","Not done"],["pos","Large pupil constricts more than the fellow eye (supersensitive)"],["neg","No supersensitivity"]]},
+ {id:"p1",l:"Pilocarpine 1%",o:[["","Not done"],["con","Constricts"],["fail","Fails to constrict"]]},
+];
+
+/* ================= STATE ================= */
+const KEY="neuroophth-v2";
+let S = (()=>{try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch{return null}})() || {ph:{lat:"",pat:"",sx:[],ex:[]},pu:{rf:[],sm:[],lg:[],m:{},dr:{}}};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch{}};
+const $=id=>document.getElementById(id);
+
+/* ================= BUILD UI ================= */
+function radioList(el,list,group,get,set,renderExtra){
+  el.innerHTML="";
+  list.forEach(o=>{
+    const lab=document.createElement("label"); lab.className="opt";
+    lab.innerHTML=`<input type="radio" name="${group}"><span><span class="t">${rich(esc(o.t))}</span>${o.s?`<span class="s">${rich(o.s)}</span>`:""}${o.says?`<span class="s">${esc(o.says)}</span>`:""}<div class="detail" style="display:none">${renderExtra?renderExtra(o):""}</div></span>`;
+    const inp=lab.querySelector("input");
+    inp.onchange=()=>{set(o.id);refresh()};
+    lab.dataset.id=o.id; el.appendChild(lab);
+  });
+}
+function checkList(el,list,arr){
+  el.innerHTML="";
+  list.forEach(o=>{
+    const lab=document.createElement("label"); lab.className="opt"; lab.dataset.id=o.id; lab.dataset.red=o.red?1:"";
+    lab.innerHTML=`<input type="checkbox"><span><span>${rich(o.l)}</span>${o.red?'<span class="rf">RED FLAG</span>':""}${o.s?`<span class="s">${rich(o.s)}</span>`:""}</span>`;
+    lab.querySelector("input").onchange=e=>{const a=arr();const i=a.indexOf(o.id);e.target.checked?(i<0&&a.push(o.id)):(i>=0&&a.splice(i,1));refresh()};
+    el.appendChild(lab);
+  });
+}
+function syncChecks(el,arr){el.querySelectorAll(".opt").forEach(l=>{const on=arr.includes(l.dataset.id);l.querySelector("input").checked=on;l.classList.toggle(l.dataset.red?"redsel":"sel",on);l.classList.remove(l.dataset.red?"sel":"redsel")})}
+function syncRadio(el,val){el.querySelectorAll(".opt").forEach(l=>{const on=l.dataset.id===val;l.querySelector("input").checked=on;l.classList.toggle("sel",on);const d=l.querySelector(".detail");if(d)d.style.display=on&&d.innerHTML?"block":"none"})}
+
+radioList($("ph-lat"),LAT,"lat",()=>S.ph.lat,v=>S.ph.lat=v);
+radioList($("ph-pat"),PAT,"pat",()=>S.ph.pat,v=>S.ph.pat=v,o=>`<p style="margin:6px 0">${rich(o.what)}</p><b>Typical features</b><ul>${o.f.map(x=>`<li>${rich(x)}</li>`).join("")}</ul><b>Differential</b><div>${rich(o.ddx)}</div>`);
+checkList($("ph-sx"),PSX,()=>S.ph.sx);
+checkList($("ph-ex"),PEX,()=>S.ph.ex);
+checkList($("pu-rf"),PRF,()=>S.pu.rf); $("pu-rf").querySelectorAll(".opt").forEach(l=>{l.dataset.red=1;l.querySelector(".t, span span")});
+checkList($("pu-small"),PSM,()=>S.pu.sm);
+checkList($("pu-large"),PLG,()=>S.pu.lg);
+// drops
+$("pu-drops").innerHTML=PDR.map(d=>`<div class="drow"><span>${d.l}</span><select data-d="${d.id}">${d.o.map(([v,t])=>`<option value="${v}">${t}</option>`).join("")}</select></div>`).join("");
+$("pu-drops").querySelectorAll("select").forEach(s=>s.onchange=()=>{S.pu.dr[s.dataset.d]=s.value;refresh()});
+["rL","lL","rD","lD"].forEach(k=>$(k).oninput=()=>{S.pu.m[k]=$(k).value;refresh()});
+
+/* ---- static reference tables ---- */
+$("drop-table").innerHTML=`
+<p class="small">General rules: put drops in <b>both eyes</b> (the normal eye is the control). Measure size before, then at the stated time, in the same lighting. No tonometry, gonioscopy or corneal touch beforehand (it changes drug penetration). Check stock with your pharmacy, because dilute pilocarpine and cocaine are usually made up or ordered specially.</p>
+<table><tr><th>Question</th><th>Agent and %</th><th>Read at</th><th>Positive result</th><th>Pitfalls</th></tr>
+<tr><td><b>Is it Horner's?</b> (first line in the UK)</td><td><b>Apraclonidine 0.5%</b> (Iopidine; 1% also used). 1 drop each eye</td><td>30–60 min</td><td><b>Reversal</b>: the Horner pupil dilates (α1 [[Denervation supersensitivity|denervation supersensitivity]]) and the ptosis improves. The normal pupil stays the same or gets slightly smaller.</td><td>Can be <b>falsely negative in the first days to ~2 weeks</b>, before supersensitivity develops, so never let a negative test delay imaging in acute Horner's. <b>Avoid in infants</b> (CNS depression, bradycardia).</td></tr>
+<tr><td>Is it Horner's? (alternative)</td><td><b>Cocaine 4% or 10%</b>, 1–2 drops each eye</td><td>45–60 min</td><td>Post-test anisocoria <b>≥0.8 mm</b> (Horner pupil fails to dilate; the normal one dilates)</td><td>A Schedule 2 controlled drug, often hard to get in the UK. Urine stays positive for cocaine metabolites for 1–2 days, so warn the patient (work or driving drug tests).</td></tr>
+<tr><td>Localise: is it 3rd-order (postganglionic)?</td><td><b>Hydroxyamphetamine 1%</b></td><td>45–60 min</td><td>Horner pupil <b>fails to dilate</b> means 3rd-order. Dilates means 1st or 2nd order.</td><td>Wait <b>48–72 h</b> after cocaine or apraclonidine. Limited UK availability; many units simply image the whole pathway.</td></tr>
+<tr><td><b>Is the big pupil Adie's?</b></td><td><b>Pilocarpine 0.1%</b> (dilute: e.g. 1% diluted 1:10 with sterile saline; 0.125% also used)</td><td>30–45 min</td><td>The tonic pupil constricts <b>more than the fellow eye</b> (cholinergic supersensitivity)</td><td>Supersensitivity may take a week or more to develop. Some third nerve palsies are also supersensitive, so check lids and motility.</td></tr>
+<tr><td><b>Is the big pupil pharmacologically blocked?</b></td><td><b>Pilocarpine 1%</b></td><td>30–45 min</td><td><b>Fails to constrict</b> means pharmacological (anticholinergic) blockade or iris damage. Normal, third nerve and Adie's pupils all constrict.</td><td>Do the slit lamp exam first to exclude iris damage. Do 0.1% first if Adie's is possible, then 1% (can be the same day if 0.1% fails).</td></tr>
+</table>`;
+$("img-table").innerHTML=`
+<p class="small">Typical UK practice. Always discuss the clinical question with radiology and follow local protocols.</p>
+<table><tr><th>Scenario</th><th>Urgency</th><th>Imaging</th><th>Plus</th></tr>
+<tr><td>Third nerve palsy with pupil involvement, or any <b>partial</b> third nerve palsy</td><td><b>Emergency (same day)</b></td><td>Non-contrast CT head + <b>CT angiography</b> (circle of Willis). If negative and suspicion remains: MRI brain with gadolinium + MRA, ± DSA.</td><td>ESR/CRP if 50 or over. Neurosurgery if aneurysm.</td></tr>
+<tr><td>Complete third nerve palsy, normal pupil, vasculopathic, 50 or over</td><td>Many units still image (MRI/MRA or CTA)</td><td>If not imaged: review pupil and motility within days and over the first 1–2 weeks; image if the pupil becomes involved, it progresses, there is no recovery by about 3 months, or [[Aberrant regeneration|aberrant regeneration]] appears.</td><td>BP, glucose/HbA1c, lipids, ESR/CRP</td></tr>
+<tr><td><b>Acute or painful Horner</b> (suspected dissection)</td><td><b>Emergency (same day)</b></td><td><b>CTA head and neck</b> (aortic arch to vertex) <i>or</i> MRI brain + MRA neck with <b>fat-saturated axial T1</b></td><td>Stroke team</td></tr>
+<tr><td>Horner, non-acute, no localising signs (adult)</td><td>Urgent (2-week to soon, by local pathway)</td><td>Image the <b>whole sympathetic chain</b>: MRI brain + neck with contrast (hypothalamus to T2–T4) + MRA neck, <i>or</i> CT/CTA from skull base to aortic arch <b>including the lung apex</b>. A CXR is not enough to exclude Pancoast tumour.</td><td>If the source is 2nd-order: CT chest</td></tr>
+<tr><td>Horner localised clinically</td><td>As above</td><td>1st-order: MRI brain and cervical cord. 2nd-order: CT/MRI neck + chest (apex). 3rd-order: MRA/CTA neck + MRI cavernous sinus.</td><td></td></tr>
+<tr><td>Horner in a child</td><td>Urgent</td><td>MRI brain, neck, chest (± abdomen) with contrast</td><td>Urine VMA/HVA (neuroblastoma); paediatrics</td></tr>
+<tr><td>Typical isolated Adie's pupil</td><td>Routine</td><td>No imaging</td><td>Tendon reflexes; syphilis serology if bilateral or atypical; consider diabetes</td></tr>
+<tr><td>Bilateral light–near dissociation with upgaze palsy or convergence-retraction</td><td>Urgent</td><td>MRI brain with contrast (pineal / dorsal midbrain)</td><td></td></tr>
+<tr><td>Argyll Robertson pupils</td><td>Urgent</td><td>No imaging needed for diagnosis</td><td>Treponemal serology, HIV, LP; GUM / ID referral</td></tr>
+<tr><td>Confirmed pharmacological pupil or physiological anisocoria</td><td>None</td><td>No imaging</td><td>Explain the cause; reassure</td></tr>
+</table>`;
+$("lnd-table").innerHTML=`<ul>
+<li><b>Unilateral:</b> [[Adie's tonic pupil]] (most common), [[Aberrant regeneration|aberrant third nerve regeneration]], severe unilateral optic neuropathy (afferent)</li>
+<li><b>Bilateral:</b> [[Argyll Robertson pupil]] (neurosyphilis), dorsal midbrain / Parinaud syndrome (pineal tumour, hydrocephalus), diabetes, bilateral Adie's, severe bilateral optic neuropathy or retinopathy</li></ul>`.replace(/\[\[(.+?)(?:\|(.+?))?\]\]/g,(m,t,l)=>`<a class="g" data-t="${t}">${l||t}</a>`);
+$("drop-table").innerHTML=rich($("drop-table").innerHTML);
+$("img-table").innerHTML=rich($("img-table").innerHTML);
+
+/* ================= PHOTOPSIA LOGIC ================= */
+const LVL={4:"EMERGENCY: act now / same day",3:"SAME DAY",2:"URGENT: days to 2 weeks",1:"ROUTINE",0:"MORE INFORMATION NEEDED"};
+function phLogic(){
+  const {lat,pat}=S.ph, has=id=>S.ph.sx.includes(id)||S.ph.ex.includes(id), R=[];
+  const add=(lvl,h,why,d)=>R.push({lvl,h,why,d});
+  // localisation
+  let loc="";
+  if(lat==="mono") loc="<b>Pre-chiasmal</b>: retina, vitreous or optic nerve. Must examine the retina dilated.";
+  else if(lat==="bino") loc="<b>Retro-chiasmal / central</b> (cortex), or systemic or drug-related. The eye exam is usually normal, so look for a homonymous field defect.";
+  else if(lat==="unsure") loc="<b>Not localised.</b> Treat as ocular until a dilated fundus exam is normal; ask them to do the cover test next time.";
+
+  if(has("rd")) add(4,"Retinal detachment","RD found on exam",["Same-day vitreoretinal referral; record macula on or off (OCT)","Macula-on: highest urgency; ask the VR team about posturing","Find the primary break using [[Lincoff's rules]]; examine the fellow eye"]);
+  if(has("tear")) add(3,"Retinal tear","Break found on exam",["Laser retinopexy or cryotherapy within ~24 h for a symptomatic horseshoe tear","Operculated or atrophic holes are often observed; discuss","Re-examine in 2–6 weeks; examine the fellow eye; safety-net advice"]);
+  if(has("noview")) add(3,"No fundal view","A tear or RD cannot be excluded",["Same-day dynamic B-scan to look for RD or a flap tear","Repeat the dilated exam every 1–2 weeks until the view clears; refer to VR if in doubt"]);
+  const hi=["curtain","shower","va","shafer","vh"].filter(has);
+  if(hi.length && !has("tear") && !has("rd")) add(3,"High risk of a retinal break",hi.map(x=>(PSX.concat(PEX).find(o=>o.id===x).l.replace(/\[\[|\]\]/g,""))).join("; "),["Same-day dilated exam of both eyes with 360° indentation by an experienced examiner","None found but VH or pigment present: re-examine within 1–2 weeks (early tears are easy to miss)"]);
+  if(has("gca")) add(4,"Possible giant cell arteritis","Age 50 or over with GCA symptoms",["Same-day ESR, CRP, FBC","Start steroids if suspected (BSR 2020): prednisolone 40–60 mg; with visual loss, IV methylprednisolone 500 mg–1 g daily for 3 days or prednisolone 60 mg","Fast-track GCA pathway (temporal artery ultrasound or biopsy)"]);
+  if(has("neuro")||has("homon")||(has("aura50")&&lat!=="mono")) add(4,"Possible posterior circulation TIA or stroke",["neuro","homon","aura50"].filter(has).map(x=>x==="neuro"?"focal neurology":x==="homon"?"homonymous field defect":"atypical or late-onset aura").join("; "),["Symptoms ongoing: 999 / hyperacute stroke unit","Resolved: aspirin 300 mg (unless contraindicated) and specialist TIA assessment within 24 h (NICE NG128)","Advise no driving until assessed"]);
+  if(has("rapd")||has("disc")||(pat==="movement")) add(has("va")?3:2,"Possible optic neuritis / optic neuropathy",[pat==="movement"?"movement phosphenes":"",has("rapd")?"RAPD or red desaturation":"",has("disc")?"disc swelling":""].filter(Boolean).join("; "),["VA, colour (Ishihara), RAPD, formal fields, OCT RNFL","MRI brain and orbits with contrast (urgent)","Atypical (bilateral, painless, severe, marked disc swelling, no recovery by 3 weeks, Black or Asian ethnicity): AQP4 and MOG antibodies; consider steroids early","Same or next-day eye casualty / neuro-ophthalmology"]);
+  if(has("cells")||has("redeye")) add(2,"Possible uveitis / retinitis","inflammation",["Dilated exam for retinitis, choroiditis or vasculitis (same day if retinitis: ARN, CMV, toxoplasma)","Syphilis serology, QuantiFERON, ACE, CXR, HIV","Uveitis clinic"]);
+  if(pat==="shimmer"||has("whitedots")||(has("nyct")&&lat!=="bino")||has("blindspot")) add(2,"Suspected outer retinal disease","shimmering photopsia / white dots / field defect / nyctalopia",["OCT macula ([[Ellipsoid zone|ellipsoid zone]]), widefield FAF, Humphrey 24-2 or 30-2 (blind spot)","ERG / mfERG if the fundus looks normal","Syphilis and TB screen"+(has("cancer")?"; anti-retinal antibodies and a primary tumour search (CAR/MAR)":""),"Medical retina / uveitis review within 1–2 weeks"]);
+  // pattern-specific
+  if(pat==="traction"){
+    if(lat==="bino") add(0,"Mismatch","Traction flashes should be monocular",["Repeat the cover test; consider cortical causes"]);
+    if(has("pvdonly")&&!hi.length) add(1,"Uncomplicated PVD","PVD, no break after full indented exam",["Explain and give safety-net advice (see Guide)", has("riskrd")?"RD risk factors present: review at 4–6 weeks":"Review at 4–6 weeks only if risk factors, VH or pigment, or a poor view; otherwise discharge with advice"]);
+    else if(!has("tear")&&!has("rd")&&!hi.length) add(3,"New flashes: probable PVD","traction-type photopsia",["Dilated exam of both eyes with 360° indentation, ideally within 24 h (NICE CKS)","Look for Shafer's sign and VH at the slit lamp", has("riskrd")?"Risk factors present: lower threshold for VR review and a 4–6 week recheck":"Then tick the exam findings for the next step"]);
+  }
+  if(pat==="scint"){
+    if(lat==="mono") add(0,"Monocular zigzag is unusual","Patients often misattribute homonymous aura",["Re-check with the cover test; true monocular episodes need a retinal/vascular workup (retinal migraine is a diagnosis of exclusion)"]);
+    if(!has("neuro")&&!has("aura50")&&!has("homon")) add(1,"Typical migraine aura","Gradual spread over 5–20 min, under 60 min, positive features",["Normal eye exam confirms it","GP for migraine management / prophylaxis if frequent","Return if atypical: sudden, negative, prolonged, always the same side, or neurology"]);
+  }
+  if(pat==="seizure") add(2,"Possible occipital seizures","brief, coloured, circular, recurrent",["Urgent first-seizure / neurology referral (NICE: seen within 2 weeks)","MRI brain; EEG","Advise to stop driving and inform the DVLA"]);
+  if(pat==="snow") add(1,"Possible visual snow syndrome","whole-field, bilateral, continuous",["Confirm a normal exam: VA, fields, OCT, fundus (exclude AZOOR, CAR, RP)","Ask about hallucinogen use (HPPD) and migraine","Routine neuro-ophthalmology or neurology; reassure; avoid trigger drugs"]);
+  if(pat==="formed"){
+    if(has("vloss")&&!has("insightlost")) add(1,"Charles Bonnet syndrome likely","visual loss with insight preserved",["Explain clearly that it is not mental illness; optimise vision","Support: Esme's Umbrella, RNIB; inform the GP"]);
+    else add(2,"Complex hallucinations: non-ocular cause possible",has("insightlost")?"insight lost or cognitive change":"no significant visual loss",["Cognitive screen, medication review (dopaminergics, anticholinergics), delirium screen","GP / neurology / old-age psychiatry; MRI if focal"]);
+  }
+  if(pat==="iol") add(has("tear")||has("rd")?0:2,"Probable positive dysphotopsia","light-provoked arcs after an IOL",["Still do a dilated 360° exam: pseudophakia raises PVD and RD risk","Reassure; it often improves over months (neuroadaptation)"]);
+  if(pat==="drug") add(1,"Possible drug-induced phenomena","temporal link to a new drug",["Medication review with the prescriber (voriconazole, ivabradine, digoxin level, PDE5 inhibitors, clomiphene)","Still exclude ocular causes if monocular"]);
+  if(has("normal")&&!R.length) add(1,"Normal exam","",["Consider migraine, drugs, visual snow; safety-net advice"]);
+  return {loc,R};
+}
+
+/* ================= PUPIL LOGIC ================= */
+function puLogic(){
+  const P=S.pu, R=[], add=(lvl,h,why,d)=>R.push({lvl,h,why,d});
+  const sm=id=>P.sm.includes(id), lg=id=>P.lg.includes(id), dr=id=>P.dr[id]||"";
+  P.rf.forEach(id=>{const f=PRF.find(x=>x.id===id);add(f.lvl,f.h,f.l,f.d)});
+  // measurements
+  const m=P.m, n=k=>parseFloat(m[k]);
+  let branch=null, loc="Enter sizes in light and dark to work out which pupil is abnormal.";
+  if([n("rL"),n("lL"),n("rD"),n("lD")].every(x=>!isNaN(x))){
+    const aL=n("rL")-n("lL"), aD=n("rD")-n("lD"), dL=Math.abs(aL), dD=Math.abs(aD);
+    const side=a=>a>0?"RIGHT":"LEFT", other=a=>a>0?"LEFT":"RIGHT";
+    if(Math.max(dL,dD)<0.3){branch="none";loc="No significant anisocoria (under 0.3 mm in both conditions).";}
+    else if(dD-dL>=0.5){branch="small";loc=`Anisocoria <b>${dD.toFixed(1)} mm in dark</b> vs ${dL.toFixed(1)} mm in light, so it is greater in the dark.<br>The <b>smaller ${other(aD)} pupil is abnormal</b> (it fails to dilate): Horner, physiological, or pharmacological miosis.`;}
+    else if(dL-dD>=0.5){branch="large";loc=`Anisocoria <b>${dL.toFixed(1)} mm in light</b> vs ${dD.toFixed(1)} mm in dark, so it is greater in the light.<br>The <b>larger ${side(aL)} pupil is abnormal</b> (it fails to constrict): third nerve palsy, Adie's, pharmacological, iris damage or angle closure.`;}
+    else {branch=Math.max(dL,dD)<=1?"phys":"equiv";loc=`Anisocoria similar in light (${dL.toFixed(1)} mm) and dark (${dD.toFixed(1)} mm).`+(branch==="phys"?" At 1 mm or less, this fits <b>physiological anisocoria</b> if reactions are brisk with no ptosis or dilation lag.":" Over 1 mm but equal in both conditions is <b>not typical of physiological anisocoria</b>: check for structural iris disease and use the signs and drops below.");}
+    if(aL*aD<0 && dL>=0.3 && dD>=0.3) loc+="<br><i>Note: the larger pupil switches sides between light and dark. Re-measure.</i>";
+  }
+  // signs can define branch if no measurements
+  const hornerSigns=["ptosis","reverse","lag","anhid","hetero"].filter(sm);
+  const largeSigns=["lnd","vermi","tonic","reflex","iris","anticho","blanch","episodic"].filter(lg);
+  if(!branch||branch==="equiv"){ if(hornerSigns.length&&!largeSigns.length) branch="small"; else if(largeSigns.length&&!hornerSigns.length) branch="large"; }
+  if(P.rf.includes("third")||P.rf.includes("aac")) branch=branch||"large";
+  if(P.rf.includes("painhorner")) branch=branch||"small";
+
+  if(branch==="small"||(branch==="phys"&&(hornerSigns.length||dr("apra")==="pos"||dr("coc")==="pos"))){
+    if(sm("miotic")&&!hornerSigns.length) add(1,"Pharmacological miosis likely","miotic exposure, no Horner signs",["Confirm the exposure; recheck once it has washed out"]);
+    const confirmed=dr("apra")==="pos"||dr("coc")==="pos";
+    const neg=(dr("apra")==="neg"||dr("coc")==="neg")&&!confirmed;
+    if(hornerSigns.length||confirmed){
+      const chronic=sm("oldphoto")||sm("hetero");
+      let order="Localise: ";
+      if(dr("hyd")==="post") order+="hydroxyamphetamine shows <b>3rd-order</b> (postganglionic): carotid dissection, cavernous sinus, cluster headache.";
+      else if(dr("hyd")==="pre") order+="hydroxyamphetamine shows <b>1st or 2nd order</b>: brainstem, cord, lung apex, neck.";
+      else if(sm("anhid")) order+="whole-face anhidrosis suggests <b>1st or 2nd order</b> (preganglionic).";
+      else order+="use associated signs (brainstem signs mean 1st order; arm pain or smoker means 2nd order, Pancoast; facial pain or headache means 3rd order) or image the whole chain.";
+      const why=[...hornerSigns.map(x=>PSM.find(o=>o.id===x).l.replace(/\[\[(.+?)(?:\|(.+?))?\]\]/g,(m,t,l)=>l||t)),confirmed?"positive drop test":""].filter(Boolean).join("; ");
+      add(P.rf.includes("painhorner")?4:chronic?1:3, confirmed?"Horner syndrome (pharmacologically confirmed)":"Suspected Horner syndrome", why,
+        [chronic?"Long-standing (old photos or heterochromia): image electively, MRI head and neck to T2–T4 (see imaging table)":"New or unknown onset: same-day discussion; image urgently. CTA head and neck (arch to vertex) or MRI/MRA with fat-sat T1 if any pain, trauma or acute onset",
+         confirmed?"":"Confirm if unsure: apraclonidine 0.5% to both eyes, read at 30–60 min (may be falsely negative in the first ~2 weeks, so don't delay imaging)",
+         order,"Examine the neck, axilla and supraclavicular nodes; ask about smoking and arm pain (Pancoast), neck surgery, central lines, cluster headache"].filter(Boolean));
+    } else if(neg){
+      add(1,"Horner less likely","negative drop test",["Physiological anisocoria is more likely. A negative apraclonidine test in the first ~2 weeks does not exclude Horner, so re-test or image if still suspicious"]);
+    } else if(!sm("miotic")) add(0,"Small pupil abnormal: no Horner signs ticked","",["Check ptosis, reverse ptosis and dilation lag (5 s vs 15 s)","If unsure: apraclonidine 0.5% test","No signs and 1 mm or less: physiological is likely"]);
+  }
+  if(branch==="phys"&&!hornerSigns.length&&!(dr("apra")==="pos"||dr("coc")==="pos")) add(1,"Physiological anisocoria likely","1 mm or less, similar in light and dark",["Confirm brisk reactions, no ptosis, no dilation lag; check old photos","If any doubt: apraclonidine 0.5% (no reversal supports physiological)","No imaging needed"]);
+  if(branch==="large"){
+    if(!P.rf.includes("third")) {
+      if(lg("iris")) add(1,"Structural iris damage","slit lamp findings",["No drop test needed; pilocarpine 1% won't constrict a damaged sphincter","Document; treat the cause"]);
+      if(dr("p1")==="fail"&&!lg("iris")) add(1,"Pharmacological mydriasis (confirmed)","fails to constrict to pilocarpine 1%",["Identify the agent (patch, nebuliser, drops, plants); reassure; resolves in hours to days (atropine up to ~2 weeks)","No imaging"]);
+      else if(lg("anticho")&&dr("p1")!=="con") add(1,"Probable pharmacological mydriasis","anticholinergic exposure",["Confirm with pilocarpine 1%: a pharmacological pupil fails to constrict","No imaging if confirmed"]);
+      if(lg("blanch")) add(1,"Possible adrenergic mydriasis","blanched conjunctiva or lid retraction",["Phenylephrine or cocaine exposure; pilocarpine 1% may partly constrict"]);
+      const adie=dr("p01")==="pos"||lg("vermi")||lg("tonic")||lg("lnd");
+      if(adie) add(1,(dr("p01")==="pos"?"Adie's tonic pupil (supersensitivity confirmed)":"Probable Adie's tonic pupil")+(lg("reflex")?": Holmes–Adie syndrome":""),["lnd","vermi","tonic","reflex"].filter(lg).map(x=>PLG.find(o=>o.id===x).l.replace(/\[\[(.+?)(?:\|(.+?))?\]\]/g,(m,t,l)=>l||t)).concat(dr("p01")==="pos"?["pilocarpine 0.1% supersensitivity"]:[]).join("; "),
+        [dr("p01")==="pos"?"":"Confirm: pilocarpine 0.1% to both eyes, read at 30–45 min (the tonic pupil constricts more)","Check lids and motility are completely normal (exclude third nerve palsy)","Bilateral or atypical: syphilis serology; consider diabetes and autoimmune causes","Reassure; reading glasses or tinted lenses for glare; low-dose pilocarpine if symptomatic. No imaging"].filter(Boolean));
+      if(lg("episodic")&&!adie) add(1,"Possible benign episodic unilateral mydriasis","episodic, with headache",["A diagnosis of exclusion: photograph during an episode, check motility and lids, and test with pilocarpine during an episode if possible"]);
+      if(!largeSigns.length&&!dr("p01")&&!dr("p1")) add(2,"Large pupil abnormal: cause not yet clear","",["Re-check lids and motility carefully (an isolated dilated pupil with normal lids and motility is very rarely a third nerve palsy)","Slit lamp: iris damage? vermiform movements?","Pilocarpine 0.1%: constricts means Adie's. If not, pilocarpine 1%: fails means pharmacological; constricts means consider third nerve and image"]);
+      if(dr("p01")==="neg"&&dr("p1")==="con"&&!lg("iris")) add(3,"Constricts to 1% but not supersensitive","not pharmacological, not Adie's",["Re-examine for subtle third nerve involvement; discuss imaging (MRI/MRA or CTA) with neuro-ophthalmology"]);
+    }
+  }
+  if(lg("lnd")&&!sm("ptosis")) R.push({lvl:0,h:"Light–near dissociation",why:"",d:["Unilateral: Adie's, aberrant regeneration. Bilateral: Argyll Robertson (syphilis serology), dorsal midbrain (MRI), diabetes. See the table on the left."]});
+  if(branch==="none"&&!R.length) add(1,"No significant anisocoria","",["If symptoms are episodic, ask for phone photos during an episode"]);
+  return {loc,R};
+}
+
+/* ================= RENDER RESULTS ================= */
+function renderOut(el,{loc,R},emptyMsg){
+  R.sort((a,b)=>b.lvl-a.lvl);
+  const top=R.length?R[0].lvl:null;
+  let h="";
+  if(top!==null) h+=`<div class="dispo lv${top}">${LVL[top]}</div>`;
+  if(loc) h+=`<div class="loc">${loc}</div>`;
+  if(!R.length&&!loc) h+=`<p class="small">${emptyMsg}</p>`;
+  h+=R.map(r=>`<div class="res lv${r.lvl}"><h3>${rich(r.h)}</h3>${r.why?`<div class="why">Because: ${rich(esc(r.why))}</div>`:""}<ul>${r.d.map(x=>`<li>${rich(x)}</li>`).join("")}</ul></div>`).join("");
+  el.innerHTML=h;
+}
+function refresh(){
+  save();
+  syncRadio($("ph-lat"),S.ph.lat); syncRadio($("ph-pat"),S.ph.pat);
+  syncChecks($("ph-sx"),S.ph.sx); syncChecks($("ph-ex"),S.ph.ex);
+  syncChecks($("pu-rf"),S.pu.rf); syncChecks($("pu-small"),S.pu.sm); syncChecks($("pu-large"),S.pu.lg);
+  ["rL","lL","rD","lD"].forEach(k=>{if($(k).value!==(S.pu.m[k]||""))$(k).value=S.pu.m[k]||""});
+  $("pu-drops").querySelectorAll("select").forEach(s=>s.value=S.pu.dr[s.dataset.d]||"");
+  const ph=phLogic(); renderOut($("ph-out"),ph,"Start with step 1.");
+  if(!S.ph.lat&&!S.ph.pat) $("ph-out").innerHTML=`<p class="small">Start with step 1 (cover test) and step 2 (description).</p>`;
+  renderOut($("pu-out"),puLogic(),"");
+}
+
+/* ================= COPY / RESET ================= */
+const plain=s=>s.replace(/<[^>]+>/g,"").replace(/\[\[(.+?)(?:\|(.+?))?\]\]/g,(m,t,l)=>l||t);
+function summary(kind){
+  const L=[]; const d=new Date().toLocaleDateString("en-GB");
+  if(kind==="ph"){
+    L.push(`PHOTOPSIA ASSESSMENT ${d}`);
+    const lat=LAT.find(x=>x.id===S.ph.lat), pat=PAT.find(x=>x.id===S.ph.pat);
+    if(lat)L.push("Cover test: "+lat.t); if(pat)L.push("Description: "+pat.t);
+    if(S.ph.sx.length)L.push("Symptoms: "+S.ph.sx.map(id=>plain(PSX.find(o=>o.id===id).l)).join("; "));
+    if(S.ph.ex.length)L.push("Exam: "+S.ph.ex.map(id=>plain(PEX.find(o=>o.id===id).l)).join("; "));
+    var out=phLogic();
+  } else {
+    L.push(`ANISOCORIA ASSESSMENT ${d}`); const m=S.pu.m;
+    L.push(`Pupils (mm) light R ${m.rL||"-"} L ${m.lL||"-"} | dark R ${m.rD||"-"} L ${m.lD||"-"}`);
+    if(S.pu.rf.length)L.push("Red flags: "+S.pu.rf.map(id=>PRF.find(o=>o.id===id).l).join("; "));
+    const sg=[...S.pu.sm.map(id=>plain(PSM.find(o=>o.id===id).l)),...S.pu.lg.map(id=>plain(PLG.find(o=>o.id===id).l))];
+    if(sg.length)L.push("Signs: "+sg.join("; "));
+    const drs=PDR.filter(x=>S.pu.dr[x.id]).map(x=>x.l+": "+x.o.find(o=>o[0]===S.pu.dr[x.id])[1]);
+    if(drs.length)L.push("Drop tests: "+drs.join("; "));
+    var out=puLogic();
+  }
+  if(out.loc)L.push("Interpretation: "+plain(out.loc.replace(/<br>/g," ")));
+  out.R.sort((a,b)=>b.lvl-a.lvl).forEach(r=>{L.push(`\n[${LVL[r.lvl]}] ${plain(r.h)}${r.why?" (because: "+plain(r.why)+")":""}`);r.d.forEach(x=>L.push("  - "+plain(x)))});
+  if(kind==="ph")L.push("\nSafety-net advice given: return the same day for a shower of floaters, a curtain or shadow, or reduced vision.");
+  return L.join("\n");
+}
+document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=async()=>{const t=summary(b.dataset.copy);try{await navigator.clipboard.writeText(t)}catch{const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove()}const o=b.textContent;b.textContent="Copied ✓";setTimeout(()=>b.textContent=o,1500)});
+document.querySelectorAll("[data-reset]").forEach(b=>b.onclick=()=>{if(!b.dataset.arm){b.dataset.arm=1;b.textContent="Tap again to clear";setTimeout(()=>{delete b.dataset.arm;b.textContent="New patient"},3000);return}delete b.dataset.arm;b.textContent="New patient";if(b.dataset.reset==="ph")S.ph={lat:"",pat:"",sx:[],ex:[]};else S.pu={rf:[],sm:[],lg:[],m:{},dr:{}};refresh()});
+
+/* ================= GLOSSARY PAGE ================= */
+let gcat="All";
+const cats=["All",...new Set(G.map(x=>x[1]))];
+$("gcats").innerHTML=cats.map(c=>`<button class="chip" data-c="${c}">${c}</button>`).join("");
+$("gcats").querySelectorAll("button").forEach(b=>b.onclick=()=>{gcat=b.dataset.c;renderG()});
+$("gq").oninput=renderG;
+function renderG(){
+  const q=$("gq").value.toLowerCase().trim();
+  $("gcats").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.c===gcat));
+  const items=G.filter(([t,c,d])=>(gcat==="All"||c===gcat)&&(!q||(t+" "+d).toLowerCase().includes(q)));
+  $("glist").innerHTML=items.length?items.map(([t,c,d])=>`<div class="gterm"><span class="cat">${c}</span><h4>${t}</h4><p>${d}</p></div>`).join(""):`<p class="small">No match.</p>`;
+}
+renderG();
+
+/* ================= MODAL + ROUTER ================= */
+document.addEventListener("click",e=>{const a=e.target.closest("a.g");if(!a)return;e.preventDefault();e.stopPropagation();
+  const g=gIndex[a.dataset.t.toLowerCase()];$("mt").textContent=g?g.t:a.dataset.t;$("md").innerHTML=g?`<p class="small">${g.c}</p><p>${g.d}</p>`:"Not in glossary.";$("modal").classList.add("on")},true);
+$("mclose").onclick=()=>$("modal").classList.remove("on");
+$("modal").onclick=e=>{if(e.target.id==="modal")$("modal").classList.remove("on")};
+function route(){const p=(location.hash||"#home").slice(1);document.querySelectorAll(".page").forEach(s=>s.classList.toggle("on",s.id==="p-"+p));document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+p));window.scrollTo(0,0)}
+window.addEventListener("hashchange",route); route(); refresh();
+if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+</html>
